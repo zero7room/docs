@@ -134,6 +134,13 @@ module.exports = function(grunt) {
               src: ['dist/handsontable.*', 'dist/languages/*.js'],
               dest: 'generated/components/handsontable-pro/',
             },
+            // Not used in the documentation at all but used by developers who using our server as a CDN (legacy support)
+            {
+              expand: true,
+              cwd: 'node_modules/handsontable',
+              src: ['dist/handsontable.*', 'dist/languages/*.js'],
+              dest: 'generated/components/handsontable/',
+            },
             {
               expand: true,
               cwd: 'node_modules/font-awesome',
