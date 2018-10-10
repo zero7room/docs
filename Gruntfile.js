@@ -37,7 +37,7 @@ module.exports = function(grunt) {
     querystring = require('querystring');
 
     function getHotProBranch() {
-      var hotProVersion = argv['hot-pro-version'];
+      var hotProVersion = argv['hot-version'];
 
       return hotProVersion ? (hotProVersion === 'latest' ? HOT_PRO_DEFAULT_BRANCH : hotProVersion) : gitHelper.getLocalInfo().branch;
     }
