@@ -51,8 +51,8 @@
           <li><code>npm run build:es</code> - transpiles files into the <code>import/export</code> format. These files are published into NPM repository later.</li>
           <li><code>npm run build:umd</code> - creates the bundles (<code>dist/handsontable.js</code>, <code>dist/handsontable.css</code>, <code>dist/handsontable.full.js</code> and <code>dist/handsontable.full.css</code>) which are compatible with UMD (Universal Module Definition).</li>
           <li><code>npm run build:umd.min</code> - creates the minified bundles (<code>dist/handsontable.min.js</code>, <code>dist/handsontable.min.css</code>, <code>dist/handsontable.min.full.js</code> and <code>dist/handsontable.min.full.css</code>) which are compatible with UMD (Universal Module Definition).</li>
-          <li><code>npm run build:languages</code> - creates the bundles containing language sets (i.e. <code>dist/languages/de-DE.js</code>, <code>dist/languages/all.js</code>) which are compatible with UMD (Universal Module Definition). More information about languages can be found <a href="/<?js= version ?>/tutorial-internationalization.html">here</a>.
-          <li><code>npm run build:languages.min</code> - creates the minified bundles containing language sets (i.e. <code>dist/languages/de-DE.min.js</code>, <code>dist/languages/all.min.js</code>) which are compatible with UMD (Universal Module Definition). More information about languages can be found <a href="/<?js= version ?>/tutorial-internationalization.html">here</a>.
+          <li><code>npm run build:languages</code> - creates the bundles containing language sets (i.e. <code>dist/languages/de-DE.js</code>, <code>dist/languages/all.js</code>) which are compatible with UMD (Universal Module Definition). More information about languages can be found <a href="/docs/<?js= version ?>/tutorial-internationalization.html">here</a>.
+          <li><code>npm run build:languages.min</code> - creates the minified bundles containing language sets (i.e. <code>dist/languages/de-DE.min.js</code>, <code>dist/languages/all.min.js</code>) which are compatible with UMD (Universal Module Definition). More information about languages can be found <a href="/docs/<?js= version ?>/tutorial-internationalization.html">here</a>.
         </ul>
       </li>
       <li><code>npm run watch</code> - watches for changes in source directory and runs a build when a change is observed. For faster rebuild when a change is observed, the watcher triggers the file-building task without minify.</li>
@@ -77,7 +77,7 @@
     <h3 id="page-customizing">Creating a custom package</h3>
     <p>This process lets you build a custom package containing only the core engine and selected plugins.
       It's super useful when you need only a fraction of the spreadsheet's overall functionality or when
-      you have already built a <a href="/<?js= version ?>/tutorial-custom-plugin.html">custom plugin</a> and want to incorporate it into the base code.
+      you have already built a <a href="/docs/<?js= version ?>/tutorial-custom-plugin.html">custom plugin</a> and want to incorporate it into the base code.
       For this purpose we prepared a tool called <strong>hot-builder</strong>. To install hot-builder globally, run:</p>
     <p><code>npm install hot-builder -g</code></p>
     <p>Then to build Handsontable run:</p>
