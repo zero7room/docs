@@ -8,7 +8,7 @@ module.exports = function(shipit) {
   require('shipit-deploy')(shipit);
 
   const gitInfo = gitHelper.getLocalInfo();
-  const config = {
+  let config = {
     servers: 'deploy@142.4.202.189:22022',
     workspace: '/tmp/docs-pro.handsontable.com/' + gitInfo.branch,
     repositoryUrl: 'https://github.com/handsontable/docs-pro-new.git',
