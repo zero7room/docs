@@ -299,7 +299,7 @@ function onSearchKeyUp() {
 }
 
 function getDocUrl(docVersion) {
-  return location.href.replace(/(\/pro)?\/\d+\.\d+\.\d+(\-(beta|alpha)(\d+)?)?\//, '/' + docVersion + '/');
+  return location.href.replace(/\/docs\/\d+\.\d+\.\d+(\-(beta|alpha)(\d+)?)?\//, '/docs/' + docVersion + '/');
 }
 function goTo(href) {
   location.href = href;
@@ -313,7 +313,7 @@ function docVersions(docVersions) {
 
 function getLatestHOTStableVersion() {
   var stable = _docVersions.filter(function(version) {
-    return version.match(/\d+\.\d+\.\d+/) ? true : false;
+    return (Array.isArray(version) ? version[0] : version).match(/\d+\.\d+\.\d+/) ? true : false;
   });
 
   return stable.length ? stable[0] : _docVersions[0];
@@ -333,12 +333,14 @@ function buildBreadcrumbs() {
     return '<span>' + content + '</span>';
   };
 
-  var makeHotVersion = function (hotVersion) {
+  var makeHotVersion = function (currentHotVersion) {
     var lastVersion = null;
 
     var options = _docVersions.map(function(version) {
-      var minorMajor = version.split('.').splice(0, 2).join('.'),
-        option = '';
+      var hotVersion = Array.isArray(version) ? version[0] : version;
+      var minorMajor = hotVersion.split('.').splice(0, 2).join('.');
+      var hotCeVersion = Array.isArray(version) ? version[1] : null;
+      var option = '';
 
       if (lastVersion !== minorMajor) {
         if (lastVersion !== null) {
@@ -346,10 +348,12 @@ function buildBreadcrumbs() {
         }
         option += '<optgroup label="' + minorMajor + '.x">';
       }
-      if (version === hotVersion) {
-        option += '<option selected value="' + version + '">' + version + '</option>';
+      var versionLabel = hotVersion + (hotCeVersion ? ' (' + hotCeVersion + ')' : '');
+
+      if (hotVersion === currentHotVersion) {
+        option += '<option selected value="' + hotVersion + '">' + versionLabel + '</option>';
       } else {
-        option += '<option value="' + version + '">' + version + '</option>';
+        option += '<option value="' + hotVersion + '">' + versionLabel + '</option>';
       }
       lastVersion = minorMajor;
 
@@ -358,7 +362,7 @@ function buildBreadcrumbs() {
     options.push('</optgroup>');
 
     return '<span>' +
-      '<select class="hot-chooser" onchange="goTo(getDocUrl(\'pro/\' + this.value))" selected="' + hotVersion + '">' +
+      '<select class="hot-chooser" onchange="goTo(getDocUrl(this.value))" selected="' + currentHotVersion + '">' +
       options.join('') +
       '</select>' +
       '</span>';
@@ -366,8 +370,8 @@ function buildBreadcrumbs() {
 
   // links
   docsLink = document.createElement('a');
-  docsLink.href = '/pro';
-  docsLink.text = 'Handsontable PRO';
+  docsLink.href = '/docs';
+  docsLink.text = 'Handsontable';
 
   if ($('.source').size() > 0 || !$activeLink.length) {
     var filename = $('.page-title').data('filename').replace(/\.[a-z]+$/, '');
@@ -402,8 +406,6 @@ function buildBreadcrumbs() {
       + makeSpan($item.text())
       + makeSpan($activeLink.text());
   }
-
-  breadcrumbs += '<span class="right switcher"><a href="/latest">Switch to CE</a></span>';
 
   return breadcrumbs;
 }
