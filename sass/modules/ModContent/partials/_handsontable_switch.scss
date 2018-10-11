@@ -1,0 +1,49 @@
+/**
+ * @author: Handsoncode
+ */
+
+.handsontable-switcher {
+
+  & > div {
+    display: none;
+
+    &:first-child, &.active {
+      display: block;
+    }
+  }
+
+  code {
+    margin-top: 20px;
+    padding: 16px 20px;
+    overflow: auto;
+    white-space: pre;
+    font-family: $codeFont;
+    background-color: #fff;
+  }
+
+  .switch {
+    ul {
+      text-align: center;
+
+      li {
+        font-size: 18px;
+
+        &.active {
+          font-weight: 600;
+        }
+
+        &.active:last-child {
+          border-color: $brandGreen;
+        }
+      }
+    }
+  }
+
+  li.active {
+    border-color: $brandGreen;
+  }
+
+  .tab ul li > * {
+    pointer-events: none;
+  }
+}

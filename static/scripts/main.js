@@ -23,6 +23,12 @@ function isEdge() { return /Edge/.test(navigator.userAgent) }
 }())
 
 $(function () {
+  var d = document;
+  var w = window;
+  var $$ = function(selector) {
+    return d.querySelectorAll(selector);
+  };
+
   jQuery.fx.off = true;
 
   // Anchor fix
@@ -50,6 +56,83 @@ $(function () {
     });
   }
   // END: Anchor fix
+
+  // Tabs
+  d.addEventListener('click', function(event) {
+    var target = event.target;
+    var firstTab = $$('.tabs')[0];
+    var activeSection;
+
+    if (target.id && /^tab\-./.test(target.id) && !/^tab\-content\-./.test(target.id)) {
+      var tabGroups = $$('.tabs-alternative').length ? $$('.tabs-alternative') : firstTab.querySelectorAll('.tabs');
+
+      for (var i = 0; i < tabGroups.length; i += 1) {
+        if (tabGroups[i].contains(target)) {
+          var tabsContent = tabGroups[i].querySelectorAll('[id^=tab-content-]');
+
+          for (var j = 0; j < tabsContent.length; j += 1) {
+            if (tabsContent[j].classList.contains('active')) {
+              tabsContent[j].classList.remove('active');
+            }
+            if (tabsContent[j].hasAttribute('aria-hidden')) {
+              tabsContent[j].setAttribute('aria-hidden', 'true');
+            }
+          }
+
+          var tabs = tabGroups[i].querySelectorAll('[id^=tab-]');
+
+          for (var j = 0; j < tabs.length; j += 1) {
+            if (tabs[j].classList.contains('active')) {
+              tabs[j].classList.remove('active');
+            }
+            if (tabs[j].hasAttribute('aria-selected')) {
+              tabs[j].setAttribute('aria-selected', 'false');
+            }
+            if (tabs[j].hasAttribute('aria-hidden')) {
+              tabs[j].setAttribute('aria-hidden', 'true');
+            }
+          }
+
+          break;
+        }
+      }
+
+      for (var k = 0; k < firstTab.children.length; k += 1) {
+        if (firstTab.children[k].className === 'active') {
+          activeSection = firstTab.children[k];
+        }
+      }
+
+      var contentId = 'tab-content-' + target.id.replace('tab-', '');
+      var contentElement = activeSection ? activeSection.querySelector('#' + contentId) : d.getElementById(contentId);
+      var contentToActivate = contentElement.dataset.tabForward ? $('tab-content-' + contentElement.dataset.tabForward) : contentElement;
+
+      target.classList.add('active');
+      contentToActivate.classList.add('active');
+
+      if (target.hasAttribute('aria-selected')) {
+        target.setAttribute('aria-selected', 'true');
+      }
+      if (contentToActivate.hasAttribute('aria-hidden')) {
+        contentToActivate.setAttribute('aria-hidden', 'false');
+      }
+
+      var event;
+
+      try {
+        event = new Event('tab-content-active');
+      } catch (ex) {
+        event = document.createEvent('Event');
+        event.initEvent('tab-content-active', true, true);
+      }
+      contentElement.dispatchEvent(event);
+    }
+  });
+
+  function getLocationOrigin() {
+    return location.protocol + '//' + location.host + location.pathname;
+  }
+  // end
 
   // Search Items
   $('#search-form').on('keyup', onSearchKeyUp);
