@@ -1,5 +1,5 @@
 <div class="static-content">
-  <script data-jsfiddle="common" src="/pro/<?js= version ?>/components/handsontable-pro/dist/languages/all.js"></script>
+  <script data-jsfiddle="common" src="/docs/<?js= version ?>/components/handsontable-pro/dist/languages/all.js"></script>
 
   <div class="index-list">
     <ul>
@@ -49,8 +49,16 @@
         <p>from the <code>/languages</code> folder located in the root of the project, to be used by module systems;
           the example below shows how to use it with ECMAScript 6 (you will need a bundler or TypeScript).</p>
 
+        <p>
+          Usage for Handsontable Pro Edition:
+        </p>
         <pre><code class="lang-js">import Handsontable from 'handsontable-pro';
 import 'handsontable-pro/languages/pl-PL';</code></pre>
+        <p>
+          Usage for Handsontable Community Edition:
+        </p>
+        <pre><code class="lang-js">import Handsontable from 'handsontable';
+import 'handsontable/languages/pl-PL';</code></pre>
       </li>
     </ol>
 
@@ -399,7 +407,7 @@ Handsontable.languages.getTranslatedPhrase('my-AA', 'customKey');</code></pre>
   </div>
 
   <p class="gap-top-xsmall">
-    <a href="https://github.com/handsontable/docs-pro/edit/<?js= version ?>/tutorials/internationalization.html" class="edit-doc" target="_blank">
+    <a href="https://github.com/handsontable/docs/edit/<?js= version ?>/tutorials/internationalization.html" class="edit-doc" target="_blank">
       Help us improve this page
     </a>
   </p>
