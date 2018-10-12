@@ -73,7 +73,7 @@ exports.getDocsVersions = function getDocsVersions() {
   return new Promise(function(resolve, reject) {
     github.repos.getBranches({
       user: 'handsontable',
-      repo: 'docs-pro',
+      repo: 'docs-pro-new',
       per_page: 100
     }, function(err, resp) {
       if (err) {
