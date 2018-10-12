@@ -27,8 +27,10 @@
     "grunt-git": "^0.3.4",
     "grunt-jsdoc": "^0.5.8",
     "grunt-sitemap": "1.2.1",
-    "grunt-env": "0.4.4",
-    "jsdoc": "3.4.0",
+    "handsontable-pro": "3.0.0",
+    "handsontable": "3.0.0",
+    "highlightjs": "^9.10.0",
+    "jsdoc": "^3.5.5",
     "minimist": "^1.1.1",
     "semver": "^4.3.4"
   },

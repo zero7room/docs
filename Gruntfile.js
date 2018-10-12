@@ -1,12 +1,12 @@
 /**
- * This file is used to build Handsontable Pro documentation.
+ * This file is used to build Handsontable documentation.
  *
  * Installation:
  * 1. Install Grunt CLI (`npm install -g grunt-cli`)
  * 1. Install Grunt 0.4.0 and other dependencies (`npm install`)
  *
  * Build:
- * Execute `grunt` from root directory of this directory (where Gruntfile.js is)
+ * Execute `npm run start` from root directory of this directory (where Gruntfile.js is)
  *
  * Result:
  * Building Handsontable docs will create files:
@@ -34,12 +34,24 @@ module.exports = function(grunt) {
     HOT_PRO_DEFAULT_BRANCH = 'master',
     HOT_REPO = 'https://github.com/handsontable/handsontable.git',
     HOT_PRO_REPO = 'https://github.com/handsontable/handsontable-pro.git',
+    HOT_EQUIVALENT_VERSIONS = new Map([
+      ['1.18.1', '0.38.1'],
+      ['1.18.0', '0.38.0'],
+      ['1.17.0', '0.37.0'],
+      ['1.16.0', '0.36.0'],
+      ['1.15.1', '0.35.1'],
+      ['1.15.0', '0.35.0'],
+      ['1.14.3', '0.34.3'],
+      ['1.14.2', '0.34.2'],
+      ['1.14.1', '0.34.1'],
+      ['1.14.0', '0.34.0'],
+    ]),
     querystring = require('querystring');
 
-    function getHotProBranch() {
-      var hotProVersion = argv['hot-pro-version'];
+    function getHotBranch() {
+      var hotVersion = argv['hot-version'];
 
-      return hotProVersion ? (hotProVersion === 'latest' ? HOT_PRO_DEFAULT_BRANCH : hotProVersion) : gitHelper.getLocalInfo().branch;
+      return hotVersion ? (hotVersion === 'latest' ? HOT_PRO_DEFAULT_BRANCH : hotVersion) : gitHelper.getLocalInfo().branch;
     }
 
     grunt.initConfig({
@@ -83,45 +95,65 @@ module.exports = function(grunt) {
 
       copy: {
         dist: {
-          files: [{
-            expand: true,
-            cwd: 'src',
-            dest: 'generated',
-            src: ['static/**']
-          }]
-        }
-      },
-
-      bowercopy: {
-        options: {
-          srcPrefix: 'bower_components'
-        },
-        scripts: {
-          options: {
-            destPrefix: 'generated/bower_components'
-          },
-          files: {
-            'axios': 'axios/dist/axios.min.js',
-            'jquery/jquery.min.js': 'jquery/dist/jquery.min.js',
-            'fastclick': 'fastclick',
-            'jquery.cookie': 'jquery.cookie',
-            'jquery-placeholder': 'jquery-placeholder',
-            'modernizr': 'modernizr',
-            'handsontable-pro': 'handsontable-pro',
-            'zeroclipboard': 'zeroclipboard',
-            'pikaday': 'pikaday',
-            "moment": "moment",
-            "backbone": "backbone",
-            "backbone.relational": "backbone.relational",
-            "highlightjs": "highlightjs",
-            "chroma-js": "chroma-js",
-            "raphael": "raphael",
-            "bootstrap": "bootstrap",
-            "numbro": "numbro",
-            "font-awesome": "font-awesome",
-            "lodash": "lodash",
-            "promise-polyfill": "promise-polyfill",
-          }
+          files: [
+            {
+              expand: true,
+              cwd: 'src',
+              dest: 'generated',
+              src: [
+                'static/**'
+              ],
+            },
+            {
+              expand: true,
+              cwd: 'node_modules/numbro',
+              dest: 'generated/components/numbro',
+              src: ['**'],
+            },
+            {
+              expand: true,
+              cwd: 'node_modules/axios',
+              src: ['dist/axios.min.js'],
+              dest: 'generated/components/axios/',
+            },
+            {
+              expand: true,
+              cwd: 'node_modules/fastclick',
+              src: ['lib/fastclick.js'],
+              dest: 'generated/components/fastclick/',
+            },
+            {
+              expand: true,
+              cwd: 'node_modules/handsontable-pro',
+              src: ['dist/handsontable.*', 'dist/languages/*.js'],
+              dest: 'generated/components/handsontable-pro/',
+            },
+            // Not used in the documentation at all but used by developers who using our server as a CDN (legacy support)
+            {
+              expand: true,
+              cwd: 'node_modules/handsontable',
+              src: ['dist/handsontable.*', 'dist/languages/*.js'],
+              dest: 'generated/components/handsontable/',
+            },
+            {
+              expand: true,
+              cwd: 'node_modules/font-awesome',
+              src: ['css/**', 'fonts/**'],
+              dest: 'generated/components/font-awesome/',
+            },
+            {
+              expand: true,
+              cwd: 'node_modules/highlightjs',
+              dest: 'generated/components/highlightjs',
+              src: ['**'],
+            },
+            {
+              expand: true,
+              cwd: 'node_modules/promise-polyfill',
+              src: ['dist/polyfill.min.js'],
+              dest: 'generated/components/promise-polyfill/',
+            },
+          ]
         }
       },
 
@@ -184,9 +216,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('server', ['connect', 'watch']);
-
     grunt.registerTask('default', ['env:build', 'authenticate-git', 'update-hot-pro', 'update-hot', 'generate-docs']);
-
     grunt.registerTask('build', ['env:build', 'authenticate-git', 'build-docs']);
 
     grunt.registerTask('authenticate-git', 'Authenticate Github', function() {
@@ -206,7 +236,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('update-hot-pro', 'Update Handsontable Pro repository', function() {
-      var hotProBranch = getHotProBranch();
+      var hotProBranch = getHotBranch();
 
       grunt.config.set('gitclone.handsontablePro.options.branch', hotProBranch);
       grunt.log.write('Cloning Handsontable Pro v.' + hotProBranch);
@@ -239,15 +269,17 @@ module.exports = function(grunt) {
       gitHelper.getDocsVersions().then(function(branches) {
         branches = branches.filter(function(branch) {
           return /^\d+\.\d+\.\d+$/.test(branch) && !/^draft\-/.test(branch) && semver.gte(branch, '1.14.0');
+        }).map(function(branch) {
+          return HOT_EQUIVALENT_VERSIONS.has(branch) ? [branch, HOT_EQUIVALENT_VERSIONS.get(branch)] : branch;
         });
-      
+
         var content = 'docVersions && docVersions(' + JSON.stringify(branches.reverse()) + ')';
 
         grunt.log.write('The following versions found: ' + branches.join(', '));
         fs.writeFile(path.join(DOCS_PATH, 'scripts', 'doc-versions.js'), content, done);
       });
     });
-    
+
     grunt.registerTask('generate-disallow-for-robots', 'Generate disallowed paths for web crawler robots', function () {
       var done = this.async();
 
@@ -267,10 +299,12 @@ module.exports = function(grunt) {
       var done = this.async();
       var hotPackage;
 
-      if (argv['hot-pro-version']) {
+      if (argv['hot-version']) {
+        var isDraftNext = argv['hot-version'] === 'next';
+
         grunt.config.set('jsdoc.docs.options.query', querystring.stringify({
-          version: getHotProBranch(),
-          latestVersion: getHotProBranch()
+          version: isDraftNext ? 'next' : getHotBranch(),
+          latestVersion: isDraftNext ? 'next' : getHotBranch(),
         }));
 
         grunt.task.run('sass', 'copy', 'bowercopy', 'jsdoc', 'sitemap');
