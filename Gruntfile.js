@@ -22,7 +22,7 @@ var semver = require('semver');
 var gitHelper = require('./git-helper');
 
 if (semver.gt(process.versions.node, '6.11.5')) {
-  throw Error('This project supports Node.js <= 6, please downgrade your Node.js version and try again. You have currently installed version ' + process.versions.node + '.');
+  throw Error('This project supports Node.js <= 6.11.5, please downgrade your Node.js version and try again. You have currently installed version ' + process.versions.node + '.');
 }
 
 module.exports = function(grunt) {
@@ -66,13 +66,19 @@ module.exports = function(grunt) {
       jsdoc: {
         docs: {
           src: [
-          HOT_SRC_PATH + '/src/**/*.js', '!' + HOT_SRC_PATH + '/src/**/*.spec.js', '!' + HOT_SRC_PATH + '/src/**/*.unit.js', '!' + HOT_SRC_PATH + '/src/**/*.e2e.js', '!' + HOT_SRC_PATH + '/src/3rdparty/walkontable/**/*.js',
-          // Pro package
-          HOT_PRO_SRC_PATH + '/src/**/*.js',
-          // '!' + HOT_SRC_PATH + '/src/plugins/touchScroll/touchScroll.js',
-          '!' + HOT_PRO_SRC_PATH + '/src/**/*.spec.js', '!' + HOT_PRO_SRC_PATH + '/src/**/*.unit.js', '!' + HOT_PRO_SRC_PATH + '/src/**/*.e2e.js',
-          // '!' + HOT_PRO_SRC_PATH + '/src/plugins/ganttChart/dateCalculator.js',
-          '!' + HOT_PRO_SRC_PATH + '/src/3rdparty/walkontable/**/*.js', ],
+            HOT_SRC_PATH + '/src/**/*.js',
+            '!' + HOT_SRC_PATH + '/src/**/*.spec.js',
+            '!' + HOT_SRC_PATH + '/src/**/*.unit.js',
+            '!' + HOT_SRC_PATH + '/src/**/*.e2e.js',
+            '!' + HOT_SRC_PATH + '/src/3rdparty/walkontable/**/*.js',
+            HOT_SRC_PATH + '/src/3rdparty/walkontable/src/cell/*.js',
+            // Pro package
+            HOT_PRO_SRC_PATH + '/src/**/*.js',
+            // '!' + HOT_SRC_PATH + '/src/plugins/touchScroll/touchScroll.js',
+            '!' + HOT_PRO_SRC_PATH + '/src/**/*.spec.js', '!' + HOT_PRO_SRC_PATH + '/src/**/*.unit.js', '!' + HOT_PRO_SRC_PATH + '/src/**/*.e2e.js',
+            // '!' + HOT_PRO_SRC_PATH + '/src/plugins/ganttChart/dateCalculator.js',
+            '!' + HOT_PRO_SRC_PATH + '/src/3rdparty/walkontable/**/*.js',
+          ],
           jsdoc: 'node_modules/.bin/' + (/^win/.test(process.platform) ? 'jsdoc.cmd' : 'jsdoc'),
           options: {
             verbose: true,
@@ -228,8 +234,10 @@ module.exports = function(grunt) {
     grunt.registerTask('update-hot', 'Update Handsontable repository', function() {
       var hotPackage = grunt.file.readJSON(HOT_PRO_SRC_PATH + '/package.json');;
 
-      grunt.config.set('gitclone.handsontable.options.branch', hotPackage.dependencies.handsontable);
-      grunt.log.write('Cloning Handsontable v.' + hotPackage.dependencies.handsontable);
+      var cleanHotBranch = hotPackage.dependencies.handsontable.replace('github:', '').replace('handsontable/handsontable#', '');
+
+      grunt.config.set('gitclone.handsontable.options.branch', cleanHotBranch);
+      grunt.log.write('Cloning Handsontable v.' + cleanHotBranch);
 
       grunt.task.run('clean:source');
       grunt.task.run('gitclone:handsontable');
@@ -307,7 +315,7 @@ module.exports = function(grunt) {
           latestVersion: isDraftNext ? 'next' : getHotBranch(),
         }));
 
-        grunt.task.run('sass', 'copy', 'bowercopy', 'jsdoc', 'sitemap');
+        grunt.task.run('sass', 'copy', 'jsdoc', 'sitemap');
         done();
 
       } else {
@@ -318,13 +326,12 @@ module.exports = function(grunt) {
               latestVersion: info.name
           }));
 
-          grunt.task.run('sass', 'copy', 'bowercopy', 'jsdoc', 'sitemap');
+          grunt.task.run('sass', 'copy', 'jsdoc', 'sitemap');
           done();
         });
       }
     });
 
-    grunt.loadNpmTasks('grunt-bowercopy');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-copy');
