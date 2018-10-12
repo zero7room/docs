@@ -10,7 +10,7 @@ module.exports = function(shipit) {
   const gitInfo = gitHelper.getLocalInfo();
   let config = {
     servers: 'deploy@142.4.202.189:22022',
-    workspace: '/tmp/docs-pro.handsontable.com/' + gitInfo.branch,
+    workspace: '/tmp/docs.handsontable.com/' + gitInfo.branch,
     repositoryUrl: 'https://github.com/handsontable/docs-pro-new.git',
     branch: gitInfo.branch,
     ignores: ['.git', 'node_modules'],
