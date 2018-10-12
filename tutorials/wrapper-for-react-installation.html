@@ -1,9 +1,9 @@
 <div class="static-content">
   <div class="example-container clearfix">
       <p>
-          <strong>Handsontable for React</strong> is the official wrapper for Handsontable, a JavaScript data grid
-          component with a spreadsheet look & feel. It easily integrates with any data source and comes with lots of
-          useful features like data binding, validation, sorting or powerful context menu.
+        <strong>Handsontable for React</strong> is the official wrapper for Handsontable, a JavaScript data grid
+        component with a spreadsheet look & feel. It easily integrates with any data source and comes with lots of
+        useful features like data binding, validation, sorting or powerful context menu.
       </p>
 
       <h3>Installation</h3>
@@ -13,6 +13,10 @@
       <p>
         <code>npm install handsontable-pro @handsontable-pro/react</code>
       </p>
+      for Handsontable Community Edition
+      <p>
+        <code>npm install handsontable @handsontable/react</code>
+      </p>
 
       <h3>Basic usage</h3>
       <p>
@@ -20,12 +24,17 @@
         <pre>
           <code>@import 'handsontable-pro/dist/handsontable.full.css';</code>
         </pre>
+        for Handsontable Community Edition
+        <pre>
+          <code>@import 'handsontable/dist/handsontable.full.css';</code>
+        </pre>
       </p>
       <p>
         Then use Handsontable for React component in your codebase
         <pre>
         <code>import React from 'react';
-import {HotTable} from '@handsontable-pro/react';
+import { HotTable } from '@handsontable-pro/react';
+// import { HotTable } from '@handsontable/react'; // for Handsontable Community Edition
 
 class App extends React.Component {
   constructor(props) {
@@ -60,7 +69,7 @@ class App extends React.Component {
       </p>
   </div>
     <p>
-      <a href="https://github.com/handsontable/docs-pro/edit/<?js= version ?>/tutorials/react-overview.html"
+      <a href="https://github.com/handsontable/docs/edit/<?js= version ?>/tutorials/wrapper-for-react-installation.html"
          class="edit-doc" target="_blank">Help us improve this page</a>
     </p>
 </div>
