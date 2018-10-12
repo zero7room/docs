@@ -3,7 +3,7 @@
   <div class="example-container clearfix">
     <h3>6.0.0</h3>
     <p>Released on 27th of September, 2018</p>
-    <p>This release contains changes to the <code>ColumnSorting</code> plugin exclusively. Detailed information about the changes can be found in the description of pull request <a href="https://github.com/handsontable/handsontable/issues/5411" target="_blank">#5411</a> and in <a href="https://docs.handsontable.com/pro/6.0.0/demo-sorting.html" target="_blank">our documentation</a>.</p>
+    <p>This release contains changes to the <code>ColumnSorting</code> plugin exclusively. Detailed information about the changes can be found in the description of pull request <a href="https://github.com/handsontable/handsontable/issues/5411" target="_blank">#5411</a> and in <a href="https://docs.handsontable.com/6.0.0/demo-sorting.html" target="_blank">our documentation</a>.</p>
     <strong>Breaking changes</strong>
     <ul>
       <li>We refactored and rewrote parts of the <code>ColumnSorting</code> plugin in order for it to work seamlessly with the new <code>MultiColumnSorting</code> plugin for Handsontable Pro. This allowed us to fix multiple problems that the previous version of the plugin had. <br>This introduced some backward-incompatible changes:
@@ -34,7 +34,7 @@
               <li><code>loadSortingState</code></li>
               <li><code>saveSortingState</code></li>
             </ul></li>
-          <li>The <code>beforeColumnSort</code> and <code>afterColumnSort</code> hooks receive a different set of arguments. For more information, check our <a href="https://docs.handsontable.com/pro/6.0.0/Hooks.html#event:beforeColumnSort" target="_blank">documentation</a>.</li>
+          <li>The <code>beforeColumnSort</code> and <code>afterColumnSort</code> hooks receive a different set of arguments. For more information, check our <a href="https://docs.handsontable.com/6.0.0/Hooks.html#event:beforeColumnSort" target="_blank">documentation</a>.</li>
           <li>Calling the <code>updateSettings</code> method with <code>columnSorting</code> defined will set a fresh sort configuration.</li>
         </ul>
       </li>
@@ -42,7 +42,7 @@
     <strong>Changes</strong>
     <p>Apart from the breaking changes above, this release introduces some additional changes to the sorting plugin:</p>
     <ul>
-      <li>Added a new plugin - <code>MultiColumnSorting</code>. It allows multiple columns to be used when sorting the table. <br> While it works similarly to CE's <code>ColumnSorting</code>, it introduces multiple new functionalities. Detailed information about this new feature can be found in the <a href="https://docs.handsontable.com/pro/6.0.0/demo-sorting.html" target="_blank"> documentation</a> and in the description of pull request <a href="https://github.com/handsontable/handsontable-pro/issues/101" target="_blank">#101</a>.</li>
+      <li>Added a new plugin - <code>MultiColumnSorting</code>. It allows multiple columns to be used when sorting the table. <br> While it works similarly to CE's <code>ColumnSorting</code>, it introduces multiple new functionalities. Detailed information about this new feature can be found in the <a href="https://docs.handsontable.com/6.0.0/demo-sorting.html" target="_blank"> documentation</a> and in the description of pull request <a href="https://github.com/handsontable/handsontable-pro/issues/101" target="_blank">#101</a>.</li>
       <li>Replaced the current sorting indicators with new ones, in the form of arrows.</li>
       <li>The sorting indicators will be displayed by default.</li>
       <li>Added a possibility to disable the action of sorting by clicking on the headers, using the <code>headerAction</code> option.</li>
@@ -395,7 +395,7 @@
     <p>Released on 6th of December, 2017</p>
     <strong>New feature:</strong>
     <p>
-      From now on you will able to translate messages and elements of the UI to your specific language. <a href="https://docs.handsontable.com/pro/tutorial-internationalization.html">Read more</a> about this new feature.
+      From now on you will able to translate messages and elements of the UI to your specific language. <a href="https://docs.handsontable.com/tutorial-internationalization.html">Read more</a> about this new feature.
     </p>
 
     <strong>Breaking changes:</strong>
@@ -421,8 +421,8 @@
 }</code></pre>
     Take a look at our documentation for more insight:
     <ul>
-      <li><a href="https://docs.handsontable.com/pro/1.14.3/demo-numeric.html" target="_blank">to version 1.14.3</a></li>
-      <li><a href="https://docs.handsontable.com/pro/1.15.0/demo-numeric.html" target="_blank">from version 1.15.0</a></li>
+      <li><a href="https://docs.handsontable.com/1.14.3/demo-numeric.html" target="_blank">to version 1.14.3</a></li>
+      <li><a href="https://docs.handsontable.com/1.15.0/demo-numeric.html" target="_blank">from version 1.15.0</a></li>
     </ul>
     </p>
 
@@ -682,7 +682,7 @@ new Handsontable(document.getElementById('element'), {
   </div>
 
     <div class="example-container clearfix">
-        <a href="https://github.com/handsontable/docs-pro/edit/<?js= version ?>/tutorials/release-notes.html"
+        <a href="https://github.com/handsontable/docs/edit/<?js= version ?>/tutorials/release-notes.html"
            class="edit-doc" target="_blank">
             Edit this page
         </a>
@@ -972,7 +972,7 @@ new Handsontable(document.getElementById('element'), {
             <br>
             <ul>
                 <li>This release introduces a new feature - Formulas (currently in alpha stage, may not be stable). This required us to make some breaking changes, for example,
-                    the <code>afterCreateRow</code> and <code>afterCreateCol</code> changes their argument types (the third argument used to be <code>boolean</code>, now it has to be <code>string</code>). You can find more about the plugin in our docs: <a href="http://docs.handsontable.com/pro/demo-formula-support.html">http://docs.handsontable.com/pro/demo-formula-support.html</a>.</li>
+                    the <code>afterCreateRow</code> and <code>afterCreateCol</code> changes their argument types (the third argument used to be <code>boolean</code>, now it has to be <code>string</code>). You can find more about the plugin in our docs: <a href="http://docs.handsontable.com/demo-formula-support.html">http://docs.handsontable.com/demo-formula-support.html</a>.</li>
                 <li>We've refactored the Manual Column Move plugin to allow the user to move multiple columns at once. This made some backward-incompatible changes.
                     For example the <code>beforeColumnMove</code> and <code>afterColumnMove</code> hooks had their arguments changed.</li>
             </ul>
@@ -980,7 +980,7 @@ new Handsontable(document.getElementById('element'), {
             <strong>Changes</strong>
             <ul>
                 <li>New plugin - Nested Rows. It's currently in alpha stage and may not be stable. It allows providing Handsontable with nested data structures and operating on data within the groups.
-                    You can find more information in our docs: <a href="http://docs.handsontable.com/pro/demo-nested-rows.html">http://docs.handsontable.com/pro/demo-nested-rows.html</a>.</li>
+                    You can find more information in our docs: <a href="http://docs.handsontable.com/demo-nested-rows.html">http://docs.handsontable.com/demo-nested-rows.html</a>.</li>
                 <li>Added missing dependencies to <code>bower.json</code>.</li>
                 <li>Updated to the latest Handsontable version (<code>0.28.0</code>).</li>
             </ul>
@@ -1194,7 +1194,7 @@ new Handsontable(document.getElementById('element'), {
         </div>
     </div>
     <p class="gap-top-xsmall">
-      <a href="https://github.com/handsontable/docs-pro/edit/<?js= version ?>/tutorials/release-notes.html" class="edit-doc" target="_blank">
+      <a href="https://github.com/handsontable/docs/edit/<?js= version ?>/tutorials/release-notes.html" class="edit-doc" target="_blank">
         Help us improve this page
       </a>
     </p>

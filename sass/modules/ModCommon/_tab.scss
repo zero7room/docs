@@ -10,13 +10,13 @@
     white-space: nowrap;
 
     ul li {
-      padding: 14px 16px 7px;
+      padding: 14px 20px 12px;
       display: inline-block;
       border-bottom: 3px solid transparent;
       outline: none;
       cursor: pointer;
       transition: 0.3s;
-      font-size: 14px;
+      font-size: 16px;
       background-color: inherit;
 
       &:hover {
@@ -24,7 +24,6 @@
       }
 
       &.active {
-        font-weight: 500;
         cursor: default;
         border-bottom: 3px solid $brandBlue;
 
@@ -40,6 +39,3 @@
     background-color: $darkWhite;
   }
 }
-
-
-
