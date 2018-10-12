@@ -1,5 +1,7 @@
 function isIE() { return ((navigator.appName == 'Microsoft Internet Explorer') || ((navigator.appName == 'Netscape') && (new RegExp("Trident/.*rv:([0-9]{1,}[\.0-9]{0,})").exec(navigator.userAgent) != null))); }
 
+function isEdge() { return /Edge/.test(navigator.userAgent) }
+
 (function() {
   if (isIE()) {
     return;
@@ -21,6 +23,12 @@ function isIE() { return ((navigator.appName == 'Microsoft Internet Explorer') |
 }())
 
 $(function () {
+  var d = document;
+  var w = window;
+  var $$ = function(selector) {
+    return d.querySelectorAll(selector);
+  };
+
   jQuery.fx.off = true;
 
   // Anchor fix
@@ -48,6 +56,83 @@ $(function () {
     });
   }
   // END: Anchor fix
+
+  // Tabs
+  d.addEventListener('click', function(event) {
+    var target = event.target;
+    var firstTab = $$('.tabs')[0];
+    var activeSection;
+
+    if (target.id && /^tab\-./.test(target.id) && !/^tab\-content\-./.test(target.id)) {
+      var tabGroups = $$('.tabs-alternative').length ? $$('.tabs-alternative') : firstTab.querySelectorAll('.tabs');
+
+      for (var i = 0; i < tabGroups.length; i += 1) {
+        if (tabGroups[i].contains(target)) {
+          var tabsContent = tabGroups[i].querySelectorAll('[id^=tab-content-]');
+
+          for (var j = 0; j < tabsContent.length; j += 1) {
+            if (tabsContent[j].classList.contains('active')) {
+              tabsContent[j].classList.remove('active');
+            }
+            if (tabsContent[j].hasAttribute('aria-hidden')) {
+              tabsContent[j].setAttribute('aria-hidden', 'true');
+            }
+          }
+
+          var tabs = tabGroups[i].querySelectorAll('[id^=tab-]');
+
+          for (var j = 0; j < tabs.length; j += 1) {
+            if (tabs[j].classList.contains('active')) {
+              tabs[j].classList.remove('active');
+            }
+            if (tabs[j].hasAttribute('aria-selected')) {
+              tabs[j].setAttribute('aria-selected', 'false');
+            }
+            if (tabs[j].hasAttribute('aria-hidden')) {
+              tabs[j].setAttribute('aria-hidden', 'true');
+            }
+          }
+
+          break;
+        }
+      }
+
+      for (var k = 0; k < firstTab.children.length; k += 1) {
+        if (firstTab.children[k].className === 'active') {
+          activeSection = firstTab.children[k];
+        }
+      }
+
+      var contentId = 'tab-content-' + target.id.replace('tab-', '');
+      var contentElement = activeSection ? activeSection.querySelector('#' + contentId) : d.getElementById(contentId);
+      var contentToActivate = contentElement.dataset.tabForward ? $('tab-content-' + contentElement.dataset.tabForward) : contentElement;
+
+      target.classList.add('active');
+      contentToActivate.classList.add('active');
+
+      if (target.hasAttribute('aria-selected')) {
+        target.setAttribute('aria-selected', 'true');
+      }
+      if (contentToActivate.hasAttribute('aria-hidden')) {
+        contentToActivate.setAttribute('aria-hidden', 'false');
+      }
+
+      var event;
+
+      try {
+        event = new Event('tab-content-active');
+      } catch (ex) {
+        event = document.createEvent('Event');
+        event.initEvent('tab-content-active', true, true);
+      }
+      contentElement.dispatchEvent(event);
+    }
+  });
+
+  function getLocationOrigin() {
+    return location.protocol + '//' + location.host + location.pathname;
+  }
+  // end
 
   // Search Items
   $('#search-form').on('keyup', onSearchKeyUp);
@@ -82,12 +167,13 @@ $(function () {
   });
 
   updateNav(true);
+  hideJSFiddleButton();
 
   var breadcrumbs = buildBreadcrumbs();
   $('div.breadcrumbs').eq(0).html(breadcrumbs);
 
   /**
-   * Outdated version - notification
+   * Outdated version notification
    */
   if (hotVersion !== _docVersions[0]) {
     $('#outdated-version')
@@ -184,6 +270,18 @@ $(function () {
   }
   // end
 });
+
+function hideJSFiddleButton() {
+  var buttons = $('.jsFiddleLink');
+
+  for (var i = 0, len = buttons.length; i < len; i += 1) {
+    var button = buttons[i];
+
+    if (isIE() || isEdge()) {
+      button.style.display = 'none';
+    }
+  }
+}
 
 function updateNav(scroll) {
   // Show an item related a current documentation automatically
@@ -284,7 +382,7 @@ function onSearchKeyUp() {
 }
 
 function getDocUrl(docVersion) {
-  return location.href.replace(/(\/pro)?\/\d+\.\d+\.\d+(\-(beta|alpha)(\d+)?)?\//, '/' + docVersion + '/');
+  return location.href.replace(/\/docs\/\d+\.\d+\.\d+(\-(beta|alpha)(\d+)?)?\//, '/docs/' + docVersion + '/');
 }
 function goTo(href) {
   location.href = href;
@@ -298,7 +396,7 @@ function docVersions(docVersions) {
 
 function getLatestHOTStableVersion() {
   var stable = _docVersions.filter(function(version) {
-    return version.match(/\d+\.\d+\.\d+/) ? true : false;
+    return (Array.isArray(version) ? version[0] : version).match(/\d+\.\d+\.\d+/) ? true : false;
   });
 
   return stable.length ? stable[0] : _docVersions[0];
@@ -318,12 +416,14 @@ function buildBreadcrumbs() {
     return '<span>' + content + '</span>';
   };
 
-  var makeHotVersion = function (hotVersion) {
+  var makeHotVersion = function (currentHotVersion) {
     var lastVersion = null;
 
     var options = _docVersions.map(function(version) {
-      var minorMajor = version.split('.').splice(0, 2).join('.'),
-        option = '';
+      var hotVersion = Array.isArray(version) ? version[0] : version;
+      var minorMajor = hotVersion.split('.').splice(0, 2).join('.');
+      var hotCeVersion = Array.isArray(version) ? version[1] : null;
+      var option = '';
 
       if (lastVersion !== minorMajor) {
         if (lastVersion !== null) {
@@ -331,10 +431,12 @@ function buildBreadcrumbs() {
         }
         option += '<optgroup label="' + minorMajor + '.x">';
       }
-      if (version === hotVersion) {
-        option += '<option selected value="' + version + '">' + version + '</option>';
+      var versionLabel = hotVersion + (hotCeVersion ? ' (' + hotCeVersion + ')' : '');
+
+      if (hotVersion === currentHotVersion) {
+        option += '<option selected value="' + hotVersion + '">' + versionLabel + '</option>';
       } else {
-        option += '<option value="' + version + '">' + version + '</option>';
+        option += '<option value="' + hotVersion + '">' + versionLabel + '</option>';
       }
       lastVersion = minorMajor;
 
@@ -343,7 +445,7 @@ function buildBreadcrumbs() {
     options.push('</optgroup>');
 
     return '<span>' +
-      '<select class="hot-chooser" onchange="goTo(getDocUrl(\'pro/\' + this.value))" selected="' + hotVersion + '">' +
+      '<select class="hot-chooser" onchange="goTo(getDocUrl(this.value))" selected="' + currentHotVersion + '">' +
       options.join('') +
       '</select>' +
       '</span>';
@@ -351,8 +453,8 @@ function buildBreadcrumbs() {
 
   // links
   docsLink = document.createElement('a');
-  docsLink.href = '/pro';
-  docsLink.text = 'Handsontable PRO';
+  docsLink.href = '/docs';
+  docsLink.text = 'Handsontable';
 
   if ($('.source').size() > 0 || !$activeLink.length) {
     var filename = $('.page-title').data('filename').replace(/\.[a-z]+$/, '');
@@ -387,8 +489,6 @@ function buildBreadcrumbs() {
       + makeSpan($item.text())
       + makeSpan($activeLink.text());
   }
-
-  breadcrumbs += '<span class="right switcher"><a href="//docs.handsontable.com/latest">Switch to CE</a></span>';
 
   return breadcrumbs;
 }
