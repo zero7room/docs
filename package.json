@@ -4,11 +4,11 @@
   "homepage": "http://docs.handsontable.com/",
   "private": true,
   "bugs": {
-    "url": "https://github.com/handsontable/docs-pro/issues"
+    "url": "https://github.com/handsontable/docs/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/handsontable/docs-pro.git"
+    "url": "git://github.com/handsontable/docs.git"
   },
   "author": "Handsoncode sp. z o.o. <hello@handsontable.com>",
   "version": "0.1.0",
@@ -49,9 +49,9 @@
   "scripts": {
     "test": "",
     "start": "grunt",
-    "start:develop": "grunt --hot-pro-version=develop",
+    "start:develop": "grunt --hot-version=develop",
     "build": "grunt build",
-    "build:next": "grunt build --hot-pro-version=next",
+    "build:next": "grunt build --hot-version=next",
     "deploy": "shipit production deploy"
   },
   "readmeFilename": "README.md"
