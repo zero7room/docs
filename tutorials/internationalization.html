@@ -147,10 +147,16 @@ import 'handsontable/languages/pl-PL';</code></pre>
           <code>fr-FR.js</code> for <b>French - France</b> (<code>fr-FR</code> code).
         </li>
         <li>
+          <code>it-IT.js</code> for <b>Italian - Italy</b> (<code>it-IT</code> code).
+        </li>
+        <li>
           <code>ja-JP.js</code> for <b>Japanese - Japan</b> (<code>ja-JP</code> code).
         </li>
         <li>
           <code>nb-NO.js</code> for <b>Norwegian (Bokmål) - Norway</b> (<code>nb-NO</code> code).
+        </li>
+        <li>
+          <code>nl-NL.js</code> for <b>Dutch - Netherlands</b> (<code>nl-NL</code> code).
         </li>
         <li>
           <code>pl-PL.js</code> for <b>Polish - Poland</b> (<code>pl-PL</code> code).
@@ -168,8 +174,8 @@ import 'handsontable/languages/pl-PL';</code></pre>
           <code>zh-TW.js</code> for <b>Chinese - Taiwan</b> (<code>zh-TW</code> code).
         </li>
       </ul>
-    </p>
-  </div>
+      </p>
+    </div>
 
   <div class="example-container clearfix">
     <h3 id="files-hierarchy">Hierarchy of all the main files connected with internationalization</h3>
@@ -361,7 +367,7 @@ export default dictionary;</code></pre>
     <pre><code class="lang-js">const C = Handsontable.languages.dictionaryKeys;
 
 Handsontable.languages.registerLanguageDictionary({
-  languageCode: 'my-MC',
+  languageCode: 'morse',
   // Your translation in the Morse code
   [C.FILTERS_BUTTONS_OK]: '--- -•-'
 });</code></pre>
@@ -374,8 +380,12 @@ Handsontable.languages.registerLanguageDictionary({
       You can register a language dictionary containing custom keys. These entries can be used like any other keys, so you're not
       limited to using our pre-defined constants (the ones that are present within <code>src/i18n/constants.js</code> file and may
       be accessed by <code>Handsontable.languages.dictionaryKeys</code> alias).
-    <pre><code class="lang-js">Handsontable.languages.registerLanguageDictionary('my-AA', { customKey: 'Hello world' });
-Handsontable.languages.getTranslatedPhrase('my-AA', 'customKey');</code></pre>
+    <pre><code class="lang-js">const enUSDictionary = Handsontable.languages.getLanguageDictionary('en-US');
+
+enUSDictionary.customKey = 'Hello world';
+
+Handsontable.languages.registerLanguageDictionary(enUSDictionary); // re-registration
+Handsontable.languages.getTranslatedPhrase('en-US', 'customKey'); // 'Hello world'</code></pre>
     </p>
   </div>
 
