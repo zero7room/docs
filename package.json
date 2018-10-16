@@ -1,7 +1,7 @@
 {
   "name": "handsontable-pro-docs",
   "description": "Handsontable is a minimalist Excel-like data grid editor for HTML & JavaScript",
-  "homepage": "http://docs.handsontable.com/",
+  "homepage": "https://handsontable.com/docs/",
   "private": true,
   "bugs": {
     "url": "https://github.com/handsontable/docs/issues"
