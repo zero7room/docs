@@ -298,7 +298,7 @@ function ajax(url, method, params, callback) {
       url += 'https://cdn.jsdelivr.net/npm/handsontable' + proPostfix + '@' + hotVersion + '/dist/' + postDistUrl;
 
     } else {
-      url += 'https://handsontable.com/docs' + urlMatch[2];
+      url += 'https://handsontable.com' + urlMatch[2];
     }
 
     return url;
