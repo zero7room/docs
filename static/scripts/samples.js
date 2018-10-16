@@ -286,6 +286,24 @@ function ajax(url, method, params, callback) {
     });
   }
 
+  function buildURL(tag) {
+    var urlMatch = tag.match(/(href|src)="(.*)"/);
+    var hotPackageMatch = tag.match(/handsontable(-pro)?\/dist\/(.*)"/);
+    var url = '';
+
+    if (hotPackageMatch) {
+      var proPostfix = hotPackageMatch[1] || '';
+      var postDistUrl = hotPackageMatch[2];
+
+      url += 'https://cdn.jsdelivr.net/npm/handsontable' + proPostfix + '@' + hotVersion + '/dist/' + postDistUrl;
+
+    } else {
+      url += 'https://handsontable.com' + urlMatch[2];
+    }
+
+    return url;
+  }
+
   function addLineIndicators(code) {
     var codeInner = code.innerHTML.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").split(/\n/);
     var finalString = '';
