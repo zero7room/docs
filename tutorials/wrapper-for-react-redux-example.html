@@ -32,26 +32,29 @@
         import Handsontable from 'handsontable-pro';
 
         const initialReduxStoreState = {
-          hotData: [],
-          hotSettings: {
-            readOnly: false
-          }
+          data: Handsontable.helper.createSpreadsheetData(5, 3),
+          colHeaders: true,
+          rowHeaders: true,
+          readOnly: false
         };
 
-        // Action reducer for afterChange callbacks triggered by Handsontable
+        // Action reducers for callbacks triggered by Handsontable
         const updates = (state = initialReduxStoreState, action) => {
           switch (action.type) {
             case 'updateData':
+              const newData = state.data.slice(0);
+
+              for (let [row, column, oldValue, newValue] of action.dataChanges) {
+                newData[row][column] = newValue;
+              }
+
               return Object.assign({}, state, {
-                hotData: action.handsontableData,
+                data: newData
               });
             case 'updateReadOnly':
               return Object.assign({}, state, {
-                hotSettings: {
-                  readOnly: action.readOnly
-                }
+                readOnly: action.readOnly
               });
-              break;
             default:
               return state;
           }
@@ -66,27 +69,28 @@
             this.toggleReadOnly = this.toggleReadOnly.bind(this);
             this.hotTableComponent = React.createRef();
 
-            this.state = {
-              hotReadOnly: false,
-              hotSettings: {
-                data: Handsontable.helper.createSpreadsheetData(5, 3),
-                colHeaders: true,
-                rowHeaders: true,
-                afterChange: function(changes, source) {
-                  reduxStore.dispatch({
-                    type: 'updateData',
-                    handsontableData: this.getSourceData()
-                  });
-                }
-              }
-            };
-
             reduxStore.subscribe(this.updateReduxPreview);
+            reduxStore.subscribe(render);
+          }
+
+          get reduxHotSettings() {
+            return reduxStore.getState().updates;
+          }
+
+          componentDidMount() {
+            this.updateReduxPreview();
+          }
+
+          onBeforeHotChange(changes, source) {
+            reduxStore.dispatch({
+              type: 'updateData',
+              dataChanges: changes
+            });
+
+            return false;
           }
 
           toggleReadOnly(event) {
-            this.setState({hotReadOnly: event.target.checked});
-
             reduxStore.dispatch({
               type: 'updateReadOnly',
               readOnly: event.target.checked
@@ -100,10 +104,10 @@
             let newInnerHtml = '<tbody>';
 
             for (const [key, value] of Object.entries(currentState)) {
-              newInnerHtml += `<tr><td class="table-container">`;
+              newInnerHtml += `<tr><td>`;
 
-              if (key === 'hotData' && Array.isArray(value)) {
-                newInnerHtml += `<strong>hotData:</strong> <br><table><tbody>`;
+              if (key === 'data' && Array.isArray(value)) {
+                newInnerHtml += `<strong>data:</strong> <br><table style="border: 1px solid #d6d6d6;"><tbody>`;
 
                 for (let row of value) {
                   newInnerHtml += `<tr>`;
@@ -116,16 +120,9 @@
                 }
                 newInnerHtml += `</tbody></table>`;
 
-              } else if (key === 'hotSettings') {
-                newInnerHtml += `<strong>hotSettings:</strong> <ul>`;
-
-                for (let settingsKey of Object.keys(value)) {
-                  newInnerHtml += `<li>${settingsKey}: ${currentState.hotSettings[settingsKey]}</li>`;
-                }
-
-                newInnerHtml += `</ul>`;
+              } else {
+                newInnerHtml += `<strong>${key}:</strong> ${value}`;
               }
-
               newInnerHtml += `</td></tr>`;
             }
             newInnerHtml += `</tbody>`;
@@ -144,10 +141,9 @@
                       htmlFor="readOnlyCheck"> Toggle <code>readOnly</code> for the entire table</label>
                     </div>
                     <br/>
-                    <HotTable ref={this.hotTableComponent} readOnly={this.state.hotReadOnly}
-                              settings={this.state.hotSettings}/>
+                    <HotTable ref={this.hotTableComponent} beforeChange={this.onBeforeHotChange} settings={this.reduxHotSettings}/>
                   </div>
-                  <div id="redux-preview">
+                  <div id="redux-preview" className="table-container">
                     <h4>Redux store dump:</h4>
                     <table>
                     </table>
