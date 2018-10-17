@@ -1,6 +1,43 @@
 <div class="static-content">
 
   <div class="example-container clearfix">
+    <h3>6.1.0</h3>
+    <p>Released on 17th of October, 2018</p>
+    <strong>Changes</strong>
+    <ul>
+      <li> Moved the <code>fixedRowsBottom</code> functionality to Handsontable CE. (<a href="https://github.com/handsontable/handsontable/issues/5404" target="_blank">#5404</a>, <a href="https://github.com/handsontable/handsontable-pro/issues/146" target="_blank">#146</a>)</li>
+      <li> Introduced a new functionality to the <i>Copy/Paste</i> plugin. From version <code>6.1.0</code>, it supports the <code>text/html</code> data type alongside <code>text/plain</code>. This change, apart from allowing the user to copy data from Handsontable as an HTML table, allowed us to fix multiple bugs related to the plugin:
+        <ul>
+          <li> Fixed a bug, where it was impossible to copy the first row/column if it was declared as <code>readOnly</code>. (handsontable/handsontable#5392)</li>
+          <li> Fixed a bug, where the cell editor contained an unwanted empty line, if the previous value of the cell was pasted from Excel. (<a href="https://github.com/handsontable/handsontable/issues/5330" target="_blank">#5330</a>)</li>
+          <li> Fixed a problem with copying and pasting data from rows after clicking the row headers. (<a href="https://github.com/handsontable/handsontable/issues/5300" target="_blank">#5300</a>)</li>
+          <li> Fixed a bug where pasting multiple rows from Excel (below version <code>16</code>) did not work properly. (<a href="https://github.com/handsontable/handsontable/issues/5277" target="_blank">#5277</a>)</li>
+          <li> Fixed a bug with copying entire rows into Excel not working properly. (<a href="https://github.com/handsontable/handsontable/issues/5176" target="_blank">#5176</a>)</li>
+          <li> Fixed a bug, where pasting data from Excel to Handsontable did not work on Safari. (<a href="https://github.com/handsontable/handsontable/issues/5121" target="_blank">#5121</a>)</li>
+          <li> Fixed a problem with improper cell selection after pasting data into the table. (<a href="https://github.com/handsontable/handsontable/issues/4849" target="_blank">#4849</a>)</li>
+          <li> Fixed a bug with Handsontable crashing after using <code>updateSettings</code> inside the <code>afterSelectionEnd</code> callback. (<a href="https://github.com/handsontable/handsontable/issues/4837" target="_blank">#4837</a>)</li>
+          <li> Fixed a problem with pasting double quotation marks (<code>""</code>) into the table. (<a href="https://github.com/handsontable/handsontable/issues/4790" target="_blank">#4790</a>, <a href="https://github.com/handsontable/handsontable/issues/4003" target="_blank">#4003</a>)</li>
+          <li> Fixed a bug, where copying and pasting empty cells did not work properly. (<a href="https://github.com/handsontable/handsontable/issues/4725" target="_blank">#4725</a>)</li>
+          <li> Fixed a problem with copying data on IE and pasting it on Chrome/Firefox. (<a href="https://github.com/handsontable/handsontable/issues/4717" target="_blank">#4717</a>)</li>
+          <li> Fixed a bug, where copying and pasting entire columns did not work as expected. (<a href="https://github.com/handsontable/handsontable/issues/4456" target="_blank">#4456</a>)</li>
+          <li> Fixed a problem with pasting multiline content into a single cell. (<a href="https://github.com/handsontable/handsontable/issues/4308" target="_blank">#4308</a>)</li>
+        </ul></li>
+
+      <li> Added an Italian translation to the languages set. (<a href="https://github.com/handsontable/handsontable/issues/5407" target="_blank">#5407</a>)</li>
+      <li> Added a Dutch translation to the languages set. (<a href="https://github.com/handsontable/handsontable/issues/5156" target="_blank">#5156</a>)</li>
+      <li> Fixed a bug, where trying to open the cell editor while a cell outside of the viewport was being edited threw an error. (<a href="https://github.com/handsontable/handsontable/issues/5119" target="_blank">#5119</a>)</li>
+      <li> Fixed a bug, where the cell editor rendered improperly when the <code>preventOverflow</code> option was enabled. (<a href="https://github.com/handsontable/handsontable/issues/5073" target="_blank">#5073</a>)</li>
+      <li> Fixed a bug, where clicking on a cell caused the table container to scroll. (<a href="https://github.com/handsontable/handsontable/issues/4656" target="_blank">#4656</a>)</li>
+      <li> Fixed a bug, where using the <code>Undo</code> functionality did not work properly after sorting and removing rows. (<a href="https://github.com/handsontable/handsontable/issues/3188" target="_blank">#3188</a>)</li>
+      <li> Fixed a bug, where the contents of the <code>Filters</code> dropdown menu was scrollable horizontally. (<a href="https://github.com/handsontable/handsontable-pro/issues/151" target="_blank">#151</a>)</li>
+      <li> Fix a bug, where multi-column sorting did not work with the <code>Filters</code> plugin. (<a href="https://github.com/handsontable/handsontable-pro/issues/149" target="_blank">#149</a>)</li>
+      <li> Switched to using a CDN in the default jsfiddle link in the issue template. (<a href="https://github.com/handsontable/handsontable-pro/issues/154" target="_blank">#154</a>)</li>
+    </ul>
+
+    <p>The corresponding Handsontable CE version is <a href="https://github.com/handsontable/handsontable/releases/6.1.0" target="_blank">6.1.0</a>.</p>
+  </div>
+
+  <div class="example-container clearfix">
     <h3>6.0.1</h3>
     <p>Released on 2nd of October, 2018</p>
     <strong>Changes</strong>
