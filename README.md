@@ -44,7 +44,6 @@ To preview the documentation run docker-compose:
 ```sh
 docker-compose -f docker/docker-compose.yml up
 ```
-The documentation needs prepared 
 By default the documentation will be available at http://localhost:8085/docs/{your-docs-version}/tutorial-introduction.html.
 
 ## Building a feature documentation
