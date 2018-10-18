@@ -46,3 +46,13 @@ docker-compose -f docker/docker-compose.yml up
 ```
 The documentation needs prepared 
 By default the documentation will be available at http://localhost:8085/docs/{your-docs-version}/tutorial-introduction.html.
+
+## Building a feature documentation
+Feature documentation can be shared under `draft-next` branch. To build this version it has to be cloned to the `next` directory and build using
+```sh
+npm run start -- --hot-version=6.1.0 // Handsontable version which will be used to build API Ref
+```
+After all, it is necessary to rebuild templates to use valid paths to assets (as `/docs/next/...`) by executing
+```sh
+npm run build:next
+```
