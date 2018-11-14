@@ -1,6 +1,32 @@
 <div class="static-content">
 
   <div class="example-container clearfix">
+    <h3>6.2.0</h3>
+    <p>Released on 14th of November, 2018</p>
+    <strong>Changes</strong>
+    <ul>
+      <li>Added the Korean language support. (<a href="https://github.com/handsontable/handsontable/issues/5356" target="_blank">#5356</a>)</li>
+      <li>Added the Latvian language support. (<a href="https://github.com/handsontable/handsontable/issues/5186" target="_blank">#5186</a>)</li>
+      <li>Updated the TypeScript definition file for <code>ColumnSorting</code> and <code>MultiColumnSorting</code>. (<a href="https://github.com/handsontable/handsontable/issues/5545" target="_blank">#5545</a>, <a href="https://github.com/handsontable/handsontable/issues/5445" target="_blank">#5445</a>)</li>
+      <li>Updated the TypeScript definition for <code>beforeRowMove</code> and <code>beforeColumnMove</code>. (<a href="https://github.com/handsontable/handsontable/issues/5416" target="_blank">#5416</a>)</li>
+      <li>Updated the TypeScript definition for some selection and context menu related methods and hooks. (<a href="https://github.com/handsontable/handsontable/issues/5307" target="_blank">#5307</a>)</li>
+      <li>Fixed a bug with the Copy/Paste plugin working incorrectly, when copying <code>0</code>. (<a href="https://github.com/handsontable/handsontable/issues/5544" target="_blank">#5544</a>)</li>
+      <li>Fixed a problem with improper <code>autoRowSize</code> calculations. (<a href="https://github.com/handsontable/handsontable/issues/5527" target="_blank">#5527</a>)</li>
+      <li>Fixed a problem with the keyboard opening on every selection on mobile. (<a href="https://github.com/handsontable/handsontable/issues/5479" target="_blank">#5479</a>)</li>
+      <li>Refactored the <code>columnSorting</code> plugin to be reusable with the <code>multiColumnSorting</code> plugin. (<a href="https://github.com/handsontable/handsontable/issues/5457" target="_blank">#5457</a>)</li>
+      <li>Refactored the <code>multiColumnSorting</code> plugin to use the <code>columnSorting</code> plugin. (<a href="https://github.com/handsontable/handsontable-pro/issues/148" target="_blank">#148</a>)</li>
+      <li>Fixed a bug, where adding a new row cleared the data from the first row. (<a href="https://github.com/handsontable/handsontable/issues/5446" target="_blank">#5446</a>)</li>
+      <li>Fixed a bug, where using the `allowInvalid: false` option on date-typed cells broke the table. (<a href="https://github.com/handsontable/handsontable/issues/5419" target="_blank">#5419</a>)</li>
+      <li>Fixed a bug with the column header width being calculated incorrectly. (<a href="https://github.com/handsontable/handsontable/issues/5359" target="_blank">#5359</a>)</li>
+      <li>Fixed a problem with building Handsontable <code>3.0.0+</code> using <code>hot-builder</code>. (<a href="https://github.com/handsontable/handsontable/issues/5287" target="_blank">#5287</a>)</li>
+      <li>Fixed a bug, where opening the context menu on the column header sorted the column. (<a href="https://github.com/handsontable/handsontable/issues/4676" target="_blank">#4676</a>, <a href="https://github.com/handsontable/handsontable-pro/issues/176" target="_blank">#176</a>)</li>
+      <li>Updated Jest to resolve a security issue with the <code>merge</code> package. (<a href="https://github.com/handsontable/handsontable/issues/5564" target="_blank">#5564</a>, <a href="https://github.com/handsontable/handsontable-pro/issues/179" target="_blank">#179</a>)</li>
+      <li>Fixed some unstable tests, which caused the CI to fail frequently. (<a href="https://github.com/handsontable/handsontable/issues/5562" target="_blank">#5562</a>)</li>
+      <li>Fixed the <code>ERR_ADDRESS_INVALID</code> error when running e2e tests. (<a href="https://github.com/handsontable/handsontable/issues/5558" target="_blank">#5558</a>)</li>
+    </ul>
+  </div>
+
+  <div class="example-container clearfix">
     <h3>6.1.1</h3>
     <p>Released on 23rd of October, 2018</p>
     <strong>Changes</strong>
