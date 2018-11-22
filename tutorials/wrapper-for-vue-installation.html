@@ -23,42 +23,34 @@
         Vue Component
         <pre>
         <code>&lt;template&gt;
-  &lt;div id="hot-preview"&gt;
-    &lt;HotTable :settings="settings"&gt;&lt;/HotTable&gt;
-  &lt;/div&gt;
+  &lt;HotTable :settings="settings"&gt;&lt;/HotTable&gt;
 &lt;/template&gt;
 
 &lt;script&gt;
   import { HotTable } from '@handsontable-pro/vue';
-  import Vue from 'vue';
 
   export default {
-    data: {
-      settings: {
-        data: [
-          ["", "Ford", "Volvo", "Toyota", "Honda"],
-          ["2016", 10, 11, 12, 13],
-          ["2017", 20, 11, 14, 13],
-          ["2018", 30, 15, 12, 13]
-        ],
-        colHeaders: true,
-        rowHeaders: true,
-      }
+    data: function() {
+      return {
+        settings: {
+          data: [
+            ["", "Ford", "Volvo", "Toyota", "Honda"],
+            ["2016", 10, 11, 12, 13],
+            ["2017", 20, 11, 14, 13],
+            ["2018", 30, 15, 12, 13]
+          ],
+          colHeaders: true,
+          rowHeaders: true,
+        }
+      };
     },
     components: {
-      'hottable': Handsontable.vue.HotTable
+      HotTable
     }
   }
 &lt;/script&gt;
 
 &lt;style src="../node_modules/handsontable-pro/dist/handsontable.full.css"&gt;&lt;/style&gt;
-&lt;style&gt;
-  #hot-preview {
-    width: 600px;
-    height: 400px;
-    overflow: hidden;
-  }
-&lt;/style&gt;
         </code>
         </pre>
       </p>
