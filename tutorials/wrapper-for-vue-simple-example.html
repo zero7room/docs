@@ -7,12 +7,12 @@
     </h3>
     <div>
       <div id="example1" class="hot">
-        <HotTable :id="id" :settings="hotSettings"></HotTable>
+        <hot-table :settings="hotSettings"></hot-table>
       </div>
     </div>
     <script type="text/x-hot-html" data-jsfiddle="example1">
       <div id="example1" class="hot">
-        <HotTable :id="id" :settings="hotSettings"></HotTable>
+        <hot-table :settings="hotSettings"></hot-table>
       </div>
     </script>
     <div class="codeLayout">
@@ -29,15 +29,16 @@
 
       new Vue({
         el: '#example1',
-        data: {
-          id: 'test-hot',
-          hotSettings: {
-            data: Handsontable.helper.createSpreadsheetData(6, 10),
-            colHeaders: true
+        data: function() {
+          return {
+            hotSettings: {
+              data: Handsontable.helper.createSpreadsheetData(6, 10),
+              colHeaders: true
+            }
           }
         },
         components: {
-          'hottable': Handsontable.vue.HotTable
+          HotTable
         }
       });</script>
     </div>

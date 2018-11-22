@@ -8,12 +8,12 @@
     </div>
     <div>
       <div id="example1" class="hot">
-        <HotTable :id="id" :settings="hotSettings"></HotTable>
+        <hot-table :settings="hotSettings"></hot-table>
       </div>
     </div>
     <script type="text/x-hot-html" data-jsfiddle="example1">
       <div id="example1" class="hot">
-        <HotTable :id="id" :settings="hotSettings"></HotTable>
+        <hot-table :settings="hotSettings"></hot-table>
       </div>
     </script>
     <div class="codeLayout">
@@ -30,44 +30,45 @@
 
       new Vue({
         el: '#example1',
-        data: {
-          id: 'test-hot',
-          hotSettings: {
-            data:
-                [['A1', 'http://ecx.images-amazon.com/images/I/51bRhyVTVGL._SL50_.jpg'],
-                ['A2', 'http://ecx.images-amazon.com/images/I/51gdVAEfPUL._SL50_.jpg']],
-            columns: [
-              {},
-              {
-                renderer: function(instance, td, row, col, prop, value, cellProperties) {
-                  const escaped = Handsontable.helper.stringify(value);
-                  let img = null;
+        data: function() {
+          return {
+            hotSettings: {
+              data:
+                [
+                  ['A1', 'http://ecx.images-amazon.com/images/I/51bRhyVTVGL._SL50_.jpg'],
+                  ['A2', 'http://ecx.images-amazon.com/images/I/51gdVAEfPUL._SL50_.jpg']],
+              columns: [
+                {},
+                {
+                  renderer: function(instance, td, row, col, prop, value, cellProperties) {
+                    const escaped = Handsontable.helper.stringify(value);
+                    let img = null;
 
-                  if (escaped.indexOf('http') === 0) {
-                    img = document.createElement('IMG');
-                    img.src = value;
+                    if (escaped.indexOf('http') === 0) {
+                      img = document.createElement('IMG');
+                      img.src = value;
 
-                    Handsontable.dom.addEvent(img, 'mousedown', function(event) {
-                      event.preventDefault();
-                    });
+                      Handsontable.dom.addEvent(img, 'mousedown', function(event) {
+                        event.preventDefault();
+                      });
 
-                    Handsontable.dom.empty(td);
-                    td.appendChild(img);
+                      Handsontable.dom.empty(td);
+                      td.appendChild(img);
+                    } else {
+                      Handsontable.renderers.TextRenderer.apply(this, arguments);
+                    }
+
+                    return td;
                   }
-                  else {
-                    Handsontable.renderers.TextRenderer.apply(this, arguments);
-                  }
-
-                  return td;
                 }
-              }
-            ],
-            colHeaders: true,
-            rowHeights: 55
+              ],
+              colHeaders: true,
+              rowHeights: 55
+            }
           }
         },
         components: {
-          'hottable': Handsontable.vue.HotTable
+          HotTable
         }
       });</script>
     </div>

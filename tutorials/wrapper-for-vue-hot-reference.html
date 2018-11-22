@@ -8,14 +8,14 @@
     </div>
     <div>
       <div id="example1" class="hot">
-        <HotTable ref="hotTableComponent" :id="id" :settings="hotSettings"></HotTable>
+        <hot-table ref="hotTableComponent" :settings="hotSettings"></hot-table>
         <br>
         <button v-on:click="swapHotData">Load new data!</button>
       </div>
     </div>
     <script type="text/x-hot-html" data-jsfiddle="example1">
       <div id="example1" class="hot">
-        <HotTable ref="hotTableComponent" :id="id" :settings="hotSettings"></HotTable>
+        <hot-table ref="hotTableComponent" :settings="hotSettings"></hot-table>
         <br>
         <button v-on:click="swapHotData">Load new data!</button>
       </div>
@@ -34,11 +34,12 @@
 
       new Vue({
         el: '#example1',
-        data: {
-          id: 'test-hot',
-          hotSettings: {
-            data: Handsontable.helper.createSpreadsheetData(4, 4),
-            colHeaders: true
+        data: function() {
+          return {
+            hotSettings: {
+              data: Handsontable.helper.createSpreadsheetData(4, 4),
+              colHeaders: true
+            }
           }
         },
         methods: {
@@ -48,7 +49,7 @@
           }
         },
         components: {
-          'hottable': Handsontable.vue.HotTable
+          HotTable
         }
       });</script>
     </div>

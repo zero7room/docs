@@ -11,13 +11,13 @@
     <div>
       <div id="example1" class="hot">
         <label for="languages">Select language: </label><select v-on:change="updateHotLanguage" id="languages"></select><br/><br/>
-        <HotTable :id="id" :language="language" :settings="hotSettings"></HotTable>
+        <hot-table :language="language" :settings="hotSettings"></hot-table>
       </div>
     </div>
     <script type="text/x-hot-html" data-jsfiddle="example1">
       <div id="example1" class="hot">
         <label for="languages">Select language: </label><select v-on:change="updateHotLanguage" id="languages"></select><br/><br/>
-        <HotTable :id="id" :language="language" :settings="hotSettings"></HotTable>
+        <hot-table :language="language" :settings="hotSettings"></hot-table>
       </div>
     </script>
     <div class="codeLayout">
@@ -34,15 +34,16 @@
 
       new Vue({
         el: '#example1',
-        data: {
-          id: 'test-hot',
-          hotSettings: {
-            data: Handsontable.helper.createSpreadsheetData(5, 10),
-            colHeaders: true,
-            rowHeaders: true,
-            contextMenu: true
-          },
-          language: 'en-US'
+        data: function() {
+          return {
+            hotSettings: {
+              data: Handsontable.helper.createSpreadsheetData(5, 10),
+              colHeaders: true,
+              rowHeaders: true,
+              contextMenu: true
+            },
+            language: 'en-US'
+          }
         },
         mounted: function() {
           this.getAllLanguageOptions();
@@ -62,7 +63,7 @@
           }
         },
         components: {
-          'hottable': Handsontable.vue.HotTable
+          HotTable
         }
       });</script>
     </div>

@@ -370,6 +370,9 @@
           "wrapper-for-vue-simple-example": {
             "title": "Basic example"
           },
+          "wrapper-for-vue-custom-id-class-style": {
+            "title": "Custom ID, Class, Style and other attributes"
+          },
           "wrapper-for-vue-custom-context-menu-example": {
             "title": "Custom Context Menu example"
           },

@@ -7,12 +7,12 @@
     </div>
     <div>
       <div id="example1" class="hot">
-        <HotTable :id="id" :settings="hotSettings"></HotTable>
+        <hot-table :settings="hotSettings"></hot-table>
       </div>
     </div>
     <script type="text/x-hot-html" data-jsfiddle="example1">
       <div id="example1" class="hot">
-        <HotTable :id="id" :settings="hotSettings"></HotTable>
+        <hot-table :settings="hotSettings"></hot-table>
       </div>
     </script>
     <div class="codeLayout">
@@ -29,22 +29,23 @@
 
       new Vue({
         el: '#example1',
-        data: {
-          id: 'test-hot',
-          hotSettings: {
-            data: Handsontable.helper.createSpreadsheetData(5,5),
-            colHeaders: true,
-            contextMenu: {
-              items: {
-                'row_above': {
-                  name: 'Insert row above this one (custom name)'
-                },
-                'row_below': {},
-                'separator': Handsontable.plugins.ContextMenu.SEPARATOR,
-                'clear_custom': {
-                  name: 'Clear all cells (custom)',
-                  callback: function() {
-                    this.clear();
+        data: function() {
+          return {
+            hotSettings: {
+              data: Handsontable.helper.createSpreadsheetData(5, 5),
+              colHeaders: true,
+              contextMenu: {
+                items: {
+                  'row_above': {
+                    name: 'Insert row above this one (custom name)'
+                  },
+                  'row_below': {},
+                  'separator': Handsontable.plugins.ContextMenu.SEPARATOR,
+                  'clear_custom': {
+                    name: 'Clear all cells (custom)',
+                    callback: function() {
+                      this.clear();
+                    }
                   }
                 }
               }
@@ -52,7 +53,7 @@
           }
         },
         components: {
-          'hottable': Handsontable.vue.HotTable
+          HotTable
         }
       });</script>
     </div>

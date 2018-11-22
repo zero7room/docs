@@ -15,7 +15,7 @@
                 <input v-on:click="toggleReadOnly" id="readOnlyCheck" type="checkbox"/><label for="readOnlyCheck"> Toggle <code>readOnly</code> for the entire table</label>
               </div>
               <br>
-              <HotTable ref="wrapper" :id="id" :settings="hotSettings"></HotTable>
+              <hot-table ref="wrapper" :settings="hotSettings"></hot-table>
             </div>
             <div id="vuex-preview">
               <h4>Vuex store dump:</h4>
@@ -32,7 +32,7 @@
           <div id="toggle-boxes">
             <input v-on:click="toggleReadOnly" checked id="readOnlyCheck" type="checkbox"/><label for="readOnlyCheck"> Toggle <code>readOnly</code> for the entire table</label>
           </div>
-          <HotTable ref="wrapper" :id="id" :settings="hotSettings"></HotTable>
+          <hot-table ref="wrapper" :settings="hotSettings"></hot-table>
         </div>
         <div id="vuex-preview">
           <h4>Vuex store dump:</h3>
@@ -57,7 +57,6 @@
         el: "#example1",
         data: function() {
           return {
-            id: "test-hot",
             hotSettings: {
               data: Handsontable.helper.createSpreadsheetData(4, 4),
               colHeaders: true,
@@ -125,7 +124,7 @@
           }
         },
         components: {
-          'hottable': Handsontable.vue.HotTable
+          HotTable
         },
         store: new Vuex.Store({
           state: {

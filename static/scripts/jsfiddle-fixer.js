@@ -73,7 +73,7 @@
       ns = 'Handsontable.react';
 
     } else if (key === '@handsontable/vue' || key === '@handsontable-pro/vue') {
-      ns = 'HotTable';
+      ns = 'Handsontable.vue';
 
     } else if (key === 'handsontable-pro') {
       ns = 'Handsontable';
