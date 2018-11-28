@@ -357,7 +357,8 @@ function onSearchKeyUp() {
         return;
       }
 
-      if ($item.data('name') && !$item.hasClass('multiple') && regexp.test($item.find("a").first().text())) {
+      if ($item.data('name') && !$item.hasClass('multiple') &&
+          (regexp.test($item.find('a').first().text()) || regexp.test($item.data('name')))) {
         $item.show();
 
         $item.closest('.itemMembers').show();
