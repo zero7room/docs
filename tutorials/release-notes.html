@@ -1,6 +1,25 @@
 <div class="static-content">
 
   <div class="example-container clearfix">
+    <h3>6.2.1</h3>
+    <p>Released on 12th of December, 2018</p>
+    <strong>Changes</strong>
+    <ul>
+      <li>Updated <code>babel</code> to <code>7.x</code>. (<a href="https://github.com/handsontable/handsontable/issues/5398" target="_blank">#5398</a>)</li>
+      <li>Fixed a bug, where calling <code>updateSettings</code> or <code>loadData</code> with a new, larger dataset caused an error to be thrown. (<a href="https://github.com/handsontable/handsontable/issues/5617" target="_blank">#5617</a>)</li>
+      <li>Fixed a bug, where the mobile keyboard opened on every cell selection on Android devices. (<a href="https://github.com/handsontable/handsontable/issues/5586" target="_blank">#5586</a>)</li>
+      <li>Fixed a bug, where the date validation did not work properly in some cases. (<a href="https://github.com/handsontable/handsontable/issues/5563" target="_blank">#5563</a>)</li>
+      <li>Fixed a problem with poor <code>updateSettings</code> performance when removing rows. (<a href="https://github.com/handsontable/handsontable/issues/5561" target="_blank">#5561</a>)</li>
+      <li>Fixed a problem with improper `carriage return` symbol usage in the pasted data. (<a href="https://github.com/handsontable/handsontable/issues/5477" target="_blank">#5477</a>)</li>
+      <li>Added some missing methods, options and hooks to the typescript definition file. (<a href="https://github.com/handsontable/handsontable/issues/5639" target="_blank">#5639</a>, <a href="https://github.com/handsontable/handsontable/issues/5590" target="_blank">#5590</a>)</li>
+      <li>Corrected the CSS property assignment to zero from <code>0</code> to <code>'0'</code>; (<a href="https://github.com/handsontable/handsontable/issues/5291" target="_blank">#5291</a>)</li>
+      <li>Fixed a bug, where the <code>autofill</code> feature did not work properly with the <code>mergeCells</code> plugin, while working on an object-based dataset. (<a href="https://github.com/handsontable/handsontable/issues/5022" target="_blank">#5022</a>)</li>
+      <li>Fixed a problem with the <code>observeChanges</code> plugin causing a memory leak. (<a href="https://github.com/handsontable/handsontable/issues/4400" target="_blank">#4400</a>)</li>
+      <li>Fixed a problem with the scientific notation not being supported in the numeric editor. (<a href="https://github.com/handsontable/handsontable/issues/#2030" target="_blank">##2030</a>)</li>
+    </ul>
+  </div>
+
+  <div class="example-container clearfix">
     <h3>6.2.0</h3>
     <p>Released on 14th of November, 2018</p>
     <strong>Changes</strong>
