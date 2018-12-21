@@ -355,8 +355,26 @@
           "wrapper-for-angular-installation": {
             "title": "Installation"
           },
-          "wrapper-for-angular-examples": {
-            "title": "Examples"
+          "wrapper-for-angular-simple-example": {
+            "title": "Basic example"
+          },
+          "wrapper-for-angular-custom-id": {
+            "title": "Custom ID"
+          },
+          "wrapper-for-angular-custom-context-menu-example": {
+            "title": "Custom Context Menu example"
+          },
+          "wrapper-for-angular-custom-editor-example": {
+            "title": "Custom editor example"
+          },
+          "wrapper-for-angular-custom-renderer-example": {
+            "title": "Custom renderer example"
+          },
+          "wrapper-for-angular-language-change-example": {
+            "title": "Language change example"
+          },
+          "wrapper-for-angular-hot-reference": {
+            "title": "Referencing the Handsontable instance"
           }
         }
       },
