@@ -56,4 +56,4 @@ After all, it is necessary to rebuild templates to use valid paths to assets (as
 npm run build:next
 ```
 
-### Note: If you want to store code on feature branch please remember to name it using `draft-` postfix (eg. `draft-icons`). All branches except that which start with `draft-` are later processed. A dropdown list with generated branches (versions) is based on that list.
+##### Note: If you want to store code on feature branch please remember to name it using `draft-` postfix (eg. `draft-icons`). All branches except that which start with `draft-` are later processed. A dropdown list with generated branches (versions) is based on that list.
