@@ -267,6 +267,10 @@
           "custom-buttons": {
             "title": "Custom buttons"
           },
+          "spreadsheet-icons": {
+            "title": "Spreadsheet icons",
+            "pro": true
+          },
           "comments": {
             "title": "Comments"
           },
