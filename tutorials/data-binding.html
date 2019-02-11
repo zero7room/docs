@@ -12,8 +12,8 @@
       <p>
         Handsontable binds to your data source (list of arrays or list of objects) by reference. Therefore, all the data entered
         in the grid will alter the original data source. In complex applications, you may want to change
-        the data source from outside Handsontable. A change being made will not be presented
-        on the screen unless you refresh the grid on the screen using the <a href="/docs/<?js= version ?>/Core.html#render">render</a> method.
+        the data from outside Handsontable. A change being made will be presented immediately
+        on the screen after calling <a href="/docs/<?js= version ?>/Core.html#setDataAtCell">setDataAtCell</a> method.
       </p>
 
       <div data-jsfiddle="example1">
@@ -49,8 +49,7 @@
             hot1;
 
           hot1 = new Handsontable(container1, settings1);
-          data1[0][1] = 'Ford'; // change "Tesla" to "Ford" programmatically
-          hot1.render();</script>
+          hot1.setDataAtCell(0, 1, 'Ford');</script>
       </div>
     </div>
 

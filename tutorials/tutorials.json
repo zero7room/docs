@@ -73,24 +73,14 @@
           "testing": {
             "title": "Testing"
           },
-          "principles": {
-            "title": "Principles"
-          },
           "performance-tips": {
             "title": "Performance tips"
-          },
-          "good-practices": {
-            "title": "Good practices"
           },
           "release-notes": {
             "title": "Release notes"
           },
           "known-limitations": {
             "title": "Known limitations"
-          },
-          "roadmap": {
-            "title": "Roadmap",
-            "external": "//trello.com/b/PztR4hpj"
           }
         }
       },
@@ -104,10 +94,6 @@
           "forum": {
             "title": "Forum",
             "external": "https://forum.handsontable.com"
-          },
-          "stackoverflow": {
-            "title": "Stack Overflow",
-            "external": "http://stackoverflow.com/tags/handsontable"
           }
         }
       },
