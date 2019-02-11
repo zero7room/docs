@@ -11,20 +11,12 @@
         This component needs the Handsontable library to work. We suggest using <a href="https://www.npmjs.com/">npm</a> to install the package.
       </p>
       <p>
-        <code>npm install handsontable-pro @handsontable-pro/react</code>
-      </p>
-      for Handsontable Community Edition
-      <p>
         <code>npm install handsontable @handsontable/react</code>
       </p>
 
       <h3>Basic usage</h3>
       <p>
         Import the Handsontable styles to your project
-        <pre>
-          <code>@import 'handsontable-pro/dist/handsontable.full.css';</code>
-        </pre>
-        for Handsontable Community Edition
         <pre>
           <code>@import 'handsontable/dist/handsontable.full.css';</code>
         </pre>
@@ -33,8 +25,7 @@
         Then use Handsontable for React component in your codebase
         <pre>
         <code>import React from 'react';
-import { HotTable } from '@handsontable-pro/react';
-// import { HotTable } from '@handsontable/react'; // for Handsontable Community Edition
+import { HotTable } from '@handsontable/react';
 
 class App extends React.Component {
   constructor(props) {

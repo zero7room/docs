@@ -304,7 +304,6 @@ function buildNav(members) {
         isExperimental: v.experimental ? 1 : 0,
         isPlugin: v.plugin ? 1 : 0,
         plugin: v.plugin,
-        isPro: v.pro ? 1 : 0,
         isUtil: v.util ? 1 : 0,
         type: 'class',
         longname: v.longname,
@@ -378,7 +377,6 @@ exports.publish = function(taffyData, opts, tutorials) {
   view.layout = 'layout.tmpl';
 
   extendTutorialsObj(tutorials, "external");
-  extendTutorialsObj(tutorials, "pro");
   extendTutorialsObj(tutorials, "demo");
   extendTutorialsObj(tutorials, "framework");
   extendTutorialsObj(tutorials, "since");
@@ -599,7 +597,6 @@ exports.publish = function(taffyData, opts, tutorials) {
     var tutorialData = {
       title: title,
       header: tutorial.title,
-      pro: tutorial.pro,
       content: _.template(tutorial.parse(), null, {
         evaluate: /<\?js([\s\S]+?)\?>/g,
         interpolate: /<\?js=([\s\S]+?)\?>/g,

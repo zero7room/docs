@@ -1,9 +1,9 @@
 <div class="static-content">
-  <script data-jsfiddle="common" src="/docs/<?js= version ?>/components/handsontable-pro/dist/languages/all.js"></script>
+  <script data-jsfiddle="common" src="/docs/<?js= version ?>/components/handsontable/dist/languages/all.js"></script>
 
   <div class="example-container clearfix">
     <div>
-      <p>An implementation of the <code>@handsontable-pro/angular</code> component with an option to change the Context Menu language.
+      <p>An implementation of the <code>@handsontable/angular</code> component with an option to change the Context Menu language.
         Select a language from the selector above the table and open the Context Menu to see the result.</p>
     </div>
     <div>
@@ -23,7 +23,7 @@
       <script type="text/typescript" data-jsfiddle="example1" data-jsfiddle-panel_js="4">
         // app.component.ts
         import { Component } from '@angular/core';
-        import * as Handsontable from 'handsontable-pro';
+        import * as Handsontable from 'handsontable';
 
         @Component({
           selector: 'app-root',
@@ -52,7 +52,7 @@
         import { NgModule } from '@angular/core';
         import { FormsModule } from '@angular/forms';
         import { BrowserModule } from '@angular/platform-browser';
-        import { HotTableModule } from '@handsontable-pro/angular';
+        import { HotTableModule } from '@handsontable/angular';
 
         @NgModule({
           imports:      [ BrowserModule, FormsModule, HotTableModule ],
@@ -82,5 +82,5 @@
 <script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/@angular/common@7/bundles/common.umd.min.js"></script>
 <script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/@angular/platform-browser@7/bundles/platform-browser.umd.min.js"></script>
 <script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/@angular/platform-browser-dynamic@7/bundles/platform-browser-dynamic.umd.min.js"></script>
-<script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/@handsontable-pro/angular@3.0.0/bundles/handsontable-pro-angular.umd.min.js"></script>
+<script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/@handsontable/angular@3.0.0/bundles/handsontable-angular.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typescript/3.2.2/typescript.min.js"></script>

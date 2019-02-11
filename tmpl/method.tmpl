@@ -6,13 +6,8 @@
   var sourceName = '';
 
   if (data.meta) {
-    if (/^handsontable\/src/.test(meta.filename)) {
-      sourceName = meta.filename.replace('handsontable/src/', '') + '#L' + meta.lineno;
-      sourceUrl = 'https://github.com/handsontable/handsontable/blob/' + env.opts.query.version + '/src/' + sourceName;
-    } else {
-      sourceName = meta.filename.replace('handsontable-pro/src/', '') + '#L' + meta.lineno;
-      sourceUrl = 'https://github.com/handsontable/handsontable-pro/blob/' + env.opts.query.version + '/src/' + sourceName;
-    }
+    sourceName = meta.filename.replace('handsontable/src/', '') + '#L' + meta.lineno;
+    sourceUrl = 'https://github.com/handsontable/handsontable/blob/' + env.opts.query.version + '/src/' + sourceName;
   }
 ?>
 <dt>

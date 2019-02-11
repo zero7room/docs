@@ -2,7 +2,7 @@
   <div class="example-container clearfix">
     <div>
       <p>
-        An implementation of the <code>@handsontable-pro/react</code> component with a <code>readOnly</code> toggle switch
+        An implementation of the <code>@handsontable/react</code> component with a <code>readOnly</code> toggle switch
         and the Redux state manager implemented.
       </p>
     </div>
@@ -28,8 +28,8 @@
         import React from 'react';
         import ReactDOM from 'react-dom';
         import {createStore, combineReducers} from 'redux';
-        import {HotTable} from '@handsontable-pro/react';
-        import Handsontable from 'handsontable-pro';
+        import {HotTable} from '@handsontable/react';
+        import Handsontable from 'handsontable';
 
         const initialReduxStoreState = {
           data: Handsontable.helper.createSpreadsheetData(5, 3),
@@ -170,5 +170,5 @@
 <script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/react@16/umd/react.development.js"></script>
 <script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/react-dom@16/umd/react-dom.development.js"></script>
 <script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/redux@4/dist/redux.min.js"></script>
-<script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/@handsontable-pro/react@2.0.0/dist/react-handsontable.min.js"></script>
+<script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/@handsontable/react@2.0.0/dist/react-handsontable.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7/babel.min.js"></script>

@@ -30,10 +30,7 @@ module.exports = function(grunt) {
     DOCS_PATH = 'generated',
     HOT_SRC_PATH = 'src/handsontable',
     HOT_DEFAULT_BRANCH = 'master',
-    HOT_PRO_SRC_PATH = 'src/handsontable-pro',
-    HOT_PRO_DEFAULT_BRANCH = 'master',
     HOT_REPO = 'https://github.com/handsontable/handsontable.git',
-    HOT_PRO_REPO = 'https://github.com/handsontable/handsontable-pro.git',
     HOT_EQUIVALENT_VERSIONS = new Map([
       ['1.18.1', '0.38.1'],
       ['1.18.0', '0.38.0'],
@@ -51,7 +48,7 @@ module.exports = function(grunt) {
     function getHotBranch() {
       var hotVersion = argv['hot-version'];
 
-      return hotVersion ? (hotVersion === 'latest' ? HOT_PRO_DEFAULT_BRANCH : hotVersion) : gitHelper.getLocalInfo().branch;
+      return hotVersion ? (hotVersion === 'latest' ? HOT_DEFAULT_BRANCH : hotVersion) : gitHelper.getLocalInfo().branch;
     }
 
     grunt.initConfig({
@@ -60,7 +57,6 @@ module.exports = function(grunt) {
       clean: {
         dist: [DOCS_PATH],
         source: [HOT_SRC_PATH],
-        sourcePro: [HOT_PRO_SRC_PATH]
       },
 
       jsdoc: {
@@ -72,12 +68,6 @@ module.exports = function(grunt) {
             '!' + HOT_SRC_PATH + '/src/**/*.e2e.js',
             '!' + HOT_SRC_PATH + '/src/3rdparty/walkontable/**/*.js',
             HOT_SRC_PATH + '/src/3rdparty/walkontable/src/cell/*.js',
-            // Pro package
-            HOT_PRO_SRC_PATH + '/src/**/*.js',
-            // '!' + HOT_SRC_PATH + '/src/plugins/touchScroll/touchScroll.js',
-            '!' + HOT_PRO_SRC_PATH + '/src/**/*.spec.js', '!' + HOT_PRO_SRC_PATH + '/src/**/*.unit.js', '!' + HOT_PRO_SRC_PATH + '/src/**/*.e2e.js',
-            // '!' + HOT_PRO_SRC_PATH + '/src/plugins/ganttChart/dateCalculator.js',
-            '!' + HOT_PRO_SRC_PATH + '/src/3rdparty/walkontable/**/*.js',
           ],
           jsdoc: 'node_modules/.bin/' + (/^win/.test(process.platform) ? 'jsdoc.cmd' : 'jsdoc'),
           options: {
@@ -204,14 +194,6 @@ module.exports = function(grunt) {
             verbose: true
           }
         },
-        handsontablePro: {
-          options: {
-            branch: HOT_PRO_DEFAULT_BRANCH,
-            repository: HOT_PRO_REPO,
-            directory: HOT_PRO_SRC_PATH,
-            verbose: true
-          }
-        }
       },
 
       env: {
@@ -222,35 +204,21 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('server', ['connect', 'watch']);
-    grunt.registerTask('default', ['env:build', 'authenticate-git', 'update-hot-pro', 'update-hot', 'generate-docs']);
+    grunt.registerTask('default', ['env:build', 'authenticate-git', 'update-hot', 'generate-docs']);
     grunt.registerTask('build', ['env:build', 'authenticate-git', 'build-docs']);
 
     grunt.registerTask('authenticate-git', 'Authenticate Github', function() {
-      if (!gitHelper.gitlab) {
-        gitHelper.setupGitApi(process.env.GITHUB_TOKEN);
-      }
+      gitHelper.setupGitApi(process.env.GITHUB_TOKEN);
     });
 
     grunt.registerTask('update-hot', 'Update Handsontable repository', function() {
-      var hotPackage = grunt.file.readJSON(HOT_PRO_SRC_PATH + '/package.json');;
+      var hotBranch = getHotBranch();
 
-      var cleanHotBranch = hotPackage.dependencies.handsontable.replace('github:', '').replace('handsontable/handsontable#', '');
-
-      grunt.config.set('gitclone.handsontable.options.branch', cleanHotBranch);
-      grunt.log.write('Cloning Handsontable v.' + cleanHotBranch);
+      grunt.log.write('Cloning Handsontable v.' + hotBranch);
+      grunt.config.set('gitclone.handsontable.options.branch', hotBranch);
 
       grunt.task.run('clean:source');
       grunt.task.run('gitclone:handsontable');
-    });
-
-    grunt.registerTask('update-hot-pro', 'Update Handsontable Pro repository', function() {
-      var hotProBranch = getHotBranch();
-
-      grunt.config.set('gitclone.handsontablePro.options.branch', hotProBranch);
-      grunt.log.write('Cloning Handsontable Pro v.' + hotProBranch);
-
-      grunt.task.run('clean:sourcePro');
-      grunt.task.run('gitclone:handsontablePro');
     });
 
     grunt.registerTask('generate-docs', 'Generate the documentation', function() {
@@ -258,7 +226,7 @@ module.exports = function(grunt) {
       var done = this.async();
 
       timer = setInterval(function() {
-        if (!grunt.file.isFile(HOT_SRC_PATH + '/package.json') || !grunt.file.isFile(HOT_PRO_SRC_PATH + '/package.json')) {
+        if (!grunt.file.isFile(HOT_SRC_PATH + '/package.json')) {
             return;
         }
 
@@ -320,7 +288,7 @@ module.exports = function(grunt) {
 
       } else {
         gitHelper.getHotLatestRelease().then(function(info) {
-          hotPackage = grunt.file.readJSON(HOT_PRO_SRC_PATH + '/package.json');
+          hotPackage = grunt.file.readJSON(HOT_SRC_PATH + '/package.json');
           grunt.config.set('jsdoc.docs.options.query', querystring.stringify({
               version: hotPackage.version,
               latestVersion: info.name

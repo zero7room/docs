@@ -26,11 +26,7 @@
             <ul class="members itemMembers" data-list-id="<?js= child.longname ?>">
               <?js child.children.forEach(function (c) { ?>
                 <?js if (c.disabled) { return; } ?>
-                <li class="sub-item" data-name="<?js= c.name ?>"><?js= self.tutoriallink(c)?>
-                  <?js if (c.pro) { ?>
-                  <sup>PRO</sup>
-                  <?js } ?>
-                </li>
+                <li class="sub-item" data-name="<?js= c.name ?>"><?js= self.tutoriallink(c)?></li>
               <?js }); ?>
             </ul>
           </li>
@@ -67,11 +63,7 @@
               <ul class="members itemMembers" data-list-id="<?js= child.longname ?>">
                 <?js child.children.forEach(function (c) { ?>
                   <?js if (c.disabled) { return; } ?>
-                  <li class="sub-item" data-name="<?js= c.name ?>"><?js= self.tutoriallink(c) ?>
-                    <?js if (c.pro) { ?>
-                    <sup>PRO</sup>
-                    <?js } ?>
-                  </li>
+                  <li class="sub-item" data-name="<?js= c.name ?>"><?js= self.tutoriallink(c) ?></li>
                 <?js }); ?>
               </ul>
             </li>
@@ -107,9 +99,6 @@
                 <?js item.members.forEach(function (v) { ?>
                   <li data-name="<?js= v.longname ?>">
                     <?js= self.linkto(v.longname, v.name) ?>
-                    <?js if (v.pro) { ?>
-                      <sup>PRO</sup>
-                    <?js } ?>
                 <?js }); ?>
                   </li>
               <?js } ?>
@@ -130,9 +119,6 @@
                 <?js item.events.forEach(function (v) { ?>
                   <li data-name="<?js= v.longname ?>">
                     <?js= self.linkto(v.longname, v.name) ?>
-                    <?js if (v.pro) { ?>
-                      <sup>PRO</sup>
-                    <?js } ?>
                   </li>
                 <?js }); ?>
               <?js } ?>
@@ -146,8 +132,8 @@
               <?js } ?>
             </ul>
           </li>
-        <?js } else { ?>
-          <!-- Core: Core -->
+        <?js } else if (item.longname === 'Core' || item.longname === 'Options') { ?>
+          <!-- Core: Core and Options -->
           <li class="item" data-name="<?js= item.longname ?>">
             <span class="title extensible" data-list-id="<?js= item.longname ?>">
               <a class="link-header" href="#"><?js= item.longname ?></a>
@@ -166,9 +152,6 @@
                 <?js item.members.forEach(function (v) { ?>
                   <li data-name="<?js= v.longname ?>">
                     <?js= self.linkto(v.longname, v.name) ?>
-                    <?js if (v.pro) { ?>
-                      <sup>PRO</sup>
-                    <?js } ?>
                   </li>
                 <?js }); ?>
               <?js } ?>
@@ -195,9 +178,6 @@
                 <?js item.events.forEach(function (v) { ?>
                   <li data-name="<?js= v.longname ?>">
                     <?js= self.linkto(v.longname, v.name) ?>
-                    <?js if (v.pro) { ?>
-                      <sup>PRO</sup>
-                    <?js } ?>
                   </li>
                 <?js }); ?>
               <?js } ?>
@@ -223,9 +203,6 @@
 
           <span class="title extensible" data-list-id="<?js= item.longname ?>">
             <a class="link-header" href="#"><?js= item.longname ?>
-            <?js if (item.isPro) { ?>
-              <sup>PRO</sup>
-            <?js } ?>
             </a></span>
             <?js if (item.type === 'namespace') { ?>
               <span class="static">static</span>
@@ -289,11 +266,7 @@
           <?js if (item.longname !== experimentalName) { return; } ?>
 
           <span class="title extensible" data-list-id="<?js= item.longname ?>">
-            <a class="link-header" href="#"><?js= item.longname ?>
-            <?js if (item.isPro) { ?>
-              <sup>PRO</sup>
-            <?js } ?>
-            </a></span>
+            <a class="link-header" href="#"><?js= item.longname ?></a></span>
             <?js if (item.type === 'namespace') { ?>
               <span class="static">static</span>
             <?js } ?>
