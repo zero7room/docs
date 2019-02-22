@@ -177,7 +177,7 @@ $(function () {
    */
   if (hotVersion !== _docVersions[0]) {
     $('#outdated-version')
-      .html('<strong>Please note:</strong> You\'re viewing an older version of Handsontable. Switch to the latest version.')
+      .html('You\'re viewing a documentation of a previous version of Handsontable.')
       .removeClass('hidden');
   }
 
@@ -453,15 +453,11 @@ function buildBreadcrumbs() {
   };
 
   // links
-  docsLink = document.createElement('a');
-  docsLink.href = '/docs';
-  docsLink.text = 'Handsontable';
 
   if ($('.source').size() > 0 || !$activeLink.length) {
     var filename = $('.page-title').data('filename').replace(/\.[a-z]+$/, '');
 
-    breadcrumbs = docsLink.outerHTML
-      + makeHotVersion(hotVersion)
+    breadcrumbs = makeHotVersion(hotVersion)
       + makeSpan("Source: " + filename);
 
   } else if ($activeLink.parents("div.sublist.api").size() > 0) {
@@ -473,8 +469,7 @@ function buildBreadcrumbs() {
     $subheader = $item.prevAll('p.subheader').eq(0);
     $header = $item.prevAll('p.header').eq(0);
 
-    breadcrumbs = docsLink.outerHTML
-      + makeHotVersion(hotVersion)
+    breadcrumbs = makeHotVersion(hotVersion)
       + makeSpan($header.text())
       + makeSpan($subheader.text())
       + makeSpan($item.attr('data-name'))
@@ -485,8 +480,7 @@ function buildBreadcrumbs() {
     $item = $activeLink.parents('li.item').eq(0);
     $item = $item.find('.title a');
 
-    breadcrumbs = docsLink.outerHTML
-      + makeHotVersion(hotVersion)
+    breadcrumbs = makeHotVersion(hotVersion)
       + makeSpan($item.text())
       + makeSpan($activeLink.text());
   }

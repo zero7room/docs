@@ -5,19 +5,16 @@
 header {
   @include fixed-top-left (0, 0);
   width: 100%;
-  padding: 34px 0 14px;
+  padding: 12px 0 5px;
   z-index: 300;
-  background-color: #fff;
-
-  @media only screen and (min-width: $largeWidth) {
-    padding-bottom: 24px;
-  }
+  box-shadow: 0 0 3px rgba(0,0,0,0.20);
+  background-color: $snowWhite;
 
   .logo {
-    @include relative-top-left (-3px, 0);
+    @include relative-top-left (5px, 0);
 
     @media only screen and (min-width: $largeWidth) {
-      @include relative-top-left (10px, 0);
+      @include relative-top-left (4px, -14px);
     }
 
     svg {
@@ -27,18 +24,17 @@ header {
         fill: $baseGray;
       }
     }
-  }
 
-  /* Begin: This allows to stretch the mobile menu to 100% of width of the viewport */
-  & > .row > .columns:last-child {
-    position: static;
+    span {
+      @include relative-top-left(-12px, 5px);
+      color: $middleGray;
+    }
   }
-  /* End */
 
   nav {
 
     & > a {
-      @include absolute-top-right (24px, 25px);
+      @include absolute-top-right (10px, 25px);
       display: block;
       z-index: 11;
 
@@ -71,33 +67,6 @@ header {
           display: none;
         }
 
-        &.news {
-          padding-right: 32px;
-          position: relative;
-
-          svg {
-            @include square (18px);
-            @include relative-top-left (4px, 0);
-            fill: $baseGray;
-          }
-
-          #HW_badge_cont {
-            @include absolute-top-left (0, 13px);
-
-            #HW_badge {
-              @include square (12px);
-              @include relative-top-left (0, 0);
-              line-height: 13px;
-              background-color: $brandRedActive;
-
-              &.HW_softHidden {
-                opacity: .4;
-                background-color: $brandVibrantGreenActive;
-              }
-            }
-          }
-        }
-
         a, a:hover, a:active, a:visited {
           font-size: 13px;
           color: $baseGray;
@@ -126,9 +95,9 @@ header {
     }
 
     ul {
-      @include absolute-top-left (12px, 2%);
+      @include absolute-top-left (-10px, 2%);
       width: 96%;
-      padding: 66px 0 8px;
+      padding: 66px 0 56px;
       display: block;
       text-align: center;
       border-radius: 4px;
@@ -154,15 +123,6 @@ header {
             font-size: 18px;
           }
         }
-
-        &:last-child {
-          width: 90%;
-          padding-top: 40px;
-        }
-
-        &.news {
-          display: none;
-        }
       }
     }
   }
@@ -170,16 +130,6 @@ header {
   &.header-white {
 
     .logo {
-
-      .github-star {
-        border: 1px solid $darkWhite;
-        color: $darkWhite;
-        font-weight: 600;
-
-        .triangle {
-          border-right-color: $darkWhite;
-        }
-      }
 
       svg {
         fill: $darkWhite;
@@ -197,13 +147,5 @@ header {
     svg, .news svg {
       fill: #fff;
     }
-  }
-}
-
-/* Hack for Headwayapp */
-@media only screen and (max-width: $mediumWidth) {
-
-  #HW_frame_cont {
-    display: none;
   }
 }

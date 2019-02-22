@@ -5,28 +5,32 @@
 .nav-holder {
 
   @media only screen and (min-width: $largeWidth) {
-    width: 280px;
+    width: 310px;
     height: 1px;
   }
 }
 
 .navigation {
-  height: 260px;
 
   @media only screen and (min-width: $largeWidth) {
-    width: 280px;
-    height: calc(100% - 170px);
+    width: 310px;
+    height: calc(100% - 126px);
     position: fixed;
   }
 
   .search {
 
     input {
-      margin-bottom: 6px;
-      border: 2px solid $darkWhite;
+      margin: 96px 0 16px;
+      border: 1px solid #e8e8e8;
+      border-radius: 4px;
+
+      @media only screen and (min-width: $largeWidth) {
+        margin: 67px 0 16px;
+      }
 
       &:focus {
-        border: 2px solid $lightGrayActiveLight;
+        border-color: $middleGray;
       }
     }
   }
@@ -54,22 +58,23 @@
     color: #838383;
   }
   .list {
-    margin: 0;
-    padding: 10px 0 20px 10px;
     position: relative;
     overflow: auto;
-    height: 100%;
+    height: 217px;
     list-style: none;
-    background-color: $ultraLightGray;
+    border-radius: 4px;
+    border: 1px solid #e8e8e8;
 
-    @media only screen and (min-width: $largeWidth) {
-      background-color: #fff;
+    @media only screen and (min-width: $mediumWidth) {
+      height: 100%;
+      border: none;
     }
+
   }
   li.item {
     margin: 0 12px 0 18px;
     a {
-      padding: 8px 0;
+      padding: 4px 0;
       display: inline-block;
       text-decoration: none;
       &.active-link {
@@ -107,15 +112,6 @@
       display: block;
       font-size: 0.8em;
 
-      &.extensible a:after {
-        content: "\f107";
-        font-family: 'FontAwesome';
-        color: $lightGray;
-        font-size: 17px;
-        position: absolute;
-        top: 5px;
-        right: 4px;
-      }
       sup {
         color: $brandRed;
       }
@@ -162,15 +158,13 @@
       list-style: none;
     }
     p.header {
-      margin: 26px 12px 18px;
+      margin: 18px 12px;
       padding: 0;
-      font-size: 14px;
       font-weight: 600;
-      color: $brandRed;
+      color: $brandGreen;
     }
     p.subheader {
       margin: 16px 12px 6px;
-      font-size: 14px;
       color: $brandGreen;
       font-weight: 600;
     }

@@ -6,8 +6,10 @@
   position: relative;
   h3 {
     margin: 50px 0 24px;
+    padding-bottom: 12px;
     font-size: 22px;
     font-weight: 500;
+    border-bottom: 1px solid $ultraLightGray;
   }
   .head-gap {
     margin-top: 1rem;
@@ -27,9 +29,11 @@
     }
   }
   .codeLayout {
-    margin-top: 2rem;
+    max-height: 300px;
+    margin-top: 40px;
     position: relative;
     z-index: 0;
+    overflow: auto;
   }
   .buttons {
     margin-bottom: 0.3rem;
@@ -41,7 +45,7 @@
   .buttons button, button.intext-btn {
     padding: .3rem .5rem .31rem;
     color: #fff;
-    font-size: 12px;
+    font-size: 13px;
     border: none;
     background: #9e9e9e;
     &.jsFiddleLink {
@@ -67,9 +71,8 @@
     margin-right: 0.4rem;
   }
   .index-list {
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid $lightGray;
+    margin: 50px 0 0;
+
     ul > li {
       margin-left: 3rem;
     }
@@ -80,7 +83,7 @@
     display: inline;
     font-weight: 400;
     border: none;
-    background-color: $ultraLightGray;
+    background-color: $snowWhite;
   }
   pre code {
     padding: 0.5rem 1rem;

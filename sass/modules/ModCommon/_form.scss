@@ -4,7 +4,7 @@
 
 form {
   @include placeholder {
-    font-size: 0.938em; /* 13px */
+    font-size: 13px;
   }
 
   fieldset {
@@ -12,7 +12,7 @@ form {
   }
 
   label {
-    font-size: 0.938em; /* 15px */
+    font-size: 15px;
     font-weight: 100;
     display: block;
     margin-bottom: 7px;
@@ -26,9 +26,9 @@ form {
   .selectbox,
   textarea {
     @include border($inputBorder);
-    font-size: 0.938em; /* 15px */
+    font-size: 13px;
     width: 100%;
-    padding: 11px 20px 12px;
+    padding: 11px 20px;
     margin-bottom: 16px;
     border-radius: 2px;
     background: #fff;

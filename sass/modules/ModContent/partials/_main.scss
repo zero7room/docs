@@ -4,19 +4,18 @@
 
 .main {
   width: 100%;
-  padding: 70px 0 20px;
+  padding: 30px 0 0;
+
   @media only screen and (min-width: $largeWidth) {
-    padding: 0 0 20px 60px;
+    padding: 70px 0 0;
   }
-  .page-title {
-    display: none;
-  }
+
   h4 {
     font-size: 1em;
     font-weight: 500;
   }
   dd {
-    font-size: 13px;
+    font-size: 15px;
     margin-left: 0;
 
   }
@@ -64,16 +63,16 @@
   h5 {
     &.method-parameters {
       padding-bottom: 0px;
-      margin-bottom: 4px;
+      margin-bottom: 12px;
       text-transform: uppercase;
-      font-size: 14px;
+      font-size: 15px;
     }
     &.method-returns, &.method-fires, &.method-example, &.member-example {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 500;
     }
     &.method-fires, &.method-example, &.member-example {
-      margin-bottom: 4px;
+      margin-bottom: 12px;
     }
 
     span.returnType {
@@ -86,7 +85,6 @@
       font-size: 15px;
     }
   }
-
 
   span.static {
     display: inline-block;
@@ -123,19 +121,18 @@
   }
 
   .subsection-title {
-    font-size: 14px;
-    margin-top: 30px;
-    color: $brandGreen;
+    font-size: 22px;
+    margin: 50px 0 0;
   }
 
   .description {
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .tag-source {
     position: absolute;
-    top: 27px;
+    top: 75px;
     right: 0;
     font-size: 11px;
     z-index: 10;
@@ -161,8 +158,29 @@
     border-radius: 5px;
   }
 
+  .container-overview {
+
+    dt {
+      display: none;
+    }
+  }
+
+  dl {
+
+    dt:first-child {
+
+      .tag-source {
+        top: 5px;
+      }
+
+      .nameContainer {
+        margin-top: 0;
+      }
+    }
+  }
+
   .type-signature {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .tag-deprecated {
@@ -179,9 +197,9 @@
 
   .nameContainer {
     position: relative;
-    margin-top: 20px;
+    margin-top: 70px;
     padding-top: 5px;
-    border-top: 1px dashed $lightGray;
+    border-top: 1px solid $ultraLightGray;
 
     .inherited {
       display: inline-block;
@@ -196,15 +214,15 @@
     }
 
     &.inherited {
-      color: gray;
+      color: $middleGray;
     }
 
     h4 {
-      margin-right: 150px;
-      line-height: 1.3;
+      margin: 15px 0 0;
+      font-size: 18px;
 
       .signature {
-        font-size: 14px;
+        font-size: 15px;
         font-weight: normal;
         font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
       }
@@ -259,19 +277,18 @@
     }
 
     .type {
-      width: 60px;
-      color: #aaa;
+      width: 110px;
       vertical-align: middle;
       text-align: center;
     }
     .default {
+      width: 110px;
       vertical-align: middle;
       text-align: center;
     }
 
     .attributes {
-      width: 80px;
-      color: #aaa;
+      width: auto;
     }
 
     .description {
@@ -285,10 +302,9 @@
       float: left;
       border-radius: 3px;
       background-color: #ddd!important;
-      font-size: 0.7em;
+      font-size: 10px;
       padding: 2px 4px;
       margin-right: 5px;
-      color: gray;
     }
   }
 
@@ -400,4 +416,7 @@
         line-height: 1rem; }
     }
   }
+}
+.page-title {
+  display: none;
 }

@@ -66,13 +66,7 @@ body {
   font-weight: normal;
   line-height: 1.5;
   margin: 0;
-  padding: 100px 0 0;
   position: relative;
-  background: $snowWhite;
-
-  @media only screen and (min-width: $largeWidth) {
-    padding-top: 120px;
-  }
 }
 
 a:hover {
@@ -136,7 +130,8 @@ select {
 
 .row {
   margin: 0 auto;
-  max-width: 73.8rem;
+  //max-width: 73.8rem;
+  max-width: 80rem;
   width: 100%; }
   .row:before, .row:after {
     content: " ";

@@ -4,7 +4,7 @@
   <?js= this.partial('analytics-pre.tmpl', this) ?>
   <meta charset="utf-8">
   <meta name=viewport content="width=device-width, initial-scale=1">
-  <title>Handsontable - <?js= title ?></title>
+  <title><?js= title ?> - Handsontable Documentation</title>
   <?js= this.partial('head.tmpl', this) ?>
 </head>
 
@@ -15,16 +15,14 @@
   <?js= this.partial('header.tmpl', this) ?>
 
   <div id="wrapper">
-    <div class="row">
-      <div class="small-10 medium-3 columns">
+    <div class="row large-collapse">
+      <div class="small-12 medium-4 large-3 columns">
 
           <?js= this.partial('navigation.tmpl', this) ?>
 
       </div>
-      <div class="small-12 medium-9 columns">
+      <div class="small-12 medium-6 large-7 medium-offset-1 end columns">
         <div class="main">
-          <div id="outdated-version" class="notification info mt-0 hidden"></div>
-          <h1 class="page-title" data-filename="<?js= filename.replace('tutorial-','') ?>"><?js= title ?></h1>
           <div class="breadcrumbs"></div>
 
           <?js= content ?>
@@ -36,6 +34,7 @@
   </div>
 
   <?js= this.partial('scripts.tmpl', this) ?>
+  <span class="page-title" data-filename="<?js= filename.replace('tutorial-','') ?>"><?js= title ?></span>
 
 </body>
 </html>
