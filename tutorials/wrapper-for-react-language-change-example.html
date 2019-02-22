@@ -68,7 +68,7 @@
           render() {
             return (
               <div>
-                <label for="languages">Select language: </label><select onChange={this.updateHotLanguage} id="languages"></select><br/><br/>
+                <label for="languages">Select language: </label><select onChange={this.updateHotLanguage} id="languages" style={{width: 100 + 'px'}}></select><br/><br/>
                 <HotTable id={this.id} language={this.state.language} settings={this.state.hotSettings}/>
               </div>
             );
