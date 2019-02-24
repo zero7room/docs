@@ -21,14 +21,10 @@
   .search {
 
     input {
-      margin: 96px 0 16px;
+      margin: 71px 0 16px;
       font-size: 15px;
       border: 1px solid $lightGray;
       border-radius: 4px;
-
-      @media only screen and (min-width: $largeWidth) {
-        margin: 71px 0 16px;
-      }
 
       &:focus {
         border-color: $middleGray;
