@@ -22,11 +22,12 @@
 
     input {
       margin: 96px 0 16px;
-      border: 1px solid #e8e8e8;
+      font-size: 15px;
+      border: 1px solid $lightGray;
       border-radius: 4px;
 
       @media only screen and (min-width: $largeWidth) {
-        margin: 67px 0 16px;
+        margin: 71px 0 16px;
       }
 
       &:focus {

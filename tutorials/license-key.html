@@ -1,29 +1,94 @@
 <div class="static-content">
+
+    <div data-alert class="alert-box info secondary">
+        License key is validated in an offline mode. No connection is made to any server.
+    </div>
+
     <div class="example-container clearfix">
         <p>
-            After you buy the commercial license, you will receive a license key of your copy of the software. It will be available in
-            your account at <a href="https://my.handsontable.com">my.handsontable.com</a>.
+            Starting with version 7.0.0, we require you to pass the license key in the
+            <code class=“inline”>Settings</code> object in each instance of Handsontable.
         </p>
+
+        <h3 id="installing-key">Installing the license key</h3>
         <p>
-            Paste your license key to the configuration section, just like in the example below.
+            Pass your license key in the <code class="inline">Settings</code> object as showed below.
+            Note that the license key is a string, so you need to wrap it in quotes ('').
         </p>
-<pre><code class="lang-js">var container = document.getElementById('example');
-var hot = new Handsontable(container, {
+
+<pre><code class="lang-js">settings: {
   data: data,
   rowHeaders: true,
   colHeaders: true,
   licenseKey: '00000-00000-00000-00000-00000'
-});</code></pre>
-        <p>
-            Note that the license key is passed as a string so you need to wrap it with quotes ('').
+}</code></pre>
+
+        <p>Alternatively, you can pass it to a <code>licenseKey</code> prop:</p>
+
+        <p><strong>React</strong></p>
+        <pre><code class="lang-js">&lt;HotTable settings={settings} licenseKey="00000-00000-00000-00000-00000" /&gt;</code></pre>
+
+        <p><strong>Angular</strong></p>
+        <pre><code class="lang-js">&lt;hot-table [settings]="settings" [licenseKey]="00000-00000-00000-00000-00000"&gt;&lt;/hot-table&gt;</code></pre>
+
+        <p><strong>Vue</strong></p>
+        <pre><code class="lang-js">&lt;hot-table :settings="settings" licenseKey="00000-00000-00000-00000-00000" /&gt;</code></pre>
+
+        <h3 id="non-commercial-use">Non-commercial use</h3>
+        <p>If you use Handsontable for purposes not intended toward monetary compensation such as, but not limited to,
+            teaching, academic research, evaluation, testing and experimentation, pass a phrase 
+            <code>'non-commercial-and-evaluation’</code>. Just remember that the license
+            key is case-sensitive, so you need to pass it in the exact same way as presented below.</p>
+
+        <pre><code class="lang-js">licenseKey: ‘non-commercial-and-evaluation’</code></pre>
+
+        <h3 id="how-does-it-work">The validation process</h3>
+        <p>The validation is done offline so we never make any connection to any server. Each commercial license
+            key has several information encoded inside its corresponding license key.
+            One of these information is an expiration date. To validate
+            your license, we simply compare that date with the release date of your version of Handsontable.
+            If you use a version that was released after the expiration date of your license key,
+            you will see a notification right below the data grid, and in the console.</p>
+
+        <h3 id="notifications">Notifications</h3>
+        <p>If your license key is missing, invalid or expired, we will display a corresponding notification
+            right below your instance of the data grid and in the console log.
+            Below are the messages you will see, depending on what’s happened.
         </p>
-        <p>
-            <a href="https://handsontable.com/pricing">Check the pricing</a> of a commercial license of Handsontable.
+
+        <p><strong>License key is missing</strong></p>
+        <p style="font-style: italic">The license key for Handsontable is missing.
+            Use your purchased key to activate the product.
+            Alternatively, you can activate Handsontable to use for non-commercial purposes by passing the
+            key: ‘non-commercial-and-evaluation’. 
+            <a href="http://handsontable.com/docs/tutorial-license-key.html" target="_blank">Read more</a> 
+            about it in the documentation or contact us at <code>[email]</code>.
         </p>
+
+        <p><strong>License key is invalid</strong></p>
+        <p style="font-style: italic">The license key for Handsontable is invalid. 
+            <a href="http://handsontable.com/docs/tutorial-license-key.html" target="_blank">Read more</a> on how install it properly or
+            contact us at <code>[email]</code>.
+        </p>
+
+        <p><strong>License key has expired</strong></p>
+        <p style="font-style: italic">The license key for Handsontable expired on <code>[expiration_date]</code>,
+            and is not valid for the
+            installed version <code>[handsontable_version]</code>. 
+            <a href="https://my.handsontable.com" target="_blank">Renew</a> your license key or downgrade to a version
+            released prior to <code>[expiration_dates]</code>. If you need any help, contact us at <code>[email]</code>.
+        </p>
+
+        <h3 id="troubleshooting">Troubleshooting</h3>
+        <p>If you have any questions or concerns, feel free to contact our
+            <a href="https://handsontable.com/contact?category=technical_support">Support Team.</p>
+
     </div>
+
   <p class="gap-top-xsmall">
     <a href="https://github.com/handsontable/docs/edit/<?js= version ?>/tutorials/license-key.html" class="edit-doc" target="_blank">
-      Help us improve this page
+      Edit this page
     </a>
   </p>
+
 </div>
