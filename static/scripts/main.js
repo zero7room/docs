@@ -44,12 +44,14 @@ $(function () {
     });
 
     $(document.body).on('click', 'a[href*="#"]', function(event) {
-      if (location.pathname === event.target.pathname) {
+      var target = event.currentTarget;
+
+      if (location.pathname === target.pathname) {
         event.preventDefault();
 
-        var rect = document.getElementById(event.target.hash.replace('#', '')).getBoundingClientRect();
+        var rect = document.getElementById(target.hash.replace('#', '')).getBoundingClientRect();
 
-        history.pushState({previousHash: event.target.hash}, '', event.target.pathname + event.target.hash);
+        history.pushState({previousHash: target.hash}, '', target.pathname + target.hash);
 
         window.scrollTo(0, window.scrollY + rect.top - 120);
       }
@@ -458,7 +460,7 @@ function buildBreadcrumbs() {
     var filename = $('.page-title').data('filename').replace(/\.[a-z]+$/, '');
 
     breadcrumbs = makeHotVersion(hotVersion)
-      + makeSpan("Source: " + filename);
+      + makeSpan(filename);
 
   } else if ($activeLink.parents("div.sublist.api").size() > 0) {
     $subtitle = $activeLinkParent.prevAll('span.subtitle').eq(0).filter(function () {
@@ -472,9 +474,7 @@ function buildBreadcrumbs() {
     breadcrumbs = makeHotVersion(hotVersion)
       + makeSpan($header.text())
       + makeSpan($subheader.text())
-      + makeSpan($item.attr('data-name'))
-      + makeSpan($subtitle.text())
-      + makeSpan($activeLink.text());
+      + makeSpan($item.attr('data-name'));
 
   } else {
     $item = $activeLink.parents('li.item').eq(0);

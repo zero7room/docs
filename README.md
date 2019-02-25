@@ -11,7 +11,7 @@ Create a `.env.json` file in the main directory, and fill it with your Github to
   "GITHUB_TOKEN": "[insert your gihub token here]"
 }
 ```
-Fetch source code of the Handsontable PRO and CE and build the documentation:
+Fetch source code of the Handsontable and build the documentation:
 ```sh
 npm run start
 ```
