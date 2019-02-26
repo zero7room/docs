@@ -68,7 +68,7 @@
 
     <h4 id="copy-cut-trigger-paste-programmatically">Trigger copy & cut programmatically</h4>
     <p>Firstly, you need to select a cell range to copy or cut.</p>
-    <pre><code>hot.selectCell(0, 0);</code></pre>
+    <pre><code>hot.selectCell(1, 1);</code></pre>
     <p>Then you can use one of the following commands:</p>
     <ul>
       <li><code>document.execCommand('copy')</code></li>
@@ -78,8 +78,8 @@
       our implementation will copy or cut the selected data into the system clipboard.</p>
     <div data-jsfiddle="example1">
       <p>
-        <button id="copy">Copy</button>
-        <button id="cut">Cut</button>
+        <button id="copy">Select and copy cell B2</button>
+        <button id="cut">Select and cut cell B2</button>
       </p>
       <div id="example1" class="hot"></div>
     </div>
@@ -99,15 +99,13 @@
           outsideClickDeselects: false,
         });
 
-        hot.selectCell(0, 0);
-
         Handsontable.dom.addEvent(copyBtn, 'click', function () {
-          hot.selectCell(0, 0);
+          hot.selectCell(1, 1);
           document.execCommand('copy');
         });
 
         Handsontable.dom.addEvent(cutBtn, 'click', function () {
-          hot.selectCell(0, 0);
+          hot.selectCell(1, 1);
           document.execCommand('cut');
         });
       </script>
