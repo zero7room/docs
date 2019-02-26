@@ -102,10 +102,12 @@
         hot.selectCell(0, 0);
 
         Handsontable.dom.addEvent(copyBtn, 'click', function () {
+          hot.selectCell(0, 0);
           document.execCommand('copy');
         });
 
         Handsontable.dom.addEvent(cutBtn, 'click', function () {
+          hot.selectCell(0, 0);
           document.execCommand('cut');
         });
       </script>

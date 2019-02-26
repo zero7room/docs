@@ -30,7 +30,6 @@
     "grunt-git": "^0.3.4",
     "grunt-jsdoc": "^0.5.8",
     "grunt-sitemap": "1.2.1",
-    "handsontable-pro": "6.2.2",
     "handsontable": "6.2.2",
     "highlightjs": "^9.10.0",
     "jsdoc": "^3.5.5",
