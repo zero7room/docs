@@ -184,13 +184,20 @@ module.exports = function(grunt) {
             debounceDelay: 250
           },
         },
-        assets: {
-          files: ['sass/**', 'static/**'],
-          tasks: ['sass', 'copy'],
+        sass: {
+          files: ['sass/**'],
+          tasks: ['sass'],
           options: {
             debounceDelay: 250
           },
         },
+        static: {
+          files: ['static/**'],
+          tasks: ['copy'],
+          options: {
+            debounceDelay: 250
+          },
+        }
       },
 
       sitemap: {
