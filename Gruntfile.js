@@ -185,7 +185,7 @@ module.exports = function(grunt) {
           },
         },
         assets: {
-          files: ['sass/**', 'static/**', 'tmpl/**'],
+          files: ['sass/**', 'static/**'],
           tasks: ['sass', 'copy'],
           options: {
             debounceDelay: 250
