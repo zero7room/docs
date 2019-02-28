@@ -60,7 +60,23 @@ module.exports = function(grunt) {
       },
 
       jsdoc: {
-        docs: {
+        only_tutorials: {
+          src: [
+            // jsdoc requires at least one js file, doesn't work otherwise
+            'static/scripts/main.js',
+          ],
+          jsdoc: 'node_modules/.bin/' + (/^win/.test(process.platform) ? 'jsdoc.cmd' : 'jsdoc'),
+          options: {
+            verbose: true,
+            destination: DOCS_PATH,
+            configure: 'conf.json',
+            tutorials: 'tutorials',
+            template: './',
+            'private': false,
+            query: ''
+          }
+        },
+        prod: {
           src: [
             HOT_SRC_PATH + '/src/**/*.js',
             '!' + HOT_SRC_PATH + '/src/**/*.spec.js',
@@ -74,12 +90,12 @@ module.exports = function(grunt) {
             verbose: true,
             destination: DOCS_PATH,
             configure: 'conf.json',
-            template: './',
             tutorials: 'tutorials',
+            template: './',
             'private': false,
             query: ''
           }
-        }
+        },
       },
 
       sass: {
@@ -154,28 +170,27 @@ module.exports = function(grunt) {
       },
 
       watch: {
-        files: ['tutorials/**', 'sass/**', 'static/**', 'tmpl/**'],
-        tasks: [],
-        options: {
-          debounceDelay: 250
+        tutorials: {
+          files: ['tutorials/**'],
+          tasks: ['build-tutorials'],
+          options: {
+            debounceDelay: 250
+          },
         },
-        dist: {
-          files: ['generated/**'],
+        templates: {
+          files: ['tmpl/**'],
+          tasks: ['build-docs'],
           options: {
-              livereload: true
-          }
-        }
-      },
-
-      connect: {
-        dist: {
+            debounceDelay: 250
+          },
+        },
+        assets: {
+          files: ['sass/**', 'static/**', 'tmpl/**'],
+          tasks: ['sass', 'copy'],
           options: {
-            port: 5455,
-            hostname: '0.0.0.0',
-            base: 'generated',
-            livereload: true
-          }
-        }
+            debounceDelay: 250
+          },
+        },
       },
 
       sitemap: {
@@ -203,7 +218,6 @@ module.exports = function(grunt) {
       }
     });
 
-    grunt.registerTask('server', ['connect', 'watch']);
     grunt.registerTask('default', ['env:build', 'authenticate-git', 'update-hot', 'generate-docs']);
     grunt.registerTask('build', ['env:build', 'authenticate-git', 'build-docs']);
 
@@ -277,24 +291,53 @@ module.exports = function(grunt) {
 
       if (argv['hot-version']) {
         var isDraftNext = argv['hot-version'] === 'next';
+        var version = isDraftNext ? 'next' : getHotBranch();
 
-        grunt.config.set('jsdoc.docs.options.query', querystring.stringify({
-          version: isDraftNext ? 'next' : getHotBranch(),
-          latestVersion: isDraftNext ? 'next' : getHotBranch(),
+        grunt.config.set('jsdoc.prod.options.query', querystring.stringify({
+          version: version,
+          latestVersion: version,
         }));
 
-        grunt.task.run('sass', 'copy', 'jsdoc', 'sitemap');
+        grunt.task.run('sass', 'copy', 'jsdoc:prod', 'sitemap');
         done();
 
       } else {
         gitHelper.getHotLatestRelease().then(function(info) {
           hotPackage = grunt.file.readJSON(HOT_SRC_PATH + '/package.json');
-          grunt.config.set('jsdoc.docs.options.query', querystring.stringify({
+          
+          grunt.config.set('jsdoc.prod.options.query', querystring.stringify({
+            version: hotPackage.version,
+            latestVersion: info.name
+          }));
+
+          grunt.task.run('sass', 'copy', 'jsdoc:prod', 'sitemap');
+          done();
+        });
+      }
+    });
+    
+    grunt.registerTask('build-tutorials', 'Generate only tutorials', function() {
+      var done = this.async();
+      var hotPackage;
+
+      if (argv['hot-version']) {
+        var isDraftNext = argv['hot-version'] === 'next';
+        var version = isDraftNext ? 'next' : getHotBranch();
+
+        grunt.config.set('jsdoc.only_tutorials.options.query', querystring.stringify({ version: version, latestVersion: version, }));
+
+        grunt.task.run('jsdoc:only_tutorials');
+        done();
+
+      } else {
+        gitHelper.getHotLatestRelease().then(function(info) {
+          hotPackage = grunt.file.readJSON(HOT_SRC_PATH + '/package.json');
+          grunt.config.set('jsdoc.only_tutorials.options.query', querystring.stringify({
               version: hotPackage.version,
               latestVersion: info.name
           }));
 
-          grunt.task.run('sass', 'copy', 'jsdoc', 'sitemap');
+          grunt.task.run('jsdoc:only_tutorials');
           done();
         });
       }
