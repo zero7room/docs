@@ -8,23 +8,23 @@
 
       <h3>Installation</h3>
       <p>
-        This component needs the Handsontable library to work. We suggest using <a href="https://www.npmjs.com/">npm</a> to install the package.
+        This component needs the Handsontable library to work. We suggest using <a href="https://www.npmjs.com/package/@handsontable/angular">npm</a> to install the package.
       </p>
       <p>
-        <code>npm install handsontable @handsontable/angular</code>
+        <pre><code class="bash">npm install handsontable @handsontable/angular</code></pre>
       </p>
 
       <h3>Basic usage</h3>
       <p>
         Import the Handsontable styles to your project
         <pre>
-          <code>@import '~handsontable/dist/handsontable.full.css';</code>
+          <code class="css">@import '~handsontable/dist/handsontable.full.css';</code>
         </pre>
       </p>
       <p>
         Import the Handsontable component in your module
         <pre>
-        <code>import { BrowserModule } from '@angular/platform-browser';
+        <code class="typescript">import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HotTableModule } from '@handsontable/angular';
@@ -40,28 +40,22 @@ import { HotTableModule } from '@handsontable/angular';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
-        </code>
+export class AppModule { }</code>
         </pre>
       </p>
       <p>
         Now, you can use the Handsontable component in your HTML files
         <pre>
-        <code>&lt;hot-table
+        <code class="xml">&lt;hot-table
   [colHeaders]="true"
   [rowHeaders]="true"
-  [data]="dataset"&gt;&lt;/hot-table&gt;
-        </code>
+  [data]="dataset"&gt;&lt;/hot-table&gt;</code>
         </pre>
       </p>
 
       <h3>License</h3>
-
       <p>
-          Handsontable for Angular is an open source library released free under the MIT license.
-      </p>
-      <p>
-          <a href="https://github.com/handsontable/angular-handsontable/blob/master/LICENSE" target="_blank">The MIT license</a>
+          Handsontable for Angular wrapper is released under <a href="https://github.com/handsontable/angular-handsontable/blob/master/LICENSE" target="_blank">the MIT license</a> but under the hood it uses Handsontable, which is <a href="/docs/tutorial-licensing.html">dual-licensed</a>. You can either use it for free in all your non-commercial projects or purchase a commercial license.
       </p>
   </div>
     <p>

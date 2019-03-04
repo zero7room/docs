@@ -8,18 +8,18 @@
 
       <h3>Installation</h3>
       <p>
-        This component needs the Handsontable library to work. We suggest using <a href="https://www.npmjs.com/">npm</a> to install the package.
+        This component needs the Handsontable library to work. We suggest using <a href="https://www.npmjs.com/package/@handsontable/vue">npm</a> to install the package.
       </p>
       <p>
-        <code>npm install handsontable @handsontable/vue</code>
+        <pre><code class="bash">npm install handsontable @handsontable/vue</code></pre>
       </p>
 
       <h3>Basic usage</h3>
       <p>
         Vue Component
         <pre>
-        <code>&lt;template&gt;
-  &lt;hot-table :settings="settings"&gt;&lt;/hot-table&gt;
+        <code class="xml">&lt;template&gt;
+  &lt;hot-table :data="data" rowHeaders="true" colHeaders="true"&gt;&lt;/hot-table&gt;
 &lt;/template&gt;
 
 &lt;script&gt;
@@ -28,16 +28,12 @@
   export default {
     data: function() {
       return {
-        settings: {
-          data: [
-            ["", "Ford", "Volvo", "Toyota", "Honda"],
-            ["2016", 10, 11, 12, 13],
-            ["2017", 20, 11, 14, 13],
-            ["2018", 30, 15, 12, 13]
-          ],
-          colHeaders: true,
-          rowHeaders: true,
-        }
+        data: [
+          ["", "Ford", "Volvo", "Toyota", "Honda"],
+          ["2016", 10, 11, 12, 13],
+          ["2017", 20, 11, 14, 13],
+          ["2018", 30, 15, 12, 13]
+        ],
       };
     },
     components: {
@@ -46,17 +42,13 @@
   }
 &lt;/script&gt;
 
-&lt;style src="../node_modules/handsontable/dist/handsontable.full.css"&gt;&lt;/style&gt;
-        </code>
+&lt;style src="../node_modules/handsontable/dist/handsontable.full.css"&gt;&lt;/style&gt;</code>
         </pre>
       </p>
 
       <h3>License</h3>
       <p>
-          Handsontable for Vue is an open source library released free under the MIT license.
-      </p>
-      <p>
-          <a href="https://github.com/handsontable/vue-handsontable/blob/master/LICENSE" target="_blank">The MIT license</a>
+          Handsontable for Vue wrapper is released under <a href="https://github.com/handsontable/vue-handsontable-official/blob/master/LICENSE" target="_blank">the MIT license</a> but under the hood it uses Handsontable, which is <a href="/docs/tutorial-licensing.html">dual-licensed</a>. You can either use it for free in all your non-commercial projects or purchase a commercial license.
       </p>
   </div>
     <p>

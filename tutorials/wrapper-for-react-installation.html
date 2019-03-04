@@ -8,10 +8,10 @@
 
       <h3>Installation</h3>
       <p>
-        This component needs the Handsontable library to work. We suggest using <a href="https://www.npmjs.com/">npm</a> to install the package.
+        This component needs the Handsontable library to work. We suggest using <a href="https://www.npmjs.com/package/@handsontable/react">npm</a> to install the package.
       </p>
       <p>
-        <code>npm install handsontable @handsontable/react</code>
+        <pre><code class="bash">npm install handsontable @handsontable/react</code></pre>
       </p>
 
       <h3>Basic usage</h3>
@@ -24,7 +24,7 @@
       <p>
         Then use Handsontable for React component in your codebase
         <pre>
-        <code>import React from 'react';
+        <code class="javascript">import React from 'react';
 import { HotTable } from '@handsontable/react';
 
 class App extends React.Component {
@@ -41,22 +41,17 @@ class App extends React.Component {
   render() {
     return (
       &lt;div id="hot-app"&gt;
-        &lt;HotTable data={this.data} colHeaders={true} rowHeaders={true} width="600" height="300" stretchH="all" /&gt;
+        &lt;HotTable data={this.data} colHeaders={true} rowHeaders={true} width="600" height="300" /&gt;
       &lt;/div&gt;
     );
   }
-}
-        </code>
+}</code>
         </pre>
       </p>
 
       <h3>License</h3>
-
       <p>
-          Handsontable for React is an open source library released free under the MIT license.
-      </p>
-      <p>
-          <a href="https://github.com/handsontable/react-handsontable/blob/master/LICENSE" target="_blank">The MIT license</a>
+          Handsontable for React wrapper is released under <a href="https://github.com/handsontable/react-handsontable/blob/master/LICENSE" target="_blank">the MIT license</a> but under the hood it uses Handsontable, which is <a href="/docs/tutorial-licensing.html">dual-licensed</a>. You can either use it for free in all your non-commercial projects or purchase a commercial license.
       </p>
   </div>
     <p>
