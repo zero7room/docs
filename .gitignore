@@ -1,9 +1,11 @@
 .idea/
 .env.json
 .sass-cache
+.DS_Store
 bower_components/
 node_modules/
 generated/
 src/
 static/styles/main.css
 static/styles/main.css.map
+*.log

@@ -16,7 +16,7 @@ function isEdge() { return /Edge/.test(navigator.userAgent) }
 
         var rect = document.getElementById(location.hash.replace('#', '')).getBoundingClientRect();
 
-        window.scrollTo(0, window.scrollY + rect.top - 120);
+        window.scrollTo(0, window.scrollY + rect.top - $('header')[0].offsetHeight + 15);
       }
     });
   }
@@ -33,13 +33,21 @@ $(function () {
 
   // Anchor fix
   if (!isIE()) {
+    var offsetTop = $('header')[0].offsetHeight + 15;
+
     $(window).on('popstate', function(event) {
       var hash = (event.originalEvent.state || {}).previousHash;
 
       if (hash) {
-        var rect = document.getElementById(hash.replace('#', '')).getBoundingClientRect();
+        var rect = document.getElementById(hash);
 
-        window.scrollTo(0, window.scrollY + rect.top - 120);
+        if (!rect) {
+          return;
+        }
+
+        var top = rect.getBoundingClientRect().top;
+
+        window.scrollTo(0, window.scrollY + top - offsetTop);
       }
     });
 
@@ -49,11 +57,17 @@ $(function () {
       if (location.pathname === target.pathname) {
         event.preventDefault();
 
-        var rect = document.getElementById(target.hash.replace('#', '')).getBoundingClientRect();
+        var rect = document.querySelector(target.hash);
+
+        if (!rect) {
+          return;
+        }
+
+        var top = rect.getBoundingClientRect().top;
 
         history.pushState({previousHash: target.hash}, '', target.pathname + target.hash);
 
-        window.scrollTo(0, window.scrollY + rect.top - 120);
+        window.scrollTo(0, window.scrollY + top - offsetTop);
       }
     });
   }
@@ -137,10 +151,12 @@ $(function () {
     return window.location.href.indexOf('tutorial-introduction') > -1;
   }
 
-  $('#search-form').on('keyup', onSearchKeyUp);
+  var searchForm = $('#search-form');
+  searchForm.on('keyup', onSearchKeyUp);
+  searchForm.parent('form').on('submit', function(e) { e.preventDefault(); });
 
   if (isMainPage()) {
-    document.querySelector('#search-form').focus();
+    searchForm.focus();
   }
 
   // Toggle when click an item element
