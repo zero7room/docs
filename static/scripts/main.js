@@ -130,15 +130,18 @@ $(function () {
       contentElement.dispatchEvent(event);
     }
   });
-
-  function getLocationOrigin() {
-    return location.protocol + '//' + location.host + location.pathname;
-  }
   // end
 
   // Search Items
+  function isMainPage() {
+    return window.location.href.indexOf('tutorial-introduction') > -1;
+  }
+
   $('#search-form').on('keyup', onSearchKeyUp);
-  document.querySelector('#search-form').focus();
+
+  if (isMainPage()) {
+    document.querySelector('#search-form').focus();
+  }
 
   // Toggle when click an item element
   $('.navigation').on('click', '.title', function (event) {
@@ -210,66 +213,6 @@ $(function () {
     element.toggleClass('mobile-active');
     element.toggleClass('mobile-inactive');
   });
-  // end
-
-  // dynamic stats
-  function updateElements(data) {
-    var elements = document.querySelectorAll('[data-bind]');
-
-    for (var i = 0, len = elements.length; i < len; i++) {
-      var prop = elements[i].dataset.bind;
-
-      if (data[prop] !== void 0) {
-        elements[i].innerText = data[prop];
-      }
-    }
-  }
-
-  function updateVariables(callback) {
-    axios({
-      url: 'https://stats.handsontable.com/stats'
-    }).then(function(resp) {
-      var data = resp.data;
-
-      data.lastUpdate = Date.now();
-
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      callback(data);
-    });
-  }
-
-  var STORAGE_KEY = 'dynamic-variables';
-  var variables = localStorage.getItem(STORAGE_KEY);
-
-  if (typeof variables === 'string' && variables) {
-    var data = null;
-
-    try {
-      data = JSON.parse(variables);
-    } catch(ex) {}
-
-    if (data === null) { // JSON is broken - get data from backend.
-      localStorage.removeItem(STORAGE_KEY);
-
-      updateVariables(function(data) {
-        updateElements(data);
-      });
-
-    } else if (Date.now() - data.lastUpdate > 3600 * 8 * 1000) { // Cached data are to old - get data from backend
-      updateVariables(function(data) {
-        updateElements(data);
-      });
-
-    } else { // Update elements based on cached values
-      updateElements(data);
-    }
-
-  } else {
-    // Variables are not exist in the cached - get data from backend.
-    updateVariables(function(data) {
-      updateElements(data);
-    });
-  }
   // end
 });
 
@@ -375,13 +318,14 @@ function onSearchKeyUp() {
     } else {
       $notFound.show();
     }
+
+    $el.find('.list').scrollTop(0);
   } else {
     $el.find('.item, .sub-item, .itemMembers li, .subheader, .sublist').show();
     $el.find('.item .itemMembers').hide();
     $notFound.hide();
+    updateNav(true);
   }
-
-  $el.find('.list').scrollTop(0);
 }
 
 function getDocUrl(docVersion) {

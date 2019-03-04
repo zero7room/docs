@@ -3,11 +3,12 @@
   <div class="example-container clearfix">
     <p>To enable these features, use settings <code>manualColumnMove: true</code> and <code>manualRowMove: true</code></p>
     <p>The draggable move handle appears:</p>
-    <ul>
-      <li>in the right part of the column header,</li>
-      <li>in the top part of the row header.</li>
-    </ul>
-
+    <p>
+      <ul>
+        <li>in the right part of the column header,</li>
+        <li>in the top part of the row header.</li>
+      </ul>
+    </p>
     <div data-jsfiddle="example1" class="scroll-container">
       <div id="example1" class="hot"></div>
     </div>
@@ -25,17 +26,17 @@
         </button>
       </div>
       <script data-jsfiddle="example1">
-        var
-          example1 = document.getElementById('example1'),
-          hot;
-
-        hot = new Handsontable(example1, {
-          data: Handsontable.helper.createSpreadsheetData(200, 20),
-          rowHeaders: true,
-          colHeaders: true,
-          colWidths: 100,
-          manualColumnMove: true,
-          manualRowMove: true
+        document.addEventListener('DOMContentLoaded',
+          function () {
+            var example1 = document.getElementById('example1');
+            var hot = new Handsontable(example1, {
+              data: Handsontable.helper.createSpreadsheetData(200, 20),
+              rowHeaders: true,
+              colHeaders: true,
+              colWidths: 100,
+              manualColumnMove: true,
+              manualRowMove: true
+            });
         });</script>
     </div>
   </div>

@@ -41,15 +41,16 @@
         </button>
       </div>
       <script data-jsfiddle="example1">
-        var example = document.getElementById('example1');
-        var hot1 = new Handsontable(example, {
-          data: Handsontable.helper.createSpreadsheetData(1000, 1000),
-          width: 584,
-          height: 320,
-          colWidths: 100,
-          rowHeights: 23,
-          rowHeaders: true,
-          colHeaders: true
+        document.addEventListener('DOMContentLoaded',
+          function () {
+           var example = document.getElementById('example1');
+           var hot1 = new Handsontable(example, {
+             data: Handsontable.helper.createSpreadsheetData(1000, 1000),
+             colWidths: 100,
+             rowHeights: 23,
+             rowHeaders: true,
+             colHeaders: true
+           });
         });</script>
     </div>
   </div>

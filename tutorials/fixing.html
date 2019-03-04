@@ -25,18 +25,17 @@
         </button>
       </div>
       <script data-jsfiddle="example1">
-        var
-          myData = Handsontable.helper.createSpreadsheetData(100, 50),
-          container = document.getElementById('example1'),
-          hot;
-
-        hot = new Handsontable(container, {
-          data: myData,
-          colWidths: 100,
-          rowHeaders: true,
-          colHeaders: true,
-          fixedRowsTop: 2,
-          fixedColumnsLeft: 2
+        document.addEventListener('DOMContentLoaded',
+          function () {
+            var example = document.getElementById('example1');
+            var hot = new Handsontable(example, {
+              data: Handsontable.helper.createSpreadsheetData(100, 50),
+              colWidths: 100,
+              rowHeaders: true,
+              colHeaders: true,
+              fixedRowsTop: 2,
+              fixedColumnsLeft: 2
+            });
         });</script>
     </div>
   </div>
