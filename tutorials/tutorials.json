@@ -295,7 +295,7 @@
         "demo": true,
         "children": {
           "gantt-chart": {
-            "title": "Gantt Chart",
+            "title": "Gantt chart",
             "pro": true
           },
           "formula-support": {
