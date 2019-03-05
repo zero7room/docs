@@ -260,7 +260,7 @@ module.exports = function(grunt) {
       }, 50);
     });
 
-    grunt.registerTask('generate-doc-versions', 'Generate version list for Handsontable Pro', function() {
+    grunt.registerTask('generate-doc-versions', 'Generate version list for Handsontable', function() {
       var done = this.async();
 
       gitHelper.getDocsVersions().then(function(branches) {
@@ -311,7 +311,7 @@ module.exports = function(grunt) {
       } else {
         gitHelper.getHotLatestRelease().then(function(info) {
           hotPackage = grunt.file.readJSON(HOT_SRC_PATH + '/package.json');
-          
+
           grunt.config.set('jsdoc.prod.options.query', querystring.stringify({
             version: hotPackage.version,
             latestVersion: info.name
@@ -322,7 +322,7 @@ module.exports = function(grunt) {
         });
       }
     });
-    
+
     grunt.registerTask('build-tutorials', 'Generate only tutorials', function() {
       var done = this.async();
       var hotPackage;

@@ -16,7 +16,7 @@ function isEdge() { return /Edge/.test(navigator.userAgent) }
 
         var rect = document.getElementById(location.hash.replace('#', '')).getBoundingClientRect();
 
-        window.scrollTo(0, window.scrollY + rect.top - $('header')[0].offsetHeight + 15);
+        window.scrollTo(0, window.scrollY + rect.top - $('header')[0].offsetHeight - 15);
       }
     });
   }
