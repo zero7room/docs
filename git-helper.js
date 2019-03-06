@@ -1,5 +1,5 @@
 var getRepoInfo = require('git-repo-info');
-var GitHubApi = require('@octokit/rest');
+var GitHubApi = require('github');
 var Promise = require('bluebird');
 var fs = require('fs');
 var semver = require('semver');
@@ -15,12 +15,16 @@ exports.setupGitApi = function setupGitApi(githubToken) {
     return;
   }
   github = new GitHubApi({
-    auth: githubToken,
     version: '3.0.0',
-    userAgent: 'Handsontable',
-    request: {
-      timeout: 5000,
+    timeout: 5000,
+    headers: {
+      'user-agent': 'Handsontable'
     }
+  });
+
+  github.authenticate({
+    type: 'oauth',
+    token: githubToken
   });
 };
 
@@ -43,7 +47,7 @@ exports.getHotLatestRelease = function getHotLatestRelease(range) {
   return new Promise(function(resolve, reject) {
     github.releases.listReleases({
       owner: 'handsontable',
-      repo: 'handsontable-pro',
+      repo: 'handsontable',
       page: 1,
       per_page: 100
     }, function(err, resp) {
@@ -67,8 +71,8 @@ exports.getHotLatestRelease = function getHotLatestRelease(range) {
  */
 exports.getDocsVersions = function getDocsVersions() {
   return new Promise(function(resolve, reject) {
-    github.repos.listBranches({
-      owner: 'handsontable',
+    github.repos.getBranches({
+      user: 'handsontable',
       repo: 'docs',
       page: 1,
       per_page: 100
