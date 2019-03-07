@@ -57,7 +57,7 @@ $(function () {
       if (location.pathname === target.pathname) {
         event.preventDefault();
 
-        var rect = document.querySelector(target.hash);
+        var rect = document.getElementById(target.hash.replace('#', ''));
 
         if (!rect) {
           return;

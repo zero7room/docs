@@ -26,17 +26,16 @@
         </button>
       </div>
       <script data-jsfiddle="example1">
-        document.addEventListener('DOMContentLoaded',
-          function () {
-            var example1 = document.getElementById('example1');
-            var hot = new Handsontable(example1, {
-              data: Handsontable.helper.createSpreadsheetData(200, 20),
-              rowHeaders: true,
-              colHeaders: true,
-              colWidths: 100,
-              manualColumnMove: true,
-              manualRowMove: true
-            });
+        var example1 = document.getElementById('example1');
+        var hot = new Handsontable(example1, {
+          data: Handsontable.helper.createSpreadsheetData(200, 20),
+          rowHeaders: true,
+          colHeaders: true,
+          width: '100%',
+          height: 320,
+          colWidths: 100,
+          manualColumnMove: true,
+          manualRowMove: true
         });</script>
     </div>
   </div>
