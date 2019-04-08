@@ -1,6 +1,22 @@
 <div class="static-content">
 
   <div class="example-container clearfix">
+    <h3>7.0.1</h3>
+    <p>Released on 8th of April, 2018</p>
+    <strong>Changes</strong>
+    <ul>
+      <li>Fixed the <code>LICENSE.txt</code> file link in <code>README.md</code>. (<a href="https://github.com/handsontable/handsontable/issues/5914" target="_blank">#5914</a>)</li>
+      <li>Replaced <code>fixed</code> positioning of the row/column resize handles with <code>absolute</code> to prevent misalignment issues in implementations based on CSS <code>transform</code>. (<a href="https://github.com/handsontable/handsontable/issues/5050" target="_blank">#5050</a>)</li>
+      <li>Updated <code>webpack</code> to version <code>4</code>. (<a href="https://github.com/handsontable/handsontable/issues/5912" target="_blank">#5912</a>)</li>
+      <li>Fixed a problem with Handsontable throwing errors on scroll by adding support for <code>EventListenerOption</code> in the <code>EventManager</code>. (<a href="https://github.com/handsontable/handsontable/issues/5904" target="_blank">#5904</a>, <a href="https://github.com/handsontable/handsontable/issues/4526" target="_blank">#4526</a>)</li>
+      <li>Added <code>core-js</code> to Handsontable's dependencies. (<a href="https://github.com/handsontable/handsontable/issues/5888" target="_blank">#5888</a>)</li>
+      <li>Added a <code>ghost-table</code> attribute to all cell elements generated with Ghost Table. (<a href="https://github.com/handsontable/handsontable/issues/5927" target="_blank">#5927</a>)</li>
+      <li>Fixed a bug, where the editor was visible despite not being open, when the table was positioned using CSS <code>transform</code>. (<a href="https://github.com/handsontable/handsontable/issues/5886" target="_blank">#5886</a>)</li>
+      <li>Fixed a bug, where the table scrolled up after clicking a cell when Handsontable was implemented inside of an <code>iframe</code>. (<a href="https://github.com/handsontable/handsontable/issues/5910" target="_blank">#5910</a>)</li>
+    </ul>
+  </div>
+
+  <div class="example-container clearfix">
     <h3>7.0.0</h3>
     <p>Released on 6th of March, 2018</p>
     <strong>Breaking changes</strong>
