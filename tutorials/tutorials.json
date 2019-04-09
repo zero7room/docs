@@ -41,6 +41,9 @@
           "setting-options": {
             "title": "Setting options"
           },
+          "grid-sizing": {
+            "title": "Grid sizing"
+          },
           "using-callbacks": {
             "title": "Using callbacks"
           },

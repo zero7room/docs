@@ -1,0 +1,143 @@
+<div class="static-content">
+  <div class="example-container clearfix">
+    <div class="index-list">
+      <ul>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#how-to-set-up-dimensions">How to set up dimensions</a></li>
+        <li><a href="#what-if-dimensions-are-not-set-up">What if dimensions are not set up</a></li>
+        <li><a href="#autoresizing">Autoresizing</a></li>
+        <li><a href="#manual-resizing">Manual resizing</a></li>
+      </ul>
+    </div>
+
+    <h3 id="introduction">Introduction</h3>
+    <p>To set up Handsontable DOM structure in your application, you have to define its container as a starting point to initialise component.
+      Usually, the <code>div</code> element becomes this container. This container should have defined dimensions as well as the rest of your layout.
+        Since v7.0.0, Handsontable supports relative units such as <code>%</code>, <code>rem</code>, <code>em</code>,
+        <code>vh</code>, <code>vw</code> or as exact size in <code>px</code>.</p>
+
+    <h3 id="how-to-set-up-dimensions">How to set up dimensions</h3>
+    <p>There are two possible ways to define a table size.</p>
+    <ol>
+      <li>
+        <h4>Using CSS styles</h4>
+        <p>Both <code>width</code> and <code>height</code> could be defined as inline styles or as a CSS class property.
+            In this case, it's important to properly define what should be an <code>overflow</code> parent.
+            Handsontable looks for the closest element with <code>overflow: auto</code> or <code>overflow: hidden</code> to use it as a scrollable container.
+            If no such element is found a window will be used.</p>
+        <div class="notification warning">Handsontable doesn't observe CSS changes for container out of the box.<br/>
+            If you'd like to observe it, you can define dimensions in configuration object or create your own observer.</div>
+      </li>
+      <li>
+        <h4>Configuration object</h4>
+        <pre class="prettyprint"><code class="js">{
+  width: '100px',
+  width: '75%',
+  width: 100 // For backward compatibility we parse number into pixels
+}
+...
+{
+  height: '100px',
+  height: '75%', // Please read info note below
+  height: 100 // For backward compatibility we parse number into pixels
+}</code></pre>
+        <p>These dimensions will be set as inline styles in a container element and <code>overflow: hidden</code> will be added automatically.</p>
+        <div class="notification warning">If container is a block element, then its parent has to have defined <code>height</code>.
+          By default block element is <code>0px</code> height, so <code>100%</code> from <code>0px</code> is still <code>0px</code>.</div>
+        <div class="notification info">Changes called in <code>updateSettings</code> will rerender grid with the new properties</div>
+      </li>
+    </ol>
+
+    <h3 id="what-if-dimensions-are-not-set-up">What if dimensions are not set up</h3>
+    <p>If you don't define dimensions, Handsontable will generate as many rows and columns to fill available space and will also provide full
+      support for virtual rendering and fixed parts.</p>
+    <div class="notification warning">You might come across performance issues when editing or scrolling, because of the entirely
+      different positioning algorithm for fixed areas.</div>
+
+    <h3 id="autoresizing">Autoresizing</h3>
+    <p>Since <code>v7.0.0</code> we observe window resizing. If the window's dimensions have changed then we check if Handsontable should resize itself too.
+      Due to the performance issue, we use debounce method to response on window resize.</p>
+    <p>You can easily overwrite this behaviour by returning <code>false</code> in <code>beforeRefreshDimensions</code> hook.</p>
+    <pre class="prettyprint"><code class="js">{
+  beforeRefreshDimensions() { return false; }
+}</code></pre>
+    
+    <h3 id="manual-resizing">Manual resizing</h3>
+    <p>Created Handsontable instance exposes <code>refreshDimensions()</code> method which helps to resize grid elements properly.</p>
+    <pre class="prettyprint"><code class="js">const hot = new Handsontable(...);
+hot.refreshDimensions();</code></pre>
+    <p>Additionally, you can listen for two hooks, <code>beforeRefreshDimensions</code> and <code>afterRefreshDimensions</code>.</p>
+
+    <p><button id="expander">Expand</button> container</p>
+    <div data-jsfiddle="example">
+      <div class="graybox">
+        <div class="slice">
+          <div id="example" class="hot"></div>
+        </div>
+      </div>
+    </div>
+    <div class="codeLayout">
+      <div class="buttons">
+        <button class="jsFiddleLink" data-runfiddle="example">
+          <i class="fa fa-jsfiddle"></i>
+          Edit
+        </button>
+      </div>
+      <style data-jsfiddle="common">
+        .graybox {
+          padding: 15px;
+          background: #f8f8f8;
+          height: 400px;
+        }
+        .slice {
+          height: 50%;
+          width: 50%;
+          transition: all 0.5s;
+          background: #f0f0f0;
+          overflow: hidden;
+        }
+        .graybox.expanded .slice {
+          height: 100%;
+          width: 100%;
+        }
+      </style>
+      <script data-jsfiddle="example">
+        var sliceElem = document.querySelector('.slice');
+        var blueboxElem = sliceElem.parentElement;
+        var triggerBtn = document.getElementById('expander');
+        var example = document.getElementById('example');
+        var hot = new Handsontable(example, {
+          data: Handsontable.helper.createSpreadsheetData(50, 50),
+          rowHeaders: true,
+          colHeaders: true,
+          width: '100%',
+          height: '100%',
+          rowHeights: 30,
+          colWidths: 100,
+        });
+
+        triggerBtn.addEventListener('click', function() {
+          if (triggerBtn.textContent === 'Collapse') {
+            triggerBtn.textContent = 'Expand';
+            blueboxElem.className = blueboxElem.className.replace(' expanded', '');
+
+          } else {
+            triggerBtn.textContent = 'Collapse';
+            blueboxElem.className += ' expanded'
+          }
+        });
+        sliceElem.addEventListener('transitionend', function(e) {
+          if (e.propertyName === 'width') {
+            hot.refreshDimensions();
+          }
+        });
+      </script>
+    </div>
+  </div>
+  <p class="gap-top-xsmall">
+    <a href="https://github.com/handsontable/docs/edit/<?js= version ?>/tutorials/table-sizing.html" class="edit-doc" target="_blank">
+      Edit this page
+    </a>
+  </p>
+</div>
+
