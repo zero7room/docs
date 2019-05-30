@@ -117,44 +117,46 @@
       invoke the original method and then perform other operations, specific to your editor.</p>
     <p><strong>Example</strong> - overriding common method</p>
     <pre>
-      <code class="lang-js">// CustomEditor is a class function, inheriting form BaseEditor
-CustomEditor.prototype.prepare = function(row, col, prop, td, originalValue, cellProperties){
-  // Invoke the original method...
-  Handsontable.editors.BaseEditor.prototype.prepare.apply(this, arguments);
-  // ...and then do some stuff specific to your CustomEditor
-  this.customEditorSpecificProperty = &#x27;foo&#x27;;
-};
+      <code class="lang-js">// CustomEditor is a class, inheriting form BaseEditor
+class CustomEditor extends BaseEditor {
+  prepare(row, col, prop, td, originalValue, cellProperties) {
+    // Invoke the original method...
+    super.prepare(row, col, prop, td, originalValue, cellProperties);
+    // ...and then do some stuff specific to your CustomEditor
+    this.customEditorSpecificProperty = &#x27;foo&#x27;;
+  }
+}
       </code>
     </pre>
     <p>There are 7 common methods. All of them are described below.</p>
     <h4 id="prepare-row-number-col-number-prop-string-td-htmltablecellelement-cellproperties-object-">prepare(row: <code>Number</code>,
-      col: <code>Number</code>, prop: <code>String</code>, td: <code>HTMLTableCellElement</code>, cellProperties: <code>Object</code>)
+      col: <code>Number</code>, prop: <code>Number|String</code>, td: <code>HTMLTableCellElement</code>, originalValue: <code>Mixed</code>, cellProperties: <code>Object</code>)
     </h4>
     <p>Prepares editor to be displayed for given cell. Sets most of the instance properties.</p>
     <p>Returns: <code>undefined</code></p>
-    <h4 id="beginediting-initialvalue-string-optional-">beginEditing(initialValue: 'String' <em>[optional]</em> )
+    <h4 id="beginediting-initialvalue-string-optional-">beginEditing(newInitialValue: <code>Mixed</code>, event: <code>Mixed</code>)
     </h4>
-    <p>Sets editor value to <code>initialValue</code>. If <code>initialValue</code> is undefined, the editor value is set to
+    <p>Sets editor value to <code>newInitialValue</code>. If <code>newInitialValue</code> is undefined, the editor value is set to
       original cell value.
       Calls <code>open()</code> method internally.</p>
     <p>Returns: <code>undefined</code></p>
     <h4 id="finishediting-reverttooriginal-boolean-optional-ctrldown-boolean-optional-callback-function-">
-      finishEditing(revertToOriginal: 'Boolean' <em>[optional]</em>, ctrlDown: <code>Boolean</code>
+      finishEditing(restoreOriginalValue: 'Boolean' <em>[optional]</em>, ctrlDown: <code>Boolean</code>
       <em>[optional]</em>, callback: <code>Function</code>)</h4>
     <p>Tries to finish cell edition. Calls <code>saveValue()</code> and <code>discardEditor()</code> internally.
-      If <code>revertToOriginal</code> is set to <code>true</code> cell value is being set to its original value (from
+      If <code>restoreOriginalValue</code> is set to <code>true</code> cell value is being set to its original value (from
       before the edition).
       <code>ctrlDown</code> value is passed to <code>saveValue()</code> as the second argument.</p>
     <p>Callback function contains a boolean parameter - if new value is valid or <code>allowInvalid</code> parameter is
       <code>true</code>,
       otherwise the parameter is <code>false</code>.</p>
-    <h4 id="discardeditor-validationresult-boolean-">discardEditor(validationResult: <code>Boolean</code>)</h4>
-    <p>Called when cell validation ends. If new value is saved successfully (<code>validationResult</code> is set to <code>true</code>
+    <h4 id="discardeditor-validationresult-boolean-">discardEditor(result: <code>Boolean</code>)</h4>
+    <p>Called when cell validation ends. If new value is saved successfully (<code>result</code> is set to <code>true</code>
       or <code>allowInvalid</code> property is <code>true</code>)
       it calls <code>close()</code> method, otherwise calls <code>focus()</code> method and keeps editor opened.</p>
     <p>Returns: <code>undefined</code></p>
-    <h4 id="savevalue-val-mixed-ctrldown-boolean-">saveValue(val: <code>Mixed</code>, ctrlDown: <code>Boolean</code>)</h4>
-    <p>Tries to save <code>val</code> as new cell value. Performs validation internally. If <code>ctrlDown</code> is set to
+    <h4 id="savevalue-val-mixed-ctrldown-boolean-">saveValue(value: <code>Mixed</code>, ctrlDown: <code>Boolean</code>)</h4>
+    <p>Tries to save <code>value</code> as new cell value. Performs validation internally. If <code>ctrlDown</code> is set to
       true the new value will be set to all selected cells.</p>
     <p>Returns: <code>undefined</code></p>
     <h4 id="isopened-">isOpened()</h4>
@@ -189,37 +191,53 @@ CustomEditor.prototype.beginEditing = function() {};</code></pre>
     <p>Method does not need to return any value.</p>
     <h4 id="getvalue-">getValue()</h4>
     <p>Method should act return the current editor value, that is value that should be saved as a new cell value.</p>
-    <h4 id="setvalue-newvalue-mixed-">setValue(newValue: 'Mixed')</h4>
+    <h4 id="setvalue-newvalue-mixed-">setValue(newValue: <code>Mixed</code>)</h4>
     <p>Method should set editor value to <code>newValue</code>.</p>
     <p><strong>Example</strong>
       Let's say we are implementing a DateEditor, which helps selecting date, by displaying a calendar.
       <code>getValue()</code> and <code>setValue()</code> method could work like so:</p>
-    <pre><code class="lang-js">CalendarEditor.prototype.getValue = function() {
-  return calendar.getDate(); // returns currently selected date, for example "2013/09/15"
-};
+    <pre><code class="lang-js">class CalendarEditor extends TextEditor {
+    /**
+    * @param {Core} hotInstance Handsontable instance
+    * @private
+    */
+    constructor(hotInstance) {
+      super(hotInstance);
+    }
 
-CalendarEditor.prototype.setValue = function(newValue) {
-  calendar.highlightDate(newValue); // highlights given date on calendar
-};</code></pre>
+    getValue() {
+      return calendar.getDate(); // returns currently selected date, for example "2013/09/15"
+    }
+
+    setValue() {
+      calendar.highlightDate(newValue); // highlights given date on calendar
+    }
+}</code></pre>
     <h4 id="open-">open()</h4>
     <p>Displays the editor. In most cases this method can be as simple as:</p>
-    <pre><code class="lang-js">CustomEditor.prototype.open = function() {
-  this.editorDiv.style.display = '';
-};</code></pre>
+    <pre><code class="lang-js">class CustomEditor extends TextEditor {
+  open() {
+    this.editorDiv.style.display = '';
+  }
+}</code></pre>
     <p>This method does need to return any value.</p>
     <h4 id="close-">close()</h4>
     <p>Hides the editor after cell value has been changed. In most cases this method can be as simple as:</p>
-    <pre><code class="lang-js">CustomEditor.prototype.close = function() {
-  this.editorDiv.style.display = 'none';
-};</code></pre>
+    <pre><code class="lang-js">class CustomEditor extends TextEditor {
+  close() {
+    this.editorDiv.style.display = 'none';
+  }
+}</code></pre>
     <p>This method does need to return any value.</p>
     <h4 id="focus-">focus()</h4>
     <p>Focuses the editor. This method is called when user wants to close the editor by selecting another cell and the value
       in editor does not validate (and <code>allowInvalid</code> is <code>false</code>). In most cases this method can be as
       simple as:</p>
-    <pre><code class="lang-js">CustomEditor.prototype.focus = function() {
-  this.editorInput.focus();
-};</code></pre>
+    <pre><code class="lang-js">class CustomEditor extends TextEditor {
+  focus() {
+    this.editorInput.focus();
+  }
+}</code></pre>
     <p>This method does need to return any value.</p>
     <h3 id="common-editor-properties">Common editor properties</h3>
     <p>All of the undermentioned properties are available in editor instance through <code>this</code> object (e.g. <code>this.instance</code>).
@@ -259,24 +277,21 @@ CalendarEditor.prototype.setValue = function(newValue) {
         <code>createElements()</code> method, which creates <code>&lt;textarea&gt;</code> node and append it to DOM during
         editor initialization - BINGO!</p>
     <p>Here is the code</p>
-    <pre><code class="lang-js">var PasswordEditor = Handsontable.editors.TextEditor.prototype.extend();
-
-PasswordEditor.prototype.createElements = function () {
-  // Call the original createElements method
-  Handsontable.editors.TextEditor.prototype.createElements.apply(this, arguments);
-
-  // Create password input and update relevant properties
-  this.TEXTAREA = document.createElement('input');
-  this.TEXTAREA.setAttribute('type', 'password');
-  this.TEXTAREA.className = 'handsontableInput';
-  this.textareaStyle = this.TEXTAREA.style;
-  this.textareaStyle.width = 0;
-  this.textareaStyle.height = 0;
-
-  // Replace textarea with password input
-  Handsontable.dom.empty(this.TEXTAREA_PARENT);
-  this.TEXTAREA_PARENT.appendChild(this.TEXTAREA);
-};</code></pre>
+    <pre><code class="lang-js">class PasswordEditor extends TextEditor {
+  createElements() {
+    super.createElements();
+    
+    this.TEXTAREA = this.hot.rootDocument.createElement('input');
+    this.TEXTAREA.setAttribute('type', 'password');
+    this.TEXTAREA.className = 'handsontableInput';
+    this.textareaStyle = this.TEXTAREA.style;
+    this.textareaStyle.width = 0;
+    this.textareaStyle.height = 0;
+    
+    empty(this.TEXTAREA_PARENT);
+    this.TEXTAREA_PARENT.appendChild(this.TEXTAREA);
+  }
+}</code></pre>
     <p>That's it! You can now use your new editor:</p>
     <pre><code class="lang-js">var hot = new Handsontable(document.getElementById('container'), {
   data: someData,
@@ -351,23 +366,28 @@ PasswordEditor.prototype.createElements = function () {
         input is somewhere in <code>init()</code> method. DOM manipulation is considered to be quite expensive
         (regarding the resource consumption) operation, so it's best to perform it once and reuse the produced HTML
         nodes throughout the life of editor.</p>
-    <pre><code class="lang-js">SelectEditor.prototype.init = function() {
-  // Create detached node, add CSS class and make sure its not visible
-  this.select = document.createElement('SELECT');
-  Handsontable.dom.addClass(this.select, 'htSelectEditor');
-  this.select.style.display = 'none';
-
-  // Attach node to DOM, by appending it to the container holding the table
-  this.instance.rootElement.appendChild(this.select);
+    <pre><code class="lang-js">class SelectEditor extends BaseEditor {
+  /**
+  * Initializes editor instance, DOM Element and mount hooks.
+  */
+  init() {
+    // Create detached node, add CSS class and make sure its not visible
+    this.select = this.hot.rootDocument.createElement('SELECT');
+    addClass(this.select, 'htSelectEditor');
+    this.select.style.display = 'none';
+    
+    // Attach node to DOM, by appending it to the container holding the table
+    this.hot.rootElement.appendChild(this.select);
+  }
 };</code></pre>
     <br/>
     <pre><code class="lang-css">.htSelectEditor {
-  padding: 5px 7px;
-  position: absolute;
   /*
    * This hack enables to change &#x3C;select&#x3E; dimensions in WebKit browsers
    */
   -webkit-appearance: menulist-button !important;
+  position: absolute;
+  width: auto;
 }</code></pre>
     <p>Task two: <strong>DONE</strong></p>
     <h4 id="populating-select-with-options">Populating <code>&lt;select&gt;</code> with options</h4>
@@ -400,79 +420,143 @@ PasswordEditor.prototype.createElements = function () {
       <code>BaseEditor.prototype.prepare()</code> sets some important properties, which are used by other editor methods.
     </p>
     <pre><code class="lang-javascript">// Create options in prepare() method
-SelectEditor.prototype.prepare = function() {
+prepare(row, col, prop, td, originalValue, cellProperties) {
   // Remember to invoke parent's method
-  Handsontable.editors.BaseEditor.prototype.prepare.apply(this, arguments);
-
-  var selectOptions = this.cellProperties.selectOptions;
-  var options;
-
-  if (typeof selectOptions == 'function') {
-    options = this.prepareOptions(selectOptions(this.row,
-    this.col, this.prop))
-  } else {
+  super.prepare(row, col, prop, td, originalValue, cellProperties);
+  
+  const selectOptions = this.cellProperties.selectOptions;
+  let options;
+  
+  if (typeof selectOptions === 'function') {
+    options = this.prepareOptions(selectOptions(this.row, this.col, this.prop));
+    } else {
     options = this.prepareOptions(selectOptions);
   }
-  Handsontable.dom.empty(this.select);
-
-  for (var option in options) {
-    if (options.hasOwnProperty(option)) {
-      var optionElement = document.createElement('OPTION');
-      optionElement.value = option;
-      Handsontable.dom.fastInnerHTML(optionElement, options[option]);
-      this.select.appendChild(optionElement);
-    }
-  }
-}; </code></pre>
+  
+  empty(this.select);
+  
+  objectEach(options, (value, key) => {
+    const optionElement = this.hot.rootDocument.createElement('OPTION');
+    optionElement.value = key;
+    
+    fastInnerHTML(optionElement, value);
+    this.select.appendChild(optionElement);
+  });
+}</code></pre>
     <p>Where the <code>prepareOptions</code> is:</p>
-    <pre><code class="lang-javascript">SelectEditor.prototype.prepareOptions = function(optionsToPrepare) {
-  var preparedOptions = {};
+    <pre><code class="lang-javascript">prepareOptions(optionsToPrepare) {
+  let preparedOptions = {};
 
-  if (Handsontable.helper.isArray(optionsToPrepare)) {
-    for(var i = 0, len = optionsToPrepare.length; i < len; i++) {
-      preparedOptions[optionsToPrepare[i]] = optionsToPrepare[i];
-    }
-  } else if (typeof optionsToPrepare == 'object') {
-    preparedOptions = optionsToPrepare;
+  if (Array.isArray(optionsToPrepare)) {
+    for (let i = 0, len = optionsToPrepare.length; i < len; i++) { 
+      preparedOptions[optionsToPrepare[i]]=optionsToPrepare[i];
+    
+    } else if (typeof optionsToPrepare==='object' ) { 
+      preparedOptions=optionsToPrepare; 
+    } 
+  
+    return preparedOptions; 
   }
-
-  return preparedOptions;
-};</code></pre>
+}
+</code></pre>
     <p>Task three: <strong>DONE</strong></p>
     <h4 id="implementing-editor-specific-methods">Implementing editor specific methods</h4>
     <p>Most of the work is done. Now we just need to implement all the editor specific methods. Luckily, our editor is quite
       simple
       so those methods will be only few lines of code.</p>
-    <pre><code class="lang-javascript">SelectEditor.prototype.getValue = function() {
+    <pre><code class="lang-javascript">getValue() {
   return this.select.value;
-};
+}
 
-SelectEditor.prototype.setValue = function(value) {
+setValue(value) {
   this.select.value = value;
-};
+}
 
-SelectEditor.prototype.open = function() {
-  var width = Handsontable.dom.outerWidth(this.TD);
-  var height = Handsontable.dom.outerHeight(this.TD);
-  var rootOffset = Handsontable.dom.offset(this.instance.rootElement);
-  var tdOffset = Handsontable.dom.offset(this.TD);
-
-  // sets select dimensions to match cell size
-  this.select.style.height = height + 'px';
-  this.select.style.minWidth = width + 'px';
-
-  // make sure that list positions matches cell position
-  this.select.style.top = tdOffset.top - rootOffset.top + 'px';
-  this.select.style.left = tdOffset.left - rootOffset.left + 'px';
-  this.select.style.margin = '0px';
-
-  // display the list
+open() {
+  this._opened = true;
+  this.refreshDimensions();
   this.select.style.display = '';
-};
+}
 
-SelectEditor.prototype.close = function() {
+refreshDimensions() {
+  if (this.state !== EditorState.EDITING) {
+    return;
+  }
+
+  this.TD = this.getEditedCell();
+
+  // TD is outside of the viewport.
+  if (!this.TD) {
+    this.close();
+
+    return;
+  }
+  const { wtOverlays } = this.hot.view.wt;
+  const currentOffset = offset(this.TD);
+  const containerOffset = offset(this.hot.rootElement);
+  const scrollableContainer = wtOverlays.scrollableElement;
+  const editorSection = this.checkEditorSection();
+  let width = outerWidth(this.TD) + 1;
+  let height = outerHeight(this.TD) + 1;
+  let editTop = currentOffset.top - containerOffset.top - 1 - (scrollableContainer.scrollTop || 0);
+  let editLeft = currentOffset.left - containerOffset.left - 1 - (scrollableContainer.scrollLeft || 0);
+  let cssTransformOffset;
+
+  switch (editorSection) {
+    case 'top':
+      cssTransformOffset = getCssTransform(wtOverlays.topOverlay.clone.wtTable.holder.parentNode);
+      break;
+    case 'left':
+      cssTransformOffset = getCssTransform(wtOverlays.leftOverlay.clone.wtTable.holder.parentNode);
+      break;
+    case 'top-left-corner':
+      cssTransformOffset = getCssTransform(wtOverlays.topLeftCornerOverlay.clone.wtTable.holder.parentNode);
+      break;
+    case 'bottom-left-corner':
+      cssTransformOffset = getCssTransform(wtOverlays.bottomLeftCornerOverlay.clone.wtTable.holder.parentNode);
+      break;
+    case 'bottom':
+      cssTransformOffset = getCssTransform(wtOverlays.bottomOverlay.clone.wtTable.holder.parentNode);
+      break;
+    default:
+      break;
+  }
+
+  if (this.hot.getSelectedLast()[0] === 0) {
+    editTop += 1;
+  }
+  if (this.hot.getSelectedLast()[1] === 0) {
+    editLeft += 1;
+  }
+
+  const selectStyle = this.select.style;
+
+  if (cssTransformOffset && cssTransformOffset !== -1) {
+    selectStyle[cssTransformOffset[0]] = cssTransformOffset[1];
+  } else {
+    resetCssTransform(this.select);
+  }
+
+  const cellComputedStyle = getComputedStyle(this.TD, this.hot.rootWindow);
+
+  if (parseInt(cellComputedStyle.borderTopWidth, 10) > 0) {
+    height -= 1;
+  }
+  if (parseInt(cellComputedStyle.borderLeftWidth, 10) > 0) {
+    width -= 1;
+  }
+
+  selectStyle.height = `${height}px`;
+  selectStyle.minWidth = `${width}px`;
+  selectStyle.top = `${editTop}px`;
+  selectStyle.left = `${editLeft}px`;
+  selectStyle.margin = '0px';
+}
+
+close() {
+  this._opened = false;
   this.select.style.display = 'none';
-};</code></pre>
+}</code></pre>
     <p>The implementations of <code>getValue()</code>, <code>setValue()</code> and <code>close()</code> are
       self-explanatory, but <code>open()</code> requires a few words of comment. First of all,
       the implementation assumes that code responsible for populating the list with options is placed in
@@ -532,40 +616,33 @@ var hot = new Handsontable(document.getElementById('container'), {
       register our listener would be the <code>open()</code> method and the <code>close()</code> method should contain code
       that will remove our listener.</p>
     <p>Here's how the listener function could look like:</p>
-    <pre><code class="lang-javascript">var onBeforeKeyDown = function(event) {
-  var instance = this; // context of listener function is always set to Handsontable.Core instance
-  var editor = instance.getActiveEditor();
-  var selectedIndex = editor.select.selectedIndex;
-
-  Handsontable.dom.enableImmediatePropagation(event);
-
+    <pre><code class="lang-javascript">onBeforeKeyDown() {
+  const previousOptionIndex = this.select.selectedIndex - 1;
+  const nextOptionIndex = this.select.selectedIndex + 1;
+  
   switch (event.keyCode) {
-    case Handsontable.helper.keyCode.ARROW_UP:
-      var previousOption = editor.select.options[selectedIndex - 1];
-
-      if (previousOption) { // if previous option exists
-        editor.select.value = previousOption.value; // mark it as selected
+    case KEY_CODES.ARROW_UP:
+      if (previousOptionIndex >= 0) {
+        this.select[previousOptionIndex].selected = true;
       }
-
-      event.stopImmediatePropagation(); // prevent EditorManager from processing this event
-      event.preventDefault(); // prevent browser from scrolling the page up
+    
+      stopImmediatePropagation(event);
+      event.preventDefault();
+      break;
+    
+    case KEY_CODES.ARROW_DOWN:
+      if (nextOptionIndex <= this.select.length - 1){ 
+        this.select[nextOptionIndex].selected=true; 
+      }
+      
+      stopImmediatePropagation(event);
+      event.preventDefault();
       break;
 
-    case Handsontable.helper.keyCode.ARROW_DOWN:
-      var nextOption = editor.select.options[selectedIndex + 1];
-
-      if (nextOption) { // if previous option exists
-        editor.select.value = nextOption.value; // mark it as selected
-      }
-      event.stopImmediatePropagation(); // prevent EditorManager from processing this event
-      event.preventDefault(); // prevent browser from scrolling the page up
-      break;
+    default: 
+      break; 
+  } 
 }</code></pre>
-    <p>The first two lines of <code>onBeforeKeyDown()</code> are the most important. First of all, in listeners
-      <code>this</code> is set to instance
-      of <code>Handsontable.Core</code> <strong>NOT</strong> the instance of our editor. To get an instance of editor class,
-      we need to call
-      <code>getActiveEditor()</code> method, which returns the active editor.</p>
     <p>Active editor is the editor which <code>prepare()</code> method was called most recently. For example, if you select
       a cell which
       editor is <code>Handsontable.TextEditor</code>, then <code>getActiveEditor()</code> will return an object of this
@@ -574,83 +651,13 @@ var hot = new Handsontable(document.getElementById('container'), {
       and now
       <code>getActiveEditor()</code> will return an object of <code>DateEditor</code> class.</p>
     <p>The rest of the code should be quite clear. Now all we have to do is register our listener.</p>
-    <pre><code class="lang-javascript">SelectEditor.prototype.open = function() {
-  var width = Handsontable.dom.outerWidth(this.TD);
-  var height = Handsontable.dom.outerHeight(this.TD);
-  var rootOffset = Handsontable.dom.offset(this.instance.rootElement);
-  var tdOffset = Handsontable.dom.offset(this.TD);
+    <pre><code class="lang-javascript">open() {
+  this.addHook('beforeKeyDown', () => this.onBeforeKeyDown());
+}
 
-  this.select.style.height = height + 'px';
-  this.select.style.minWidth = width + 'px';
-  this.select.style.top = tdOffset.top - rootOffset.top + 'px';
-  this.select.style.left = tdOffset.left - rootOffset.left + 'px';
-  this.select.style.margin = '0px';
-  this.select.style.display = '';
-
-  // register listener
-  this.instance.addHook('beforeKeyDown', onBeforeKeyDown);
-};
-
-SelectEditor.prototype.close = function() {
-  this.select.style.display = 'none';
-  // remove listener
-  this.instance.removeHook('beforeKeyDown', onBeforeKeyDown);
-};</code></pre>
-    <p>Additionally, due to the recent change in the positioning of the overlays (fixed columns, rows, headers etc.) we need
-      to set the css transform property. We'll use the <code>Handsontable.dom</code>'s <code>getCssTransform</code>
-      and <code>resetCssTransform</code> to get the correct values:</p>
-    <pre><code class="lang-javascript">SelectEditor.prototype.open = function() {
-  var width = Handsontable.dom.outerWidth(this.TD);
-  // important - group layout reads together for better performance
-  var height = Handsontable.dom.outerHeight(this.TD);
-  var rootOffset = Handsontable.dom.offset(this.instance.rootElement);
-  var tdOffset = Handsontable.dom.offset(this.TD);
-  var editorSection = this.checkEditorSection();
-  var cssTransformOffset;
-
-  switch(editorSection) {
-    case 'top':
-      cssTransformOffset = Handsontable.dom.getCssTransform(this.instance.view.wt.wtScrollbars.vertical.clone.wtTable.holder.parentNode);
-      break;
-    case 'left':
-      cssTransformOffset = Handsontable.dom.getCssTransform(this.instance.view.wt.wtScrollbars.horizontal.clone.wtTable.holder.parentNode);
-      break;
-    case 'corner':
-      cssTransformOffset = Handsontable.dom.getCssTransform(this.instance.view.wt.wtScrollbars.corner.clone.wtTable.holder.parentNode);
-      break;
-  }
-  var selectStyle = this.select.style;
-
-  if (cssTransformOffset && cssTransformOffset !== -1) {
-    selectStyle[cssTransformOffset[0]] = cssTransformOffset[1];
-  } else {
-    Handsontable.dom.resetCssTransform(this.select);
-  }
-
-  selectStyle.height = height + 'px';
-  selectStyle.minWidth = width + 'px';
-  selectStyle.top = tdOffset.top - rootOffset.top + 'px';
-  selectStyle.left = tdOffset.left - rootOffset.left + 'px';
-  selectStyle.margin = '0px';
-  selectStyle.display = '';
-
-  this.instance.addHook('beforeKeyDown', onBeforeKeyDown);
-};
-
-SelectEditor.prototype.checkEditorSection = function() {
-  if (this.row < this.instance.getSettings().fixedRowsTop) {
-    if (this.col < this.instance.getSettings().fixedColumnsLeft) {
-      return 'corner';
-    } else {
-      return 'top';
-    }
-  } else {
-    if (this.col < this.instance.getSettings().fixedColumnsLeft) {
-      return 'left';
-    }
-  }
-};
-</code></pre>
+close() {
+  this.clearHooks();
+}</code></pre>
     <p>Go ahead and test it!</p>
     <h2 id="page-registering-an-editor" name="registering-an-editor">Registering an editor</h2>
     <p>When you create an editor, a good idea is to assign it an alias that will refer to this particular editor class.
