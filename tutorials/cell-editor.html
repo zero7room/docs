@@ -277,7 +277,9 @@ CustomEditor.prototype.beginEditing = function() {};</code></pre>
         <code>createElements()</code> method, which creates <code>&lt;textarea&gt;</code> node and append it to DOM during
         editor initialization - BINGO!</p>
     <p>Here is the code</p>
-    <pre><code class="lang-js">class PasswordEditor extends TextEditor {
+    <pre><code class="lang-js">import Handsontable from 'handsontable';
+
+class PasswordEditor extends Handsontable.editors.TextEditor {
   createElements() {
     super.createElements();
     
@@ -288,7 +290,7 @@ CustomEditor.prototype.beginEditing = function() {};</code></pre>
     this.textareaStyle.width = 0;
     this.textareaStyle.height = 0;
     
-    empty(this.TEXTAREA_PARENT);
+    Handsontable.dom.empty(this.TEXTAREA_PARENT);
     this.TEXTAREA_PARENT.appendChild(this.TEXTAREA);
   }
 }</code></pre>
@@ -366,14 +368,16 @@ CustomEditor.prototype.beginEditing = function() {};</code></pre>
         input is somewhere in <code>init()</code> method. DOM manipulation is considered to be quite expensive
         (regarding the resource consumption) operation, so it's best to perform it once and reuse the produced HTML
         nodes throughout the life of editor.</p>
-    <pre><code class="lang-js">class SelectEditor extends BaseEditor {
+    <pre><code class="lang-js">import Handsontable from 'handsontable';
+
+class SelectEditor extends Handsontable.editors.BaseEditor {
   /**
   * Initializes editor instance, DOM Element and mount hooks.
   */
   init() {
     // Create detached node, add CSS class and make sure its not visible
     this.select = this.hot.rootDocument.createElement('SELECT');
-    addClass(this.select, 'htSelectEditor');
+    Handsontable.dom.addClass(this.select, 'htSelectEditor');
     this.select.style.display = 'none';
     
     // Attach node to DOM, by appending it to the container holding the table
@@ -433,13 +437,13 @@ prepare(row, col, prop, td, originalValue, cellProperties) {
     options = this.prepareOptions(selectOptions);
   }
   
-  empty(this.select);
+  Handsontable.dom.empty(this.select);
   
-  objectEach(options, (value, key) => {
+  Handsontable.helper.objectEach(options, (value, key) => {
     const optionElement = this.hot.rootDocument.createElement('OPTION');
     optionElement.value = key;
     
-    fastInnerHTML(optionElement, value);
+    Handsontable.dom.fastInnerHTML(optionElement, value);
     this.select.appendChild(optionElement);
   });
 }</code></pre>
@@ -450,13 +454,13 @@ prepare(row, col, prop, td, originalValue, cellProperties) {
   if (Array.isArray(optionsToPrepare)) {
     for (let i = 0, len = optionsToPrepare.length; i < len; i++) { 
       preparedOptions[optionsToPrepare[i]]=optionsToPrepare[i];
+    }
     
-    } else if (typeof optionsToPrepare==='object' ) { 
-      preparedOptions=optionsToPrepare; 
-    } 
+  } else if (typeof optionsToPrepare==='object' ) { 
+    preparedOptions=optionsToPrepare; 
+  } 
   
-    return preparedOptions; 
-  }
+  return preparedOptions; 
 }
 </code></pre>
     <p>Task three: <strong>DONE</strong></p>
@@ -479,10 +483,6 @@ open() {
 }
 
 refreshDimensions() {
-  if (this.state !== EditorState.EDITING) {
-    return;
-  }
-
   this.TD = this.getEditedCell();
 
   // TD is outside of the viewport.
@@ -492,31 +492,31 @@ refreshDimensions() {
     return;
   }
   const { wtOverlays } = this.hot.view.wt;
-  const currentOffset = offset(this.TD);
-  const containerOffset = offset(this.hot.rootElement);
+  const currentOffset = Handsontable.dom.offset(this.TD);
+  const containerOffset = Handsontable.dom.offset(this.hot.rootElement);
   const scrollableContainer = wtOverlays.scrollableElement;
   const editorSection = this.checkEditorSection();
-  let width = outerWidth(this.TD) + 1;
-  let height = outerHeight(this.TD) + 1;
+  let width = Handsontable.dom.outerWidth(this.TD) + 1;
+  let height = Handsontable.dom.outerHeight(this.TD) + 1;
   let editTop = currentOffset.top - containerOffset.top - 1 - (scrollableContainer.scrollTop || 0);
   let editLeft = currentOffset.left - containerOffset.left - 1 - (scrollableContainer.scrollLeft || 0);
   let cssTransformOffset;
 
   switch (editorSection) {
     case 'top':
-      cssTransformOffset = getCssTransform(wtOverlays.topOverlay.clone.wtTable.holder.parentNode);
+      cssTransformOffset = Handsontable.dom.getCssTransform(wtOverlays.topOverlay.clone.wtTable.holder.parentNode);
       break;
     case 'left':
-      cssTransformOffset = getCssTransform(wtOverlays.leftOverlay.clone.wtTable.holder.parentNode);
+      cssTransformOffset = Handsontable.dom.getCssTransform(wtOverlays.leftOverlay.clone.wtTable.holder.parentNode);
       break;
     case 'top-left-corner':
-      cssTransformOffset = getCssTransform(wtOverlays.topLeftCornerOverlay.clone.wtTable.holder.parentNode);
+      cssTransformOffset = Handsontable.dom.getCssTransform(wtOverlays.topLeftCornerOverlay.clone.wtTable.holder.parentNode);
       break;
     case 'bottom-left-corner':
-      cssTransformOffset = getCssTransform(wtOverlays.bottomLeftCornerOverlay.clone.wtTable.holder.parentNode);
+      cssTransformOffset = Handsontable.dom.getCssTransform(wtOverlays.bottomLeftCornerOverlay.clone.wtTable.holder.parentNode);
       break;
     case 'bottom':
-      cssTransformOffset = getCssTransform(wtOverlays.bottomOverlay.clone.wtTable.holder.parentNode);
+      cssTransformOffset = Handsontable.dom.getCssTransform(wtOverlays.bottomOverlay.clone.wtTable.holder.parentNode);
       break;
     default:
       break;
@@ -534,10 +534,10 @@ refreshDimensions() {
   if (cssTransformOffset && cssTransformOffset !== -1) {
     selectStyle[cssTransformOffset[0]] = cssTransformOffset[1];
   } else {
-    resetCssTransform(this.select);
+    Handsontable.dom.resetCssTransform(this.select);
   }
 
-  const cellComputedStyle = getComputedStyle(this.TD, this.hot.rootWindow);
+  const cellComputedStyle = Handsontable.dom.getComputedStyle(this.TD, this.hot.rootWindow);
 
   if (parseInt(cellComputedStyle.borderTopWidth, 10) > 0) {
     height -= 1;
@@ -551,6 +551,46 @@ refreshDimensions() {
   selectStyle.top = `${editTop}px`;
   selectStyle.left = `${editLeft}px`;
   selectStyle.margin = '0px';
+}
+
+getEditedCell() {
+  const { wtOverlays } = this.hot.view.wt;
+  const editorSection = this.checkEditorSection();
+  let editedCell;
+
+  switch (editorSection) {
+    case 'top':
+      editedCell = wtOverlays.topOverlay.clone.wtTable.getCell({
+        row: this.row,
+        col: this.col
+      });
+      this.select.style.zIndex = 101;
+    break;
+    case 'corner':
+      editedCell = wtOverlays.topLeftCornerOverlay.clone.wtTable.getCell({
+        row: this.row,
+        col: this.col
+      });
+      this.select.style.zIndex = 103;
+      break;
+    case 'left':
+      editedCell = wtOverlays.leftOverlay.clone.wtTable.getCell({
+        row: this.row,
+        col: this.col
+      });
+      this.select.style.zIndex = 102;
+      break;
+    default:
+      editedCell = this.hot.getCell(this.row, this.col);
+      this.select.style.zIndex = '';
+      break;
+  }
+
+  return editedCell < 0 ? void 0 : editedCell; 
+}
+
+focus() {
+  this.select.focus();
 }
 
 close() {
@@ -621,7 +661,7 @@ var hot = new Handsontable(document.getElementById('container'), {
   const nextOptionIndex = this.select.selectedIndex + 1;
   
   switch (event.keyCode) {
-    case KEY_CODES.ARROW_UP:
+    case Handsontable.helper.KEY_CODES.ARROW_UP:
       if (previousOptionIndex >= 0) {
         this.select[previousOptionIndex].selected = true;
       }
@@ -630,7 +670,7 @@ var hot = new Handsontable(document.getElementById('container'), {
       event.preventDefault();
       break;
     
-    case KEY_CODES.ARROW_DOWN:
+    case Handsontable.helper.KEY_CODES.ARROW_DOWN:
       if (nextOptionIndex <= this.select.length - 1){ 
         this.select[nextOptionIndex].selected=true; 
       }
