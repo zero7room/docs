@@ -11,6 +11,7 @@
         <li><a href="#column-settings">Declaring column settings</a></li>
         <li><a href="#custom-renderer">Declaring a custom renderer as a component</a></li>
         <li><a href="#custom-editor">Declaring a custom editor as a component</a></li>
+        <li><a href="#v-model">Using the renderer/editor components with <code>v-model</code></a></li>
         <li><a href="#advanced-example">A more advanced example</a></li>
       </ul>
     </div>
@@ -163,6 +164,17 @@
             CustomRenderer
           }
         });</script>
+    </div>
+
+    <div data-alert class="alert-box info">
+      <b>Note: </b> in order for the cell renderers to be independent, there are renderer components created for each of the displayed cells (all of them being clones
+      of the "original" renderer component). For performance reasons, there are cached using the LRU algorithm, which stores a certain amount of entries, and overwrites the
+      least recently used ones with fresh ones.<br>
+      By default, the number of entries available for the cache is set to <code>3000</code>, which means 3000 cells can be rendered at the same time, while being read from the cache.
+      However, for larger tables, some of the cells may not be able to be cached, and thus, their corresponding component would be recreated each time a cell is rendered (which is not
+      great for performance).<br><br>
+      To prevent this problem, it is possible to pass the <code><strong>wrapperRendererCacheSize</strong></code> option to the <code>HotTable</code> component and set it to a number of
+      entries to be available in the renderer cache.
     </div>
 
     <h3 id="custom-editor">Declaring a custom editor as a component</h3>
@@ -331,6 +343,106 @@
         });</script>
     </div>
 
+    <h3 id="v-model">Using the renderer/editor components with <code>v-model</code></h3>
+    <p>You can obviously use Vue's <code>v-model</code> with the renderer and editor components.</p>
+    <p>In the example below, we're utilizing an input with <code>v-model</code> assigned, and the reading the bound property from the renderer component to highlight the rows
+    entered into the input.</p>
+
+    <div>
+      <div id="v-model-example" class="hot">
+        <label for="mainInput">List of row indexes (starting from 0):</label><br>
+        <input id="mainInput" v-model="highlightedRows"/>
+
+        <br><br>
+
+        <hot-table :settings="hotSettings" :row-headers="true" :col-headers="true">
+          <hot-column :width="50">
+            <custom-renderer hot-renderer></custom-renderer>
+          </hot-column>
+        </hot-table>
+      </div>
+    </div>
+    <script type="text/x-hot-html" data-jsfiddle="v-model-example">
+      <div id="v-model-example">
+        <label for="mainInput">List of row indexes (starting from 0):</label><br>
+        <input id="mainInput" v-model="highlightedRows"/>
+
+        <br><br>
+
+        <hot-table :settings="hotSettings" :row-headers="true" :col-headers="true">
+          <hot-column :width="50">
+            <custom-renderer hot-renderer></custom-renderer>
+          </hot-column>
+        </hot-table>
+      </div>
+    </script>
+    <br><br>
+    <pre><code class="hljs html">&lt;div id="v-model-example"&gt;
+  &lt;label for="mainInput"&gt;List of row indexes (starting from 0):&lt;/label&gt;&lt;br&gt;
+    &lt;input id="mainInput" v-model="highlightedRows"/&gt;
+
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;hot-table :settings="hotSettings" :row-headers="true" :col-headers="true"&gt;
+      &lt;hot-column :width="50"&gt;
+        &lt;custom-renderer hot-renderer&gt;&lt;/custom-renderer&gt;
+      &lt;/hot-column&gt;
+    &lt;/hot-table&gt;
+&lt;/div&gt;</code></pre>
+
+    <div class="codeLayout">
+      <div class="buttons">
+        <button class="jsFiddleLink" data-runfiddle="v-model-example">
+          <i class="fa fa-jsfiddle"></i>
+          Edit
+        </button>
+      </div>
+      <script type="text/babel" data-jsfiddle="v-model-example" data-jsfiddle-panel_js="3">
+        import Vue from 'vue';
+        import { HotTable, HotColumn } from '@handsontable/vue';
+        import Handsontable from 'handsontable';
+
+        const CustomRenderer = {
+          template: `<div v-bind:style="{ backgroundColor: bgColor }">{{value}}</div>`,
+          data: function() {
+            return {
+              hotInstance: null,
+              TD: null,
+              row: null,
+              col: null,
+              prop: null,
+              value: null,
+              cellProperties: null
+            }
+          },
+          computed: {
+            bgColor: function() {
+              console.log(this.$root.highlightedRows);
+              return this.$root.highlightedRows.includes(this.row) ? '#40b882' : '#fff';
+            }
+          }
+        };
+
+        const App = new Vue({
+          el: '#v-model-example',
+          data: function() {
+            return {
+              hotSettings: {
+                data: Handsontable.helper.createSpreadsheetData(10, 1)  ,
+                licenseKey: 'non-commercial-and-evaluation',
+                autoRowSize: false,
+                autoColumnSize: false
+              },
+              highlightedRows: ''
+            }
+          },
+          components: {
+            HotTable,
+            HotColumn,
+            CustomRenderer
+          }
+        });</script>
+    </div>
 
     <h3 id="#advanced-example">A more advanced example</h3>
     <p>In this example, we'll be combining several capabilities of the wrapper:</p>
@@ -376,7 +488,7 @@
     </div>
   </div>
   <p>
-    <a href="https://github.com/handsontable/docs/edit/<?js= version ?>/tutorials/wrapper-for-vue-custom-renderer-example.html"
+    <a href="https://github.com/handsontable/docs/edit/<?js= version ?>/tutorials/wrapper-for-vue-hot-column.html"
        class="edit-doc" target="_blank">Edit this page</a>
   </p>
 </div>

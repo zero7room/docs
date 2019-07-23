@@ -2,9 +2,18 @@
   <div class="example-container clearfix">
     <div>
       <p>
-        An implementation of the <code>@handsontable/vue</code> component with a custom editor added. It utilizes the <code>placeholder</code> attribute in the editor's <code>input</code> element.
+        You can declare a custom editor for the <code>HotTable</code> component either by declaring it as a class and passing it to the
+        Handsontable options, or create an editor component.
+      <ul>
+        <li><a href="#classEditor">Declaring a renderer as a function</a></li>
+        <li><a href="frameworks-wrapper-for-vue-hot-column.html#custom-editor">Declaring an editor as a component</a></li>
+      </ul>
       </p>
     </div>
+    <h3 id="classEditor">Declaring an editor as a class</h3>
+    <p>
+      An implementation of the <code>@handsontable/vue</code> component with a custom editor added. It utilizes the <code>placeholder</code> attribute in the editor's <code>input</code> element.
+    </p>
     <div>
       <div id="example1" class="hot">
         <hot-table :settings="hotSettings"></hot-table>
