@@ -1,8 +1,36 @@
 <div class="static-content">
 
   <div class="example-container clearfix">
+    <h3>7.1.0</h3>
+    <p>Released on 11th of June, 2019</p>
+    <strong>Changes</strong>
+    <ul>
+      <li>Added a new feature, allowing users to parse HTML tables into Handsontable settings and Handsontable instances to plain HTML tables. This change introduces these new API methods:
+        <ul>
+          <li>`Handsontable.helper.instanceToHTML: (instance: Handsontable.Core) => string` - parses the provided Handsontable instance to an HTML table as a <code>string</code></li>
+          <li>`Handsontable.helper.htmlToGridSettings(element: Element | string, rootDocument?: Document) => Handsontable.DefaultSettings` - analyses a static HTML table and returns a Handsontable-compatible settings object</li>
+          <li>`hotInstance.toTableElement: () => HTMLTableElement` - converts the Handsontable instance to a static HTML table</li>
+          <li>`hotInstance.toHTML: () => string` - same as <code>Handsontable.helper.instanceToHTML</code>, but the instance is already bound</li>
+        </ul>
+        (<a href="https://github.com/handsontable/handsontable/issues/5684" target="_blank">#5684</a>)
+      </li>
+      <li>Fixed a bug, where it wasn't possible to block <code>Undo/Redo</code> plugin keyboard shortcuts. (<a href="https://github.com/handsontable/handsontable/issues/6028" target="_blank">#6028</a>)</li>
+      <li>Corrected the <code>ManualColumnMove</code> type definitions. (<a href="https://github.com/handsontable/handsontable/issues/6011" target="_blank">#6011</a>)</li>
+      <li>Fixed a problem with pasting multi-line data from Excel and Google Sheets. (<a href="https://github.com/handsontable/handsontable/issues/5970" target="_blank">#5970</a>, <a href="https://github.com/handsontable/handsontable/issues/5622" target="_blank">#5622</a>)</li>
+      <li>Fixed a bug, where it was impossible to paste merged cells from Excel. (<a href="https://github.com/handsontable/handsontable/issues/5940" target="_blank">#5940</a>)</li>
+      <li>Fixed a problem with copying cells with longer contents from Excel or Google Sheets. (<a href="https://github.com/handsontable/handsontable/issues/5925" target="_blank">#5925</a>)</li>
+      <li>Fixed a problem with Handsontable not adding the carriage return character to the pasted data. (<a href="https://github.com/handsontable/handsontable/issues/5826" target="_blank">#5826</a>, <a href="https://github.com/handsontable/handsontable/issues/5647" target="_blank">#5647</a>)</li>
+      <li>Fixed some <code>NestedRows</code> performance issues on large datasets. (<a href="https://github.com/handsontable/handsontable/issues/5711" target="_blank">#5711</a>)</li>
+      <li>Fixed a bug, where placing SVG in a cell caused a <code>ManualColumnMove</code> error. (<a href="https://github.com/handsontable/handsontable/issues/4120" target="_blank">#4120</a>)</li>
+      <li>Fixed a bug, where using the <code>Undo</code> functionality, the selection was not reverted to its original position. (<a href="https://github.com/handsontable/handsontable/issues/6017" target="_blank">#6017</a>)</li>
+      <li>Fixed a bug, where the <code>getCell</code> method, when used with the <code>topmost</code> argument set to <code>true</code>, did not return the correct cell elements from the bottom overlay. (<a href="https://github.com/handsontable/handsontable/issues/5896" target="_blank">#5896</a>)</li>
+      <li>Added a possibility to return <code>false</code> from the <code>beforeCreateCol</code> hook to stop the column creation. (<a href="https://github.com/handsontable/handsontable/issues/5691" target="_blank">#5691</a>)</li>
+    </ul>
+  </div>
+
+  <div class="example-container clearfix">
     <h3>7.0.3</h3>
-    <p>Released on 13th of May, 2018</p>
+    <p>Released on 13th of May, 2019</p>
     <strong>Changes</strong>
     <ul>
       <li>Fix the <code>skipRowOnPaste</code> option to work similarly to <code>skipColumnOnPaste</code> and add it to the documentation. (<a href="https://github.com/handsontable/handsontable/issues/5845" target="_blank">#5845</a>)</li>
@@ -16,7 +44,7 @@
 
   <div class="example-container clearfix">
     <h3>7.0.2</h3>
-    <p>Released on 9th of April, 2018</p>
+    <p>Released on 9th of April, 2019</p>
     <strong>Changes</strong>
     <ul>
       <li>Fixed a bug from <code>7.0.1</code>, which made the scrolling on overlays (fixed rows/columns, headers) work improperly. (<a href="https://github.com/handsontable/handsontable/pull/5938" target="_blank">#5938</a>)</li>
@@ -25,7 +53,7 @@
 
   <div class="example-container clearfix">
     <h3>7.0.1</h3>
-    <p>Released on 8th of April, 2018</p>
+    <p>Released on 8th of April, 2019</p>
     <strong>Changes</strong>
     <ul>
       <li>Fixed the <code>LICENSE.txt</code> file link in <code>README.md</code>. (<a href="https://github.com/handsontable/handsontable/issues/5914" target="_blank">#5914</a>)</li>
@@ -41,7 +69,7 @@
 
   <div class="example-container clearfix">
     <h3>7.0.0</h3>
-    <p>Released on 6th of March, 2018</p>
+    <p>Released on 6th of March, 2019</p>
     <strong>Breaking changes</strong>
     <ul>
       <li><b>Starting with version 7.0.0, there is only one Handsontable, as Handsontable Pro has been merged with Handsontable Community Edition.</b></li>
