@@ -381,6 +381,9 @@
           "wrapper-for-vue-simple-example": {
             "title": "Basic example"
           },
+          "wrapper-for-vue-hot-column": {
+            "title": "Using the hot-column component"
+          },
           "wrapper-for-vue-custom-id-class-style": {
             "title": "Custom ID, Class, Style and other attributes"
           },

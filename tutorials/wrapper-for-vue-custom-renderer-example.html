@@ -2,10 +2,17 @@
   <div class="example-container clearfix">
     <div>
       <p>
-        An implementation of the <code>@handsontable/vue</code> with a custom renderer added. It takes an image url as the input and renders
-        the image in the edited cell.
+        You can declare a custom renderer for the <code>HotTable</code> component either by declaring it as a function in the
+        Handsontable options, or create a rendering component.
+      <ul>
+        <li><a href="#functionRenderer">Declaring a renderer as a function</a></li>
+        <li><a href="frameworks-wrapper-for-vue-hot-column.html#custom-renderer">Declaring a renderer as a component</a></li>
+      </ul>
       </p>
     </div>
+
+    <h3 id="functionRenderer">Declaring a renderer as a function</h3>
+
     <div>
       <div id="example1" class="hot">
         <hot-table :settings="hotSettings"></hot-table>
@@ -15,6 +22,8 @@
       <div id="example1" class="hot">
         <hot-table :settings="hotSettings"></hot-table>
       </div>
+
+
     </script>
     <div class="codeLayout">
       <div class="buttons">
@@ -24,61 +33,62 @@
         </button>
       </div>
       <script type="text/babel" data-jsfiddle="example1" data-jsfiddle-panel_js="3">
-      import Vue from 'vue';
-      import { HotTable } from '@handsontable/vue';
-      import Handsontable from 'handsontable';
+        import Vue from 'vue';
+        import { HotTable } from '@handsontable/vue';
+        import Handsontable from 'handsontable';
 
-      new Vue({
-        el: '#example1',
-        data: function() {
-          return {
-            hotSettings: {
-              data:
-                [
-                  ['A1', 'http://ecx.images-amazon.com/images/I/51bRhyVTVGL._SL50_.jpg'],
-                  ['A2', 'http://ecx.images-amazon.com/images/I/51gdVAEfPUL._SL50_.jpg']],
-              columns: [
-                {},
-                {
-                  renderer: function(instance, td, row, col, prop, value, cellProperties) {
-                    const escaped = Handsontable.helper.stringify(value);
-                    let img = null;
+        new Vue({
+          el: '#example1',
+          data: function() {
+            return {
+              hotSettings: {
+                data:
+                  [
+                    ['A1', 'http://ecx.images-amazon.com/images/I/51bRhyVTVGL._SL50_.jpg'],
+                    ['A2', 'http://ecx.images-amazon.com/images/I/51gdVAEfPUL._SL50_.jpg']],
+                columns: [
+                  {},
+                  {
+                    renderer: function(instance, td, row, col, prop, value, cellProperties) {
+                      const escaped = Handsontable.helper.stringify(value);
+                      let img = null;
 
-                    if (escaped.indexOf('http') === 0) {
-                      img = document.createElement('IMG');
-                      img.src = value;
+                      if (escaped.indexOf('http') === 0) {
+                        img = document.createElement('IMG');
+                        img.src = value;
 
-                      Handsontable.dom.addEvent(img, 'mousedown', function(event) {
-                        event.preventDefault();
-                      });
+                        Handsontable.dom.addEvent(img, 'mousedown', function(event) {
+                          event.preventDefault();
+                        });
 
-                      Handsontable.dom.empty(td);
-                      td.appendChild(img);
-                    } else {
-                      Handsontable.renderers.TextRenderer.apply(this, arguments);
+                        Handsontable.dom.empty(td);
+                        td.appendChild(img);
+                      } else {
+                        Handsontable.renderers.TextRenderer.apply(this, arguments);
+                      }
+
+                      return td;
                     }
-
-                    return td;
                   }
-                }
-              ],
-              colHeaders: true,
-              rowHeights: 55
+                ],
+                colHeaders: true,
+                rowHeights: 55
+              }
             }
+          },
+          components: {
+            HotTable
           }
-        },
-        components: {
-          HotTable
-        }
-      });</script>
+        });</script>
     </div>
   </div>
-    <p>
-      <a href="https://github.com/handsontable/docs/edit/<?js= version ?>/tutorials/wrapper-for-vue-custom-renderer-example.html"
-         class="edit-doc" target="_blank">Edit this page</a>
-    </p>
+  <p>
+    <a href="https://github.com/handsontable/docs/edit/<?js= version ?>/tutorials/wrapper-for-vue-custom-renderer-example.html"
+       class="edit-doc" target="_blank">Edit this page</a>
+  </p>
 </div>
 <script data-jsfiddle="common" src="/docs/<?js= env.opts.query.version ?>/scripts/jsfiddle-fixer.js"></script>
 <script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.min.js"></script>
-<script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/@handsontable/vue@4.0.0/dist/vue-handsontable.min.js"></script>
+<script data-jsfiddle="common"
+        src="https://cdn.jsdelivr.net/npm/@handsontable/vue@4.1.0/dist/vue-handsontable.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7/babel.min.js"></script>

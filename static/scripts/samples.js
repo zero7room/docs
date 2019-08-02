@@ -209,10 +209,15 @@ function ajax(url, method, params, callback) {
               }
 
               var clonedExample = clone.querySelector('#' + runfiddle);
-              clonedExample.innerHTML = ''; //clear example HTML, just leave container
-              var originalHT = dataFiddle[x].querySelector('#' + runfiddle);
+              if (clonedExample) {
+                clonedExample.innerHTML = ''; //clear example HTML, just leave container
+              }
 
-              var originalStyle = originalHT.getAttribute('data-originalstyle');
+              var originalHT = dataFiddle[x].querySelector('#' + runfiddle);
+              if(originalHT) {
+                var originalStyle = originalHT.getAttribute('data-originalstyle');
+              }
+
               if (originalStyle) {
                 clonedExample.setAttribute('style', originalStyle);
               }

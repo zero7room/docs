@@ -1,0 +1,500 @@
+<div class="static-content">
+  <div class="example-container clearfix">
+
+    <h4>Version <code>4.1.0</code> of the <code>@handsontable/vue</code> wrapper introduces a new feature - a <code>hot-column</code> component.</h4>
+   <p>
+     It doesn't only allow to configure the column-related settings using the <code>hot-column</code> component's attributes, but also create custom renderers and editors using Vue components.
+   </p>
+
+    <div class="index-list">
+      <ul>
+        <li><a href="#column-settings">Declaring column settings</a></li>
+        <li><a href="#custom-renderer">Declaring a custom renderer as a component</a></li>
+        <li><a href="#custom-editor">Declaring a custom editor as a component</a></li>
+        <li><a href="#v-model">Using the renderer/editor components with <code>v-model</code></a></li>
+        <li><a href="#advanced-example">A more advanced example</a></li>
+      </ul>
+    </div>
+
+    <h3 id="column-settings">Declaring column settings</h3>
+    <p>To declare column-specific settings, simply pass the settings as <code>hot-column</code> props (either separately
+      or wrapped as a <code>settings</code> prop, exactly as you would for <code>hot-table</code>).</p>
+
+    <div>
+      <div id="example1" class="hot">
+        <hot-table :data="hotData" license-key="non-commercial-and-evaluation">
+          <hot-column title="First column header"></hot-column>
+          <hot-column :settings="secondColumnSettings" read-only="true"></hot-column>
+        </hot-table>
+      </div>
+    </div>
+    <script type="text/x-hot-html" data-jsfiddle="example1">
+      <div id="example1" class="hot">
+        <hot-table :data="hotData">
+          <hot-column title="First column header"></hot-column>
+          <hot-column :settings="secondColumnSettings" read-only="true"></hot-column>
+        </hot-table>
+      </div>
+    </script>
+<br><br>
+    <pre><code class="hljs html">&lt;hot-table :data="hotData"&gt;
+  &lt;hot-column title="First column header"&gt;
+  &lt;/hot-column&gt;
+  &lt;hot-column :settings="secondColumnSettings" read-only="true"&gt;
+  &lt;/hot-column&gt;
+&lt;/hot-table&gt;</code></pre>
+
+    <div class="codeLayout">
+      <div class="buttons">
+        <button class="jsFiddleLink" data-runfiddle="example1">
+          <i class="fa fa-jsfiddle"></i>
+          Edit
+        </button>
+      </div>
+      <script type="text/babel" data-jsfiddle="example1" data-jsfiddle-panel_js="3">
+        import Vue from 'vue';
+        import { HotTable, HotColumn } from '@handsontable/vue';
+        import Handsontable from 'handsontable';
+
+        new Vue({
+          el: '#example1',
+          data: function() {
+            return {
+              hotData: Handsontable.helper.createSpreadsheetData(10, 10),
+              secondColumnSettings: {
+                title: 'Second column header'
+              }
+            }
+          },
+          components: {
+            HotTable,
+            HotColumn
+          }
+        });</script>
+    </div>
+
+    <h3 id="custom-renderer">Declaring a custom renderer as a component</h3>
+    <p>The wrapper allows creating custom renderers using Vue components. The data you would normally get as arguments of
+      the rendering function will be injected into the rendering component's <code>$data</code> object.</p>
+    <p>To mark a component as a Handsontable renderer, simply add a <code>hot-renderer</code> attribute to it.</p>
+
+    <div data-alert class="alert-box warn">
+      Because the Handsontable's <code>autoRowSize</code> and <code>autoColumnSize</code> options require calculating the
+      widths/heights of some of the cells before rendering them into the table, it's not currently possible to use them alongside component-based renderers,
+      as they're created after the table's initialization.<br>
+      <strong>Be sure to turn those options off in your Handsontable config, as keeping them enabled may cause unexpected results.</strong>
+    </div>
+
+    <div>
+      <div id="custom-renderer-example" class="hot">
+        <hot-table :settings="hotSettings">
+          <hot-column :width="250">
+            <custom-renderer hot-renderer></custom-renderer>
+          </hot-column>
+        </hot-table>
+      </div>
+    </div>
+    <script type="text/x-hot-html" data-jsfiddle="custom-renderer-example">
+      <div id="custom-renderer-example" class="hot">
+        <hot-table :settings="hotSettings">
+          <hot-column :width="250">
+            <custom-renderer hot-renderer></custom-renderer>
+          </hot-column>
+        </hot-table>
+      </div>
+    </script>
+    <br><br>
+    <pre><code class="hljs html">&lt;hot-table :settings="hotSettings"&gt;
+  &lt;hot-column :width="250"&gt;
+    &lt;custom-renderer hot-renderer&gt;&lt;/custom-renderer&gt;
+  &lt;/hot-column&gt;
+&lt;/hot-table&gt;</code></pre>
+
+    <div class="codeLayout">
+      <div class="buttons">
+        <button class="jsFiddleLink" data-runfiddle="custom-renderer-example">
+          <i class="fa fa-jsfiddle"></i>
+          Edit
+        </button>
+      </div>
+      <script type="text/babel" data-jsfiddle="custom-renderer-example" data-jsfiddle-panel_js="3">
+        import Vue from 'vue';
+        import { HotTable, HotColumn } from '@handsontable/vue';
+        import Handsontable from 'handsontable';
+
+        const CustomRenderer = {
+          template: '<div><i style="color: #a9a9a9">Row: {{row}}, column: {{col}},</i> value: {{value}}</div>',
+          data: function() {
+            return {
+              // We'll need to define properties in our data object,
+              // corresponding to all of the data being injected from
+              // the BaseEditorComponent class, which are:
+              // - hotInstance (instance of Handsontable)
+              // - row (row index)
+              // - col (column index)
+              // - prop (column property name)
+              // - TD (the HTML cell element)
+              // - cellProperties (the cellProperties object for the edited cell)
+              hotInstance: null,
+              TD: null,
+              row: null,
+              col: null,
+              prop: null,
+              value: null,
+              cellProperties: null
+            }
+          }
+        };
+
+        const App = new Vue({
+          el: '#custom-renderer-example',
+          data: function() {
+            return {
+              hotSettings: {
+                data: Handsontable.helper.createSpreadsheetData(10, 10)  ,
+                licenseKey: 'non-commercial-and-evaluation',
+                autoRowSize: false,
+                autoColumnSize: false
+              }
+            }
+          },
+          components: {
+            HotTable,
+            HotColumn,
+            CustomRenderer
+          }
+        });</script>
+    </div>
+
+    <div data-alert class="alert-box info">
+      <b>Note: </b> in order for the cell renderers to be independent, there are renderer components created for each of the displayed cells (all of them being clones
+      of the "original" renderer component). For performance reasons, there are cached using the LRU algorithm, which stores a certain amount of entries, and overwrites the
+      least recently used ones with fresh ones.<br>
+      By default, the number of entries available for the cache is set to <code>3000</code>, which means 3000 cells can be rendered at the same time, while being read from the cache.
+      However, for larger tables, some of the cells may not be able to be cached, and thus, their corresponding component would be recreated each time a cell is rendered (which is not
+      great for performance).<br><br>
+      To prevent this problem, it is possible to pass the <code><strong>wrapperRendererCacheSize</strong></code> option to the <code>HotTable</code> component and set it to a number of
+      entries to be available in the renderer cache.
+    </div>
+
+    <h3 id="custom-editor">Declaring a custom editor as a component</h3>
+    <p>You can also utilize the Vue components to create custom editors. To do so, you'll need to create a component compatible with
+      Handsontable's editor class structure. The easiest way to do so is to extend <code>BaseEditorComponent</code> - a base editor component exported from <code>@handsontable/vue</code>.</p>
+    <p>This will give you a solid base to build upon. Note, that the editor component needs to tick all of the boxes that a regular editor does,
+      such as defining the <code>getValue</code>, <code>setValue</code>, <code>open</code>, <code>close</code> and <code>focus</code> methods,
+      which are abstract in the <code>BaseEditor</code>. For more info, check the documentation on
+      <a href="https://handsontable.com/docs/tutorial-cell-editor.html#-selecteditor-creating-editor-from-scratch">creating custom editors from scratch</a>.</p>
+
+    <div>
+      <div id="custom-editor-example" class="hot">
+        <hot-table :settings="hotSettings">
+          <hot-column :width="250">
+            <custom-editor hot-editor></custom-editor>
+          </hot-column>
+        </hot-table>
+      </div>
+    </div>
+    <script type="text/x-hot-html" data-jsfiddle="custom-editor-example">
+      <div id="custom-editor-example" class="hot">
+        <hot-table :settings="hotSettings">
+          <hot-column :width="250">
+            <custom-editor hot-editor></custom-editor>
+          </hot-column>
+        </hot-table>
+      </div>
+    </script>
+
+    <div type="text/x-hot-html" data-jsfiddle="custom-editor-example">
+      <script type="text/x-template" id="editor-template">
+        <div v-if="isVisible" id="editorElement" :style="style" @mousedown="stopMousedownPropagation">
+          <button v-on:click="setLowerCase">{{ value.toLowerCase() }}</button>
+          <button v-on:click="setUpperCase">{{ value.toUpperCase() }}</button>
+        </div>
+      </script>
+    </div>
+
+    <br><br>
+    <pre><code class="hljs html">&lt;hot-table :settings="hotSettings"&gt;
+  &lt;hot-column :width="250"&gt;
+    &lt;custom-editor hot-editor&gt;&lt;/custom-editor&gt;
+  &lt;/hot-column&gt;
+&lt;/hot-table&gt;
+
+&lt;script type="text/x-template" id="editor-template"&gt;
+  // We're binding the `style` attribute to the style object in our component's data
+  // as well as the `mousedown` event to a function, which stops the event propagation
+  // in order to prevent closing the editor on click.
+  &lt;div v-if="isVisible" id="editorElement" :style="style" @mousedown="stopMousedownPropagation" &gt;
+    &lt;button v-on:click="setLowerCase"&gt;{{ value.toLowerCase() }}&lt;/button&gt;
+    &lt;button v-on:click="setUpperCase"&gt;{{ value.toUpperCase() }}&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/script&gt;</code></pre>
+
+    <div class="codeLayout">
+      <div class="buttons">
+        <button class="jsFiddleLink" data-runfiddle="custom-editor-example">
+          <i class="fa fa-jsfiddle"></i>
+          Edit
+        </button>
+      </div>
+      <script type="text/babel" data-jsfiddle="custom-editor-example" data-jsfiddle-panel_js="3">
+        import Vue from 'vue';
+        import { HotTable, HotColumn, BaseEditorComponent } from '@handsontable/vue';
+        import Handsontable from 'handsontable';
+
+        const CustomEditor = {
+          name: 'CustomEditor',
+          template: '#editor-template',
+          extends: BaseEditorComponent,
+          data: function() {
+            return {
+              // We'll need to define properties in our data object,
+              // corresponding to all of the data being injected from
+              // the BaseEditorComponent class, which are:
+              // - hotInstance (instance of Handsontable)
+              // - row (row index)
+              // - col (column index)
+              // - prop (column property name)
+              // - TD (the HTML cell element)
+              // - originalValue (cell value passed to the editor)
+              // - cellProperties (the cellProperties object for the edited cell)
+              hotInstance: null,
+              TD: null,
+              row: null,
+              col: null,
+              prop: null,
+              originalValue: null,
+              value: '',
+              cellProperties: null,
+              isVisible: false,
+              style: {
+                position: 'absolute',
+                padding: '15px',
+                background: '#fff',
+                zIndex: 999,
+                border: '1px solid #000'
+              }
+            }
+          },
+          methods: {
+            stopMousedownPropagation: function(e) {
+              e.stopPropagation();
+            },
+            prepare: function(row, col, prop, td, originalValue, cellProperties) {
+              // We'll need to call the `prepare` method from
+              // the `BaseEditorComponent` class, as it provides
+              // the component with the information needed to use the editor
+              // (hotInstance, row, col, prop, TD, originalValue, cellProperties)
+              BaseEditorComponent.options.methods.prepare.call(this, row, col, prop, td, originalValue, cellProperties);
+
+              if (!document.body.contains(this.$el)) {
+                document.body.appendChild(this.$el);
+              }
+
+              const tdPosition = td.getBoundingClientRect();
+
+              // As the `prepare` method is triggered after selecting
+              // any cell, we're updating the styles for the editor element,
+              // so it shows up in the correct position.
+              this.style.left = tdPosition.left + window.pageXOffset + 'px';
+              this.style.top = tdPosition.top + window.pageYOffset + 'px';
+            },
+            setLowerCase: function() {
+              this.setValue(this.value.toLowerCase());
+              this.finishEditing();
+            },
+            setUpperCase: function() {
+              this.setValue(this.value.toUpperCase());
+              this.finishEditing();
+            },
+            open: function() {
+              this.isVisible = true;
+            },
+            close: function() {
+              this.isVisible = false;
+            },
+            setValue: function(value) {
+              this.value = value;
+            },
+            getValue: function() {
+              return this.value;
+            }
+          }
+        };
+
+        const App = new Vue({
+          el: '#custom-editor-example',
+          data: function() {
+            return {
+              hotSettings: {
+                data: [
+                  ['Obrien Fischer'], ['Alexandria Gordon'], ['John Stafford'], ['Regina Waters'], ['Kay Bentley'], ['Emerson Drake'], ['Deann Stapleton']
+                ],
+                licenseKey: 'non-commercial-and-evaluation',
+                rowHeaders: true
+              }
+            }
+          },
+          components: {
+            HotTable,
+            HotColumn,
+            CustomEditor
+          }
+        });</script>
+    </div>
+
+    <h3 id="v-model">Using the renderer/editor components with <code>v-model</code></h3>
+    <p>You can obviously use Vue's <code>v-model</code> with the renderer and editor components.</p>
+    <p>In the example below, we're utilizing an input with <code>v-model</code> assigned, and the reading the bound property from the renderer component to highlight the rows
+    entered into the input.</p>
+
+    <div>
+      <div id="v-model-example" class="hot">
+        <label for="mainInput">List of row indexes (starting from 0):</label><br>
+        <input id="mainInput" v-model="highlightedRows"/>
+
+        <br><br>
+
+        <hot-table :settings="hotSettings" :row-headers="true" :col-headers="true">
+          <hot-column :width="50">
+            <custom-renderer hot-renderer></custom-renderer>
+          </hot-column>
+        </hot-table>
+      </div>
+    </div>
+    <script type="text/x-hot-html" data-jsfiddle="v-model-example">
+      <div id="v-model-example">
+        <label for="mainInput">List of row indexes (starting from 0):</label><br>
+        <input id="mainInput" v-model="highlightedRows"/>
+
+        <br><br>
+
+        <hot-table :settings="hotSettings" :row-headers="true" :col-headers="true">
+          <hot-column :width="50">
+            <custom-renderer hot-renderer></custom-renderer>
+          </hot-column>
+        </hot-table>
+      </div>
+    </script>
+    <br><br>
+    <pre><code class="hljs html">&lt;div id="v-model-example"&gt;
+  &lt;label for="mainInput"&gt;List of row indexes (starting from 0):&lt;/label&gt;&lt;br&gt;
+    &lt;input id="mainInput" v-model="highlightedRows"/&gt;
+
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;hot-table :settings="hotSettings" :row-headers="true" :col-headers="true"&gt;
+      &lt;hot-column :width="50"&gt;
+        &lt;custom-renderer hot-renderer&gt;&lt;/custom-renderer&gt;
+      &lt;/hot-column&gt;
+    &lt;/hot-table&gt;
+&lt;/div&gt;</code></pre>
+
+    <div class="codeLayout">
+      <div class="buttons">
+        <button class="jsFiddleLink" data-runfiddle="v-model-example">
+          <i class="fa fa-jsfiddle"></i>
+          Edit
+        </button>
+      </div>
+      <script type="text/babel" data-jsfiddle="v-model-example" data-jsfiddle-panel_js="3">
+        import Vue from 'vue';
+        import { HotTable, HotColumn } from '@handsontable/vue';
+        import Handsontable from 'handsontable';
+
+        const CustomRenderer = {
+          template: `<div v-bind:style="{ backgroundColor: bgColor }">{{value}}</div>`,
+          data: function() {
+            return {
+              hotInstance: null,
+              TD: null,
+              row: null,
+              col: null,
+              prop: null,
+              value: null,
+              cellProperties: null
+            }
+          },
+          computed: {
+            bgColor: function() {
+              console.log(this.$root.highlightedRows);
+              return this.$root.highlightedRows.includes(this.row) ? '#40b882' : '#fff';
+            }
+          }
+        };
+
+        const App = new Vue({
+          el: '#v-model-example',
+          data: function() {
+            return {
+              hotSettings: {
+                data: Handsontable.helper.createSpreadsheetData(10, 1)  ,
+                licenseKey: 'non-commercial-and-evaluation',
+                autoRowSize: false,
+                autoColumnSize: false
+              },
+              highlightedRows: ''
+            }
+          },
+          components: {
+            HotTable,
+            HotColumn,
+            CustomRenderer
+          }
+        });</script>
+    </div>
+
+    <h3 id="advanced-example">A more advanced example</h3>
+    <p>In this example, we'll be combining several capabilities of the wrapper:</p>
+    <ol>
+      <li>We will create a custom editor component with an external dependency, which will act as both renderer and editor</li>
+      <li>We will declare settings for several columns using Vue's <code>v-for</code></li>
+      <li>We will create a component, which state will be bound by the data we get from the first component</li>
+    </ol>
+
+    <p>Due to the complexity of this example, I've decided to split the components to different files, so it's previewable on Codesandbox instead of jsfiddle.</p>
+    <iframe src="https://codesandbox.io/embed/advanced-vue-hot-column-implementation-lrhzk?fontsize=14&hidenavigation=1&view=preview" title="Advanced @handsontable/vue hot-column implementation" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+    <hr>
+    <h4>1. Editor component with an external dependency, which will act as both renderer and editor</h4>
+    <p>To use an external editor component with Handsontable, you'll need to create an addition "bridge" component,
+      to connect your dependency's and Handsontable's API. In this example, we'll use an external color-picker component, <a href="https://github.com/xiaokaike/vue-color">vue-color</a>.</p>
+    <p>The editor implementation is pretty straightforward: you need to import your dependency, place in in your editor template and attach its events to your editor logic and you're done!<br>
+    In our case, we're also adding an "Apply" button, which triggers Handsontable base editor's <code>finishEditing</code> method,
+      so all the heavy lifting regarding passing the new value to the dataset is done for us.</p>
+    <p>All that's left is to modify the component template to be used as a renderer <i>and</i> editor. We'll utilize the <code>isEditor</code> and <code>isRenderer</code> properties,
+    injected to the component instances created by the wrapper. The template will be divided into a render part and an editor part using Vue's <code>v-if</code>.</p>
+
+    <p>This component contains some Vuex state logic, but ignore it for now, we'll get to it in the third point.</p>
+    <iframe src="https://codesandbox.io/embed/advanced-vue-hot-column-implementation-lrhzk?fontsize=14&hidenavigation=1&module=%2Fsrc%2FColorPicker.vue&view=editor" title="Advanced @handsontable/vue hot-column implementation" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+    <h4>2. Using <code>v-for</code> for column declaration</h4>
+    <p>Let's use <code>v-for</code> to declare the second and third column in a loop. Obviously, you can bind the loop to your data and get the settings from there.</p>
+    <pre><code class="hljs html">&lt;hot-table :settings="hotSettings"&gt;
+  &lt;hot-column :width="120"&gt;
+    &lt;stars-rating hot-renderer&gt;&lt;/stars-rating&gt;
+  &lt;/hot-column&gt;
+  &lt;hot-column v-for="n in 2" :width="120" v-bind:key="'col' + n"&gt;
+    &lt;color-picker hot-editor hot-renderer&gt;&lt;/color-picker&gt;
+  &lt;/hot-column&gt;
+&lt;/hot-table&gt;</code></pre>
+
+    <h4>3. Binding the state between components.</h4>
+    <p>As you can see in our first editor/renderer component, we're already commiting all of the changes into the applications <code>$store</code>.
+    This way, we can easily bind the state of our new component (based on a star-rating component dependency) to the data in the second and third column.</p>
+
+    <iframe src="https://codesandbox.io/embed/advanced-vue-hot-column-implementation-lrhzk?fontsize=14&hidenavigation=1&module=%2Fsrc%2FStarsRating.vue&view=editor" title="Advanced @handsontable/vue hot-column implementation" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+    </div>
+  </div>
+  <p>
+    <a href="https://github.com/handsontable/docs/edit/<?js= version ?>/tutorials/wrapper-for-vue-hot-column.html"
+       class="edit-doc" target="_blank">Edit this page</a>
+  </p>
+</div>
+<script data-jsfiddle="common" src="/docs/<?js= env.opts.query.version ?>/scripts/jsfiddle-fixer.js"></script>
+<script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.min.js"></script>
+<script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/vue-color@2.7.0/dist/vue-color.min.js"></script>
+<script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/@handsontable/vue@4.1.0/dist/vue-handsontable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7/babel.min.js"></script>
+
