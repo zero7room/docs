@@ -8,6 +8,8 @@
 <?js if (env.conf.templates.openGraph.site_name) { ?><meta property="og:site_name" content="<?js= env.conf.templates.openGraph.site_name ?>"/><?js } ?>
 <meta property="og:url" content="<?js= env.conf.templates.openGraph.url ?>"/>
 <?js } ?>
+<meta name="docsearch:version" content="<?js= env.opts.query.version ?>"/>
+<meta name="theme-color" content="#ffffff">
 
 <link rel="canonical" href="https://handsontable.com/docs{@canonical}" />
 
@@ -16,7 +18,6 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/docs/<?js= env.opts.query.version ?>/images/favicon-16x16.png">
 <link rel="manifest" href="/docs/<?js= env.opts.query.version ?>/images/manifest.json">
 <link rel="mask-icon" href="/docs/<?js= env.opts.query.version ?>/images/safari-pinned-tab.svg" color="#5bbad5">
-<meta name="theme-color" content="#ffffff">
 
 <script src="/docs/<?js= env.opts.query.version ?>/scripts/prettify/prettify.js"></script>
 <script src="/docs/<?js= env.opts.query.version ?>/scripts/prettify/lang-css.js"></script>
