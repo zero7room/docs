@@ -43,10 +43,10 @@
   <div class="example-container clearfix">
       <h3 id="environments-settings">Environments settings</h3>
       <ul>
-        <li>During browser testing, the size of window's browser should be at least width of 1200px and height of 1000px, by reason of Puppeteers <code>setViewer</code> settings.</li>
-        <li>The scrollbars should be visible because the size of the scrollbar affects <code>clientWidth</code> and <code>clientHeight</code>, which affects visibility and the number of columns and rows.</li>
-        <li>Window of testing browser should be on the top, some tests will not pass while running in the background.</li>
-        <li>Focus should be on the browser window, and the mouse should be still because some mouse movement, window focus lousing etc. can interfere with the tests causing them not to pass.</li>
+        <li>The size of window's browser should be at least 1200px wide and 1000px tall. Due to Puppeteers <code>setViewer</code> settings.</li>
+        <li>The scrollbars should be visible. The size of the scrollbar affects <code>clientWidth</code> and <code>clientHeight</code>, which can interfere visibility and the number of columns and rows.</li>
+        <li>Window of testing browser should be on the top. Some tests will not pass while running in the background.</li>
+        <li>Focus should be on the browser window and the mouse should be still. Moving the mouse or losing focus on the window can interfere with the tests, causing them not to pass.</li>
       </ul>
       </div> 
   <p class="gap-top-xsmall">
