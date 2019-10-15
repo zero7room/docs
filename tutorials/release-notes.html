@@ -1,6 +1,32 @@
 <div class="static-content">
 
   <div class="example-container clearfix">
+    <h3>7.2.0</h3>
+    <p>Released on 15th of October, 2019</p>
+    <strong>Changes</strong>
+    <ul>
+      <li>Added <code>cellProperties</code> to the arguments of search's <code>queryMethod</code> so that it would be possible to tell what kind of data was being queried. (<a href="https://github.com/handsontable/handsontable/issues/4944" target="_blank">#4944</a>)</li>
+      <li>Fixed a bug with a disappearing column header, when the <code>height</code> option is was set to <code>auto</code>. (<a href="https://github.com/handsontable/handsontable/issues/6302" target="_blank">#6302</a>)</li>
+      <li>Fixed a problem with an error being thrown when trying the clear a column with the first cell set to <code>readOnly</code>. (<a href="https://github.com/handsontable/handsontable/issues/6246" target="_blank">#6246</a>)</li>
+      <li>Fixed a bug where it was impossible to set data for a <code>readOnly</code>-typed cell, when any cell was selected. (<a href="https://github.com/handsontable/handsontable/issues/6214" target="_blank">#6214</a>)</li>
+      <li>Fixed a problem with an error being thrown when pasting data to <code>readOnly</code>-typed cells. (<a href="https://github.com/handsontable/handsontable/issues/6209" target="_blank">#6209</a>)</li>
+      <li>Fixed a problem with the <code>Undo</code> feature not working for columns defined as functions. (<a href="https://github.com/handsontable/handsontable/issues/6147" target="_blank">#6147</a>)</li>
+      <li>Fixed a bug where <code>this.TD</code> was <code>undefined</code> in the editor's <code>prepare</code> method when <code>fixedColumnsLeft</code> and <code>viewportColumnRenderingOffset</code> were both set. (<a href="https://github.com/handsontable/handsontable/issues/6043" target="_blank">#6043</a>)</li>
+      <li>Fixed a bug where the cell selection frame overlapped the bottom fixed rows. (<a href="https://github.com/handsontable/handsontable/issues/5947" target="_blank">#5947</a>)</li>
+      <li>Fixed a problem with an error being thrown after initializing an empty table or removing all the data from the table and clicking the corner header. (<a href="https://github.com/handsontable/handsontable/issues/5126" target="_blank">#5126</a>)</li>
+      <li>Fixed a problem with reloading data with a new set in the Nested Rows plugin. (<a href="https://github.com/handsontable/handsontable/issues/6339" target="_blank">#6339</a>)</li>
+      <li>Rewrote some of the Walkontable methods to return correct information about the table. (<a href="https://github.com/handsontable/handsontable/issues/6191" target="_blank">#6191</a>)</li>
+      <li>Made some improvements to the TypeScript definition file. (<a href="https://github.com/handsontable/handsontable/issues/6168" target="_blank">#6168</a>, <a href="https://github.com/handsontable/handsontable/issues/6107" target="_blank">#6107</a>, <a href="https://github.com/handsontable/handsontable/issues/6102" target="_blank">#6102</a>, <a href="https://github.com/handsontable/handsontable/issues/6239" target="_blank">#6239</a>, <a href="https://github.com/handsontable/handsontable/issues/6266" target="_blank">#6266</a>)</li>
+      <li>Improved the documentation and definition files regarding the <code>after-</code> hooks for creating and removing rows/columns. (<a href="https://github.com/handsontable/handsontable/issues/6296" target="_blank">#6296</a>)</li>
+      <li>Improved the documentation for the <code>totalColumn</code> option. (<a href="https://github.com/handsontable/handsontable/issues/6281" target="_blank">#6281</a>)</li>
+      <li>Added a <code>lint:fix</code> script to be able to fix the lint errors from the CLI. (<a href="https://github.com/handsontable/handsontable/issues/6260" target="_blank">#6260</a>)</li>
+      <li>Fixed all the tests for Windows and added run-script, <code>walkontable.watch</code>. (<a href="https://github.com/handsontable/handsontable/issues/6187" target="_blank">#6187</a>)</li>
+      <li>Removed the unused <code>check-es3-syntax-cli</code> package to fix Github's security alert. (<a href="https://github.com/handsontable/handsontable/issues/6319" target="_blank">#6319</a>)</li>
+      <li>Updated the dependencies to fix errors thrown by <code>npm audit</code> (<a href="https://github.com/handsontable/handsontable/issues/6318" target="_blank">#6318</a>)</li>
+    </ul>
+  </div>
+
+  <div class="example-container clearfix">
     <h3>7.1.1</h3>
     <p>Released on 12th of August, 2019</p>
     <strong>Changes</strong>
