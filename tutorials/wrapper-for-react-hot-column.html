@@ -1,0 +1,78 @@
+<div class="static-content">
+  <div class="example-container clearfix">
+
+    <h4>Version <code>3.1.0</code> of the <code>@handsontable/react</code> wrapper introduces a new feature - a <code>HotColumn</code>
+      component.</h4>
+    <p>
+      It doesn't only allow to configure the column-related settings using the <code>HotColumn</code> component's
+      attributes, but also create custom renderers and editors using React components.
+    </p>
+
+    <div class="index-list">
+      <ul>
+        <li><a href="#column-settings">Declaring column settings</a></li>
+        <li><a href="#custom-renderer">Declaring a custom renderer as a component</a></li>
+        <li><a href="#custom-editor">Declaring a custom editor as a component</a></li>
+        <li><a href="#context">Using the renderer/editor components with React's Context</a></li>
+        <li><a href="#advanced-example">A more advanced example</a></li>
+      </ul>
+    </div>
+
+    <h3 id="column-settings">Declaring column settings</h3>
+    <p>To declare column-specific settings, simply pass the settings as <code>HotColumn</code> props (either separately
+      or wrapped as a <code>settings</code> prop, exactly as you would with <code>HotTable</code>).</p>
+
+    <iframe src="https://codesandbox.io/embed/declaring-column-settings-hknvq?fontsize=14" title="Declaring column settings" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb" style="width:100%; height:390px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+    <h3 id="custom-renderer">Declaring a custom renderer as a component</h3>
+    <p>The wrapper allows creating custom renderers using React components. <br>
+      Although it's possible to use class-based react components for this purpose, <b>we strongly suggest</b> using
+      functional components, as the <code>state</code> of a class-based component would
+      re-initialize on every Handsontable render.</p>
+    <p>To mark a component as a Handsontable renderer, simply add a <code>hot-renderer</code> attribute to it.</p>
+
+    <div data-alert class="alert-box warn">
+      Because the Handsontable's <code>autoRowSize</code> and <code>autoColumnSize</code> options require calculating
+      the
+      widths/heights of some of the cells before rendering them into the table, it's not currently possible to use them
+      alongside component-based renderers,
+      as they're created after the table's initialization.<br>
+      <strong>Be sure to turn those options off in your Handsontable config, as keeping them enabled may cause
+        unexpected results.</strong>
+    </div>
+
+    <iframe src="https://codesandbox.io/embed/declaring-column-settings-hexfj?fontsize=14" title="Declaring a custom renderer as a component" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb" style="width:100%; height:360px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+    <h3 id="custom-editor">Declaring a custom editor as a component</h3>
+    <p>You can also utilize the React components to create custom editors. To do so, you'll need to create a component compatible with
+    Handsontable's editor class structure. The easiest way to do so is to extend <code>BaseEditorComponent</code> - a base editor component exported from <code>@handsontable/react</code>.</p>
+    <p>This will give you a solid base to build upon. Note, that the editor component needs to tick all of the boxes that a regular editor does,
+    such as defining the <code>getValue</code>, <code>setValue</code>, <code>open</code>, <code>close</code> and <code>focus</code> methods,
+    which are abstract in the <code>BaseEditor</code>. For more info, check the documentation on
+    <a href="https://handsontable.com/docs/tutorial-cell-editor.html#-selecteditor-creating-editor-from-scratch">creating custom editors from scratch</a>.
+    </p><p>
+    It's also worth noting, that editors in Handsontable will close after clicking on them if the <code>outsideClickDeselects</code> option is enabled (and it is by default).<br/>
+    To prevent that, <code>mousedown</code> event on the editor container must call <code>event.stopPropagation()</code>. In React's case, however, it doesn't work out-of-the-box, because
+    of the way React handles events (<a href="https://medium.com/@ericclemmons/react-event-preventdefault-78c28c950e46" target="_blank">this article by Eric Clemmons</a> sums it up pretty well). In the example
+    below, we're using the <a href="https://www.npmjs.com/package/react-native-listener" target="_blank">react-native-listener</a> library, to utilize the native <code>mousedown</code> event.</p>
+
+    <iframe src="https://codesandbox.io/embed/declaring-a-custom-editor-as-a-component-s1i0k?fontsize=14" title="Declaring a custom editor as a component" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb" style="width:100%; height:310px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+    <h3 id="context">Using the renderer/editor components with React's Context</h3>
+    <p>It this example we're using React's Context to pass the information available in the main app component all the way to the renderer. In this case we're using just the renderer, but the same principle works with editors just as well.</p>
+    <iframe src="https://codesandbox.io/embed/using-the-renderer-component-with-reacts-context-m1x09?fontsize=14" title="Using the renderer component with React&#039;s Context" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb" style="width:100%; height:415px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+    <h3 id="advanced-example">A more advanced example</h3>
+    <p>
+      In this example we will create a custom editor component with an external dependency, which will act as both renderer and editor. Information from that component will be used by another component (first column renderer)
+      to change the way it behaves. <br> The information will be passed using Redux and <code>react-redux</code>'s <code>connect</code> method.
+    </p>
+
+    <iframe src="https://codesandbox.io/embed/advanced-handsontablereact-implementation-using-hotcolumn-878mz?fontsize=14" title="Advanced @handsontable/react implementation using HotColumn" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb" style="width:100%; height:295px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+
+    <script data-jsfiddle="common" src="/docs/<?js= env.opts.query.version ?>/scripts/jsfiddle-fixer.js"></script>
+    <script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/react@16/umd/react.development.js"></script>
+    <script data-jsfiddle="common"
+            src="https://cdn.jsdelivr.net/npm/react-dom@16/umd/react-dom.development.js"></script>
+    <script data-jsfiddle="common" src="https://cdn.jsdelivr.net/npm/@handsontable/react@3.1.0/dist/react-handsontable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7/babel.min.js"></script>

@@ -321,6 +321,9 @@
           "wrapper-for-react-simple-examples": {
             "title": "Basic examples"
           },
+          "wrapper-for-react-hot-column": {
+            "title": "Using the HotColumn component"
+          },
           "wrapper-for-react-custom-context-menu-example": {
             "title": "Custom Context Menu example"
           },
