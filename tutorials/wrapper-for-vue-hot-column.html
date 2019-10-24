@@ -453,7 +453,7 @@
     </ol>
 
     <p>Due to the complexity of this example, I've decided to split the components to different files, so it's previewable on Codesandbox instead of jsfiddle.</p>
-    <iframe src="https://codesandbox.io/embed/advanced-vue-hot-column-implementation-lrhzk?fontsize=14&hidenavigation=1&view=preview" title="Advanced @handsontable/vue hot-column implementation" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+    <iframe src="https://codesandbox.io/embed/advanced-vue-hot-column-implementation-d4ymm?fontsize=14" title="Advanced vue hot-column implementation (7.2.2 + 4.1.1)" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
 
     <hr>
     <h4>1. Editor component with an external dependency, which will act as both renderer and editor</h4>
@@ -466,7 +466,7 @@
     injected to the component instances created by the wrapper. The template will be divided into a render part and an editor part using Vue's <code>v-if</code>.</p>
 
     <p>This component contains some Vuex state logic, but ignore it for now, we'll get to it in the third point.</p>
-    <iframe src="https://codesandbox.io/embed/advanced-vue-hot-column-implementation-lrhzk?fontsize=14&hidenavigation=1&module=%2Fsrc%2FColorPicker.vue&view=editor" title="Advanced @handsontable/vue hot-column implementation" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+    <iframe src="https://codesandbox.io/embed/advanced-vue-hot-column-implementation-d4ymm?fontsize=14&hidenavigation=1&module=%2Fsrc%2FColorPicker.vue&view=editor" title="Advanced @handsontable/vue hot-column implementation" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
 
     <h4>2. Using <code>v-for</code> for column declaration</h4>
     <p>Let's use <code>v-for</code> to declare the second and third column in a loop. Obviously, you can bind the loop to your data and get the settings from there.</p>
@@ -483,7 +483,7 @@
     <p>As you can see in our first editor/renderer component, we're already commiting all of the changes into the applications <code>$store</code>.
     This way, we can easily bind the state of our new component (based on a star-rating component dependency) to the data in the second and third column.</p>
 
-    <iframe src="https://codesandbox.io/embed/advanced-vue-hot-column-implementation-lrhzk?fontsize=14&hidenavigation=1&module=%2Fsrc%2FStarsRating.vue&view=editor" title="Advanced @handsontable/vue hot-column implementation" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+    <iframe src="https://codesandbox.io/embed/advanced-vue-hot-column-implementation-d4ymm?fontsize=14&hidenavigation=1&module=%2Fsrc%2FStarsRating.vue&view=editor" title="Advanced @handsontable/vue hot-column implementation" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
 
     </div>
   </div>
