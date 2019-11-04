@@ -1,6 +1,22 @@
 <div class="static-content">
 
   <div class="example-container clearfix">
+    <h3>7.3.0</h3>
+    <p>Released on 18th of November, 2019</p>
+    <strong>New Features</strong>
+    <ul>
+      <li>Version <code>7.3.0</code> introduces a new option to the Context Menu plugin - <code>uiContainer</code>. It allows declaring a DOM container, where all the Context Menu's element will be placed. It may come espacially handy when using Handsontable inside of an <code>iframe</code> or some other content-trimming context. (<a href="https://github.com/handsontable/handsontable/issues/6283" target="_blank">#6283</a>, <a href="https://github.com/handsontable/handsontable/issues/6417" target="_blank">#6417</a>)</li>
+      <li>We also added a <code>uiContainer</code> option to the Copy/Paste plugin. It works in a similar way to the one described above, but is used to declare the container for the Copy/Paste plugin's DOM elements. (<a href="https://github.com/handsontable/handsontable/issues/6343" target="_blank">#6343</a>)</li>
+    </ul>
+    <strong>Changes</strong>
+    <ul>
+      <li>Fixed a problem with table resizing on every scroll event on Firefox, when no table height was defined. (<a href="https://github.com/handsontable/handsontable/issues/6344" target="_blank">#6344</a>)</li>
+      <li>Updated the <code>puppeteer</code> package in the <code>devDependencies</code> section to get rid of the `npm audit` security error. (<a href="https://github.com/handsontable/handsontable/issues/6393" target="_blank">#6393</a>)</li>
+      <li>Removed the unneeded <code>CNAME_</code> file from the repo. (<a href="https://github.com/handsontable/handsontable/issues/6389" target="_blank">#6389</a>)</li>
+    </ul>
+  </div>
+
+  <div class="example-container clearfix">
     <h3>7.2.2</h3>
     <p>Released on 23rd of October, 2019</p>
     <strong>Changes</strong>
