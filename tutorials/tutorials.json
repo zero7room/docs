@@ -81,9 +81,6 @@
           },
           "release-notes": {
             "title": "Release notes"
-          },
-          "known-limitations": {
-            "title": "Known limitations"
           }
         }
       },
