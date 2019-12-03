@@ -101,11 +101,19 @@
 
         Handsontable.dom.addEvent(copyBtn, 'click', function () {
           hot.selectCell(1, 1);
+
+          var input = document.querySelector('.handsontableInput');
+          input.select();
+
           document.execCommand('copy');
         });
 
         Handsontable.dom.addEvent(cutBtn, 'click', function () {
           hot.selectCell(1, 1);
+
+          var input = document.querySelector('.handsontableInput');
+          input.select();
+
           document.execCommand('cut');
         });
       </script>
