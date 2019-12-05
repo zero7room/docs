@@ -153,6 +153,9 @@
             "title": "Nested headers",
             "pro": true
           },
+          "nested-rows": {
+            "title": "Nested rows"
+          },
           "dropdown-menu": {
             "title": "Dropdown menu",
             "pro": true
@@ -300,10 +303,6 @@
           },
           "formula-support": {
             "title": "Formula support",
-            "pro": true
-          },
-          "nested-rows": {
-            "title": "Nested rows",
             "pro": true
           }
         }
