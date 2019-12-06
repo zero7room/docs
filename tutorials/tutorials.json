@@ -293,16 +293,22 @@
           }
         }
       },
+      "formulas-demos": {
+        "title": "Formulas",
+        "demo": true,
+        "children": {
+          "formula-support": {
+            "title": "Formula support",
+            "pro": true
+          }
+        }
+      },
       "experimental-demos": {
         "title": "Experimental features",
         "demo": true,
         "children": {
           "gantt-chart": {
             "title": "Gantt chart",
-            "pro": true
-          },
-          "formula-support": {
-            "title": "Formula support",
             "pro": true
           }
         }
