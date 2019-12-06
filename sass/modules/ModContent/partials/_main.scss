@@ -181,7 +181,7 @@
 
   .tag-deprecated {
     display: inline-block;
-    font-size: 10px;
+    font-size: 20px;
   }
 
   .important {
@@ -415,4 +415,17 @@
 }
 .page-title {
   display: none;
+}
+.alert-box {
+  margin-bottom: 20px;
+  padding: 18px 24px;
+  font-size: 15px;
+  border-radius: 4px;
+  background-color: $snowWhite;
+  &.warn {
+    border-left: 4px solid $brandRed;
+  }
+  &.info {
+    border-left: 4px solid $brandBlue;
+  }
 }

@@ -303,12 +303,12 @@
           }
         }
       },
-      "experimental-demos": {
-        "title": "Experimental features",
+      "gantt-demos": {
+        "title": "Gantt chart",
         "demo": true,
         "children": {
           "gantt-chart": {
-            "title": "Gantt chart",
+            "title": "Gantt chart [deprecated]",
             "pro": true
           }
         }
