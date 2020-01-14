@@ -99,13 +99,19 @@
           outsideClickDeselects: false,
         });
 
-        Handsontable.dom.addEvent(copyBtn, 'click', function () {
+        Handsontable.dom.addEvent(copyBtn, 'mousedown', function () {
           hot.selectCell(1, 1);
+        });
+
+        Handsontable.dom.addEvent(copyBtn, 'click', function () {
           document.execCommand('copy');
         });
 
-        Handsontable.dom.addEvent(cutBtn, 'click', function () {
+        Handsontable.dom.addEvent(cutBtn, 'mousedown', function () {
           hot.selectCell(1, 1);
+        });
+
+        Handsontable.dom.addEvent(cutBtn, 'click', function () {
           document.execCommand('cut');
         });
       </script>
