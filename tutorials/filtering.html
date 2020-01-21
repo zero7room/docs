@@ -187,7 +187,7 @@
         var filtersPlugin = hot.getPlugin('filters');
 
         filtersPlugin.removeConditions(colIndex);
-        filtersPlugin.addCondition(colIndex, 'contains', [event.realTarget.value]);
+        filtersPlugin.addCondition(colIndex, 'contains', [event.target.value]);
         filtersPlugin.filter();
       }, 200);
 
@@ -225,7 +225,7 @@
 
       // Deselect column after click on input.
       var doNotSelectColumn = function (event, coords) {
-        if (coords.row === -1 && event.realTarget.nodeName === 'INPUT') {
+        if (coords.row === -1 && event.target.nodeName === 'INPUT') {
           event.stopImmediatePropagation();
           this.deselectCell();
         }
