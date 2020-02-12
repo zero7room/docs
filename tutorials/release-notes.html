@@ -1,6 +1,19 @@
 <div class="static-content">
 
   <div class="example-container clearfix">
+    <h3>7.4.0</h3>
+    <p>Released on 12th of February, 2020</p>
+    <strong>Changes</strong>
+    <ul>
+      <li>Fixed the problem, where the <code>onCellMouseUp</code> hook was fired for all mouse buttons except <code>RMB</code>, which was not consistent with the <code>onCellMouseDown</code> hook. <br>To make the changes more consistent with the native <code>dblclick</code> event (which is triggered only for the <code>LMB</code> button), the <code>onCellDblClick</code> and <code>onCellCornerDblClick</code> hooks were modified to also fire only for <code>LMB</code>. (<a href="https://github.com/handsontable/handsontable/issues/6507" target="_blank">#6507</a>)</li>
+      <li>Updated <code>moment</code>, <code>pikaday</code> and <code>numbro</code> to their latest versions. (<a href="https://github.com/handsontable/handsontable/issues/6610" target="_blank">#6610</a>)</li>
+      <li>Fixed a bug with numbers not being presented properly with the <code>pt_BR</code> culture setting. (<a href="https://github.com/handsontable/handsontable/issues/5569" target="_blank">#5569</a>)</li>
+      <li>Extended the Babel config with the possibility to use private methods, optional chaining and nullish coalescing operator. (<a href="https://github.com/handsontable/handsontable/issues/6308" target="_blank">#6308</a>)</li>
+      <li>Updated some of the internal configs, updated dev-dependencies, housekeeping etc. (<a href="https://github.com/handsontable/handsontable/issues/6560" target="_blank">#6560</a>, <a href="https://github.com/handsontable/handsontable/issues/6609" target="_blank">#6609</a>, <a href="https://github.com/handsontable/handsontable/issues/6612" target="_blank">#6612</a>, <a href="https://github.com/handsontable/handsontable/issues/6629" target="_blank">#6629</a>, <a href="https://github.com/handsontable/handsontable/issues/6574" target="_blank">#6574</a>, <a href="https://github.com/handsontable/handsontable/issues/6565" target="_blank">#6565</a>)</li>
+    </ul>
+  </div>
+
+  <div class="example-container clearfix">
     <h3>7.3.0</h3>
     <p>Released on 12th of December, 2019</p>
     <strong>New Features</strong>
